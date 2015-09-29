@@ -24,7 +24,7 @@ namespace DataAccessLayer
                     using (MySqlDataAdapter da = new MySqlDataAdapter())
                     {
                         // obtain connection string information from app.config
-                        cn.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["trendsensor"].ConnectionString;
+                        cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
                         // tell the cmd to use the cn
                         cmd.Connection = cn;
                         // supply the cmd with the necessary SQL
@@ -47,7 +47,7 @@ namespace DataAccessLayer
             {
                 LineChart linechart = new LineChart();
                 linechart.Hour = dr["hour"].ToString();
-                linechart.Hour = dr["frequency"].ToString();
+                linechart.Frequency = dr["frequency"].ToString();
                 linechartList.Add(linechart);
             }
             return linechartList;
