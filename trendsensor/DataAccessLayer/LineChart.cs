@@ -31,11 +31,26 @@ namespace DataAccessLayer
                         cmd.CommandText = "SELECT * FROM tagsretrievedtemp WHERE date = '2015-09-15' GROUP BY date,hour;";
                         // tell the DataAdapter to use the cmd
                         da.SelectCommand = cmd;
-                        // open an active connection
-                        cn.Open();
-                        // rrturns the results
-                        da.Fill(ds, "Rate");
-                        // close the connection
+                        try
+                        {
+                            // open an active connection
+                            cn.Open();
+                            // rrturns the results
+                            da.Fill(ds, "Rate");
+                            // close the connection    
+                        }
+                        finally 
+                        { 
+                            if (cn != null)
+                            {
+                                cn.Dispose();
+                                if (cmd != null)
+                                {
+                                    cmd.Dispose();
+                                }
+                            }
+                        }
+                        
                         cn.Close();
                     }
                 }

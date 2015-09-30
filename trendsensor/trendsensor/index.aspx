@@ -16,21 +16,20 @@
 </head>
 <body>
     <!-- The main container. -->
-    <div class="container">
+    <div class="container-fluid">
         <!-- First row, with two columns. -->
-        <div class="row">
-            <div class="span3">
+        <div class="row-fluid">
+            <div class="span2">
                 <!-- Datepicker -->
                 <div id="selectedDateTime"></div>
                 <div id="datepicker"></div>
             </div>
-            <div class="span1"></div>
-            <div class="span8">
+            <div class="span10">
                 <!-- Trend Graph -->
                 <div id="chart_div"></div>
             </div>
         </div>
- 
+
         <hr />
  
         <!-- Another row, with two columns. -->
@@ -119,14 +118,17 @@
                         title: 'Singapore Current Affairs'
                     };
 
+                    // append to html tag
                     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+                    // draw the graph
                     chart.draw(dataTable, options);
-                    //google.visualization.events.addListener(chart, 'onmouseover', function (e) {
-                    //    var hr = linechartList[0][0];
-                    //    hr += e.row; //hour
-                    //    document.getElementById("selectedDateTime").innerHTML = "2015-09-15" + " @ " + hr + " Hour "
-                    //   // topKeywords(str, hr);
-                    //});
+                    google.visualization.events.addListener(chart, 'onmouseover', function (e) {
+                        var hr = linechartList[0][0];
+                        hr += e.row; //hour
+                        document.getElementById("selectedDateTime").innerHTML = "2015-09-15" + " @ " + hr + " Hour "
+                       // topKeywords(str, hr);
+                    });
                 }
             );;
             //var isEmpty = true
