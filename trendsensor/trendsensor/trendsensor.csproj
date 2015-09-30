@@ -70,6 +70,7 @@
     <Content Include="bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="bootstrap\css\bootstrap.css" />
     <Content Include="bootstrap\css\bootstrap.min.css" />
+    <Content Include="bootstrap\css\highcharts.css" />
     <Content Include="bootstrap\css\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="bootstrap\css\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="bootstrap\css\images\ui-bg_flat_10_000000_40x100.png" />
@@ -89,9 +90,12 @@
     <Content Include="bootstrap\img\glyphicons-halflings.png" />
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
+    <Content Include="bootstrap\js\exporting.js" />
+    <Content Include="bootstrap\js\highcharts.js" />
     <Content Include="bootstrap\js\jquery-ui.js" />
     <Content Include="bootstrap\js\jquery.js" />
     <Content Include="googleapitesting.aspx" />
+    <Content Include="highchartDemo.aspx" />
     <Content Include="index.aspx" />
     <Content Include="mysql.aspx" />
     <Content Include="Web.config" />
@@ -103,6 +107,13 @@
     </Compile>
     <Compile Include="googleapitesting.aspx.designer.cs">
       <DependentUpon>googleapitesting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="highchartDemo.aspx.cs">
+      <DependentUpon>highchartDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="highchartDemo.aspx.designer.cs">
+      <DependentUpon>highchartDemo.aspx</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
