@@ -6,12 +6,12 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Trend Sensor with Twitter</title>
-    <script src="/bootstrap/js/jquery.js"></script>
-    <script src="/bootstrap/js/jquery-ui.js"></script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://www.google.com/jsapi" ></script>
-    <script src="/bootstrap/js/highcharts.js"></script>
-    <script src="/bootstrap/js/exporting.js"></script>
+    <script src="/bootstrap/js/jquery.js" type="text/javascript"></script>
+    <script src="/bootstrap/js/jquery-ui.js" type="text/javascript"></script>
+    <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+    <script src="/bootstrap/js/highcharts.js" type="text/javascript"></script>
+    <script src="/bootstrap/js/exporting.js" type="text/javascript"></script>
     <link href="/bootstrap/css/jquery-ui.css" rel="stylesheet" />
     <link href="/bootstrap/css/highcharts.css" rel="stylesheet" />
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -62,7 +62,7 @@
         </div>
     </div>--%>
 
-    <script>
+    <script type="text/javascript">
         
         //// load the visualization API and the piechart package
         //google.load('visualization', '1', { 'packages': ['corechart'] });
@@ -103,111 +103,51 @@
                 function (data, textStatus, jqXHR)
                 {
                     var linechartList = data.d;
-
-                    // get x , y values
-                    var xAxisValue = [];
-                    var yAxisValue = [];
+                    var hours = [];
+                    var frequencies = [];
+                    var datas = { "name": "Frequency", "data": [] };
                     for (index = 0; index < linechartList.length; index++)
                     {
-                        var hr = linechartList[index].Hour;
-                        var fq = parseInt(linechartList[index].Frequency);
-                        xAxisValue[index] = hr;
-                        yAxisValue[index] = fq;
+                        hours.push(linechartList[index].Hour);
+                        datas["data"].push(parseInt(linechartList[index].Frequency));
                     }
-                    $(document).ready(function (xAxisValue, yAxisValue) {
-                        $('#chart_div').highcharts({
+
+                    var categories = hours;
+                    $('#chart_div').highcharts({
+                        title: {
+                            text: 'Singapore Current Affairs',
+                            x: -20 //center
+                        },
+                        subtitle: {
+                            text: 'Source: Twitter.com',
+                            x: -20
+                        },
+                        xAxis: {
                             title: {
-                                text: 'Singapore Current Affairs',
-                                x: -20 //center
+                                text: 'Hour'
                             },
-                            subtitle: {
-                                text: 'Source: Twitter.com',
-                                x: -20
+                            categories: categories
+                        },
+                        yAxis: {
+                            alternateGridColor: '#FDFFD5',
+                            allowDecimals: false,
+                            title: {
+                                text: 'Frequency'
                             },
-                            xAxis: {
-                                title: {
-                                    text: 'Hour'
-                                },
-                                categories: ['16', '17', '18', '19', '20']
-                            },
-                            yAxis: {
-                                alternateGridColor: '#FDFFD5',
-                                allowDecimals: false,
-                                title: {
-                                    text: 'Frequency'
-                                },
-                                plotLines: [{
-                                    value: 0,
-                                    width: 1,
-                                    color: '#808080'
-                                }]
-                            },
-                            tooltip: {
-                                valueSuffix: ' occurs'
-                            },
-                            legend: {
-                                layout: 'vertical',
-                                align: 'right',
-                                verticalAlign: 'middle',
-                                borderWidth: 0
-                            },
-                            series: [{
-                                name: 'tags',
-                                data: [26, 39, 18, 19, 55]
-                            }]
-                        });
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }],
+                           
+                        },
+                        series: [{
+                            name: 'Frequency',
+                            data: datas["data"]
+                        }]
                     });
-                    //// create the data table
-                    //var dataTable = new google.visualization.DataTable();
-                    //dataTable.addColumn('number', 'hour');
-                    //dataTable.addColumn('number', 'frequency');
-                    ////---------add row by row--------
-                    //for (index = 0; index < linechartList.length; index++)
-                    //{
-                    //    var hr = parseInt(linechartList[index].Hour);
-                    //    var fq = parseInt(linechartList[index].Frequency);
-                    //    dataTable.addRow(new Array(hr, fq));
-                    //}
-                    
-                    //// set chart options
-                    //var options =
-                    //{
-                    //    titleTextStyle: { fontSize: 18, color: 'black', fontName: 'Tahoma, Geneva, sans-serif' },
-                    //    hAxis: { title: 'Hour', titleTextStyle: { color: 'black' } },
-                    //    vAxis: { title: 'Frequency', titleTextStyle: { color: 'black' } },
-                    //    title: 'Singapore Current Affairs'
-                    //};
-
-                    //// append to html tag
-                    //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
-                    //// draw the graph
-                    //chart.draw(dataTable, options);
-                    //google.visualization.events.addListener(chart, 'onmouseover', function (e) {
-                    //    var hr = linechartList[0][0];
-                    //    hr += e.row; //hour
-                    //    document.getElementById("selectedDateTime").innerHTML = "2015-09-15" + " @ " + hr + " Hour "
-                    //   // topKeywords(str, hr);
-                    //});
                 }
             );;
-
-            //if (isEmpty) {
-            //    var dataTable = new google.visualization.DataTable();
-            //    dataTable.addColumn('number', 'hour');
-            //    dataTable.addColumn('number', 'frequency');
-            //    dataTable.addRows(0, 0, 0, 0, 0);
-
-            //    var options =
-			//	{
-			//	    titleTextStyle: { fontSize: 18, color: 'black', fontName: 'Tahoma, Geneva, sans-serif' },
-			//	    hAxis: { title: 'Hour', titleTextStyle: { color: 'black' } },
-			//	    vAxis: { title: 'Frequency', titleTextStyle: { color: 'black' } },
-			//	    title: 'Singapore Current Affairs'
-			//	};
-            //    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-            //    chart.draw(dataTable, options);
-            //}
         }
     </script>
 </body>
