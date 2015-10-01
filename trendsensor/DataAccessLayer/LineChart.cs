@@ -30,7 +30,6 @@ namespace DataAccessLayer
                         cmd.Connection = cn;
                         // supply the cmd with the necessary SQL Y-M-D FULL
                         cmd.CommandText = "SELECT * FROM tagsretrievedtemp WHERE date = '" + str + "' GROUP BY date,hour;";
-
                         //testing/print out sqlquery
                         System.Diagnostics.Debug.WriteLine(cmd.CommandText);
                         // tell the DataAdapter to use the cmd

@@ -23,7 +23,8 @@ namespace trendsensor
             List<LineChart> linechartList = new List<LineChart>();
 
             //convert to correct date format
-            DateTime date = DateTime.Parse(str);
+            //DateTime date = DateTime.Parse(str);
+            DateTime date = DateTime.ParseExact(str, "MM/dd/yyyy", null);
             string str1 = date.ToString("yyyy'-'MM'-'dd");
 
             // create a linechart class instance so that i

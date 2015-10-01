@@ -9,7 +9,6 @@
     <script src="/bootstrap/js/jquery.js" type="text/javascript"></script>
     <script src="/bootstrap/js/jquery-ui.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="https://www.google.com/jsapi" type="text/javascript"></script>
     <script src="/bootstrap/js/highcharts.js" type="text/javascript"></script>
     <script src="/bootstrap/js/exporting.js" type="text/javascript"></script>
     <link href="/bootstrap/css/jquery-ui.css" rel="stylesheet" />
@@ -102,8 +101,6 @@
             
             str = $('#datepicker').val();
             drawChart(str);
-            //drawTable(str);
-            //confirm(str);
         });
 
         function drawChart(str) {
@@ -163,7 +160,7 @@
                            
                         },
                         series: [{
-                            name: 'Frequency',
+                            name: 'All',
                             data: datas["data"]
                         }]
                     });
