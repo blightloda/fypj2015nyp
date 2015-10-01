@@ -65,6 +65,7 @@
     <script type="text/javascript">
  
         var str= "";
+        //get today's date
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth()+1; //January is 0!
@@ -95,7 +96,8 @@
         );
 
         drawChart(today);
-
+        
+        //calendar click function
         $('#datepicker').change(function () {
             
             str = $('#datepicker').val();
@@ -103,6 +105,7 @@
             //drawTable(str);
             //confirm(str);
         });
+
         function drawChart(str) {
             $.ajax
             (
