@@ -11,8 +11,9 @@ namespace DataAccessLayer
     public class LineChart
     {
 
-        public List<LineChart> getLineChart()
+        public List<LineChart> getLineChart(string str)
         {
+
             DataSet ds = new DataSet();
             // empty list
             List<LineChart> linechartList = new List<LineChart>();
@@ -27,30 +28,18 @@ namespace DataAccessLayer
                         cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
                         // tell the cmd to use the cn
                         cmd.Connection = cn;
-                        // supply the cmd with the necessary SQL
-                        cmd.CommandText = "SELECT * FROM tagsretrievedtemp WHERE date = '2015-09-15' GROUP BY date,hour;";
+                        // supply the cmd with the necessary SQL Y-M-D FULL
+                        cmd.CommandText = "SELECT * FROM tagsretrievedtemp WHERE date = '" + str + "' GROUP BY date,hour;";
+
+                        //testing/print out sqlquery
+                        System.Diagnostics.Debug.WriteLine(cmd.CommandText);
                         // tell the DataAdapter to use the cmd
                         da.SelectCommand = cmd;
-                        try
-                        {
-                            // open an active connection
-                            cn.Open();
-                            // rrturns the results
-                            da.Fill(ds, "Rate");
-                            // close the connection    
-                        }
-                        finally 
-                        { 
-                            if (cn != null)
-                            {
-                                cn.Dispose();
-                                if (cmd != null)
-                                {
-                                    cmd.Dispose();
-                                }
-                            }
-                        }
-                        
+                        // open an active connection
+                        cn.Open();
+                        // rrturns the results
+                        da.Fill(ds, "Rate");
+                        // close the connection
                         cn.Close();
                     }
                 }

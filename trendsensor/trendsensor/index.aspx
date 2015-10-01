@@ -64,6 +64,22 @@
 
     <script type="text/javascript">
  
+        var str= "";
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+           dd='0'+dd
+        } 
+
+        if(mm<10) {
+          mm='0'+mm
+        } 
+
+        today = mm+'/'+dd+'/'+yyyy;
+
         $("#datepicker").datepicker({
             inline: true
         });
@@ -78,14 +94,22 @@
             }
         );
 
-        drawChart();
+        drawChart(today);
 
-        function drawChart() {
+        $('#datepicker').change(function () {
+            
+            str = $('#datepicker').val();
+            drawChart(str);
+            //drawTable(str);
+            //confirm(str);
+        });
+        function drawChart(str) {
             $.ajax
             (
                 {
                     type: 'POST',
                     url: 'index.aspx/getLineChart',
+                    data: "{str: '" + str + "'}",
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     async: false

@@ -17,15 +17,22 @@ namespace trendsensor
         }
 
         [WebMethod]
-        public static object getLineChart()
+        public static object getLineChart(string str)
         {
             // create a list, which can hold linechart instances
             List<LineChart> linechartList = new List<LineChart>();
 
+            //convert to correct date format
+            DateTime date = DateTime.Parse(str);
+            string str1 = date.ToString("yyyy'-'MM'-'dd");
+
             // create a linechart class instance so that i
             // can talk to database 
             LineChart linechart = new LineChart();
-            linechartList = linechart.getLineChart();
+            linechartList = linechart.getLineChart(str1);
+
+            //testing/printout date
+            System.Diagnostics.Debug.WriteLine(str1);
 
             // assign the linechartList to the response object
             object response = linechartList;
