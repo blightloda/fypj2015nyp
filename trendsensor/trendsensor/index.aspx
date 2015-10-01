@@ -63,15 +63,7 @@
     </div>--%>
 
     <script type="text/javascript">
-        
-        //// load the visualization API and the piechart package
-        //google.load('visualization', '1', { 'packages': ['corechart'] });
-        //google.load('visualization', '1', { 'packages': ['table'] });
-        //// Set a callback to run when the Google Visualization API is loaded
-        //google.setOnLoadCallback(drawChart);
-
-
-
+ 
         $("#datepicker").datepicker({
             inline: true
         });
@@ -102,17 +94,19 @@
             (
                 function (data, textStatus, jqXHR)
                 {
+                    // prevent json hijacking
                     var linechartList = data.d;
+                    // 
                     var hours = [];
-                    var frequencies = [];
                     var datas = { "name": "Frequency", "data": [] };
+                    // loop through return data from database (linechartList)
+                    // push them into chart graph
                     for (index = 0; index < linechartList.length; index++)
                     {
                         hours.push(linechartList[index].Hour);
                         datas["data"].push(parseInt(linechartList[index].Frequency));
                     }
-
-                    var categories = hours;
+                    // ready to draw line chart
                     $('#chart_div').highcharts({
                         title: {
                             text: 'Singapore Current Affairs',
@@ -126,7 +120,7 @@
                             title: {
                                 text: 'Hour'
                             },
-                            categories: categories
+                            categories: hours
                         },
                         yAxis: {
                             alternateGridColor: '#FDFFD5',
