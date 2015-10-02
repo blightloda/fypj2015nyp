@@ -86,8 +86,15 @@
     <Content Include="bootstrap\css\images\ui-icons_ffd27a_256x240.png" />
     <Content Include="bootstrap\css\images\ui-icons_ffffff_256x240.png" />
     <Content Include="bootstrap\css\jquery-ui.css" />
+    <Content Include="bootstrap\css\emoIcon.css" />
+    <Content Include="bootstrap\img\anger4.png" />
+    <Content Include="bootstrap\img\disgusted4.png" />
     <Content Include="bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="bootstrap\img\joy4.png" />
+    <Content Include="bootstrap\img\normal.png" />
+    <Content Include="bootstrap\img\sadness4.png" />
+    <Content Include="bootstrap\img\surprised4.png" />
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\exporting.js" />

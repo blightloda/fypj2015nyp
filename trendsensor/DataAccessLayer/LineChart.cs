@@ -20,7 +20,7 @@ namespace DataAccessLayer
 
             using (MySqlConnection cn = new MySqlConnection())
             {
-                using (MySqlCommand cmd = new MySqlCommand())
+                using (MySqlCommand cmd = new MySqlCommand(), cmd1 = new MySqlCommand())
                 {
                     using (MySqlDataAdapter da = new MySqlDataAdapter())
                     {
@@ -28,8 +28,11 @@ namespace DataAccessLayer
                         cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
                         // tell the cmd to use the cn
                         cmd.Connection = cn;
+                        cmd1.Connection = cn;
                         // supply the cmd with the necessary SQL Y-M-D FULL
                         cmd.CommandText = "SELECT * FROM tagsretrievedtemp WHERE date = '" + str + "' GROUP BY date,hour;";
+                        // get individual mood 
+                        cmd1.CommandText = "";
                         //testing/print out sqlquery
                         System.Diagnostics.Debug.WriteLine(cmd.CommandText);
                         // tell the DataAdapter to use the cmd

@@ -1,0 +1,17 @@
+.table th{
+    text-align: right;
+}
+.table td{
+    text-align: center;
+}
+.emoIcon
+{
+    text-align: left;
+    width: 36px !important;
+    height: 36px !important;
+}
+
+.center {
+    margin: 0 auto !important;
+    float: none !important;
+}

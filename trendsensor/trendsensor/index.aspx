@@ -15,6 +15,7 @@
     <link href="/bootstrap/css/highcharts.css" rel="stylesheet" />
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/bootstrap/css/emoIcon.css" rel="stylesheet" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
@@ -39,6 +40,39 @@
         <div class="row">
             <div class="span3">
                 <!-- Mood Selector -->
+                <table class="table table-hover"> 
+                    <thead>
+                        <tr>
+                            <th>Mood Selector</th>
+                        </tr>             
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>All</td>
+                            <td><img src="bootstrap/img/normal.png" class="emoIcon" /></td>
+                        </tr>
+                        <tr>
+                            <td>Joy</td>
+                            <td><img src="bootstrap/img/joy4.png" class="emoIcon" /></td>
+                        </tr>
+                        <tr>
+                            <td>Anger</td>
+                            <td><img src="bootstrap/img/anger4.png" class="emoIcon" /></td>
+                        </tr>
+                        <tr>
+                            <td>Sadness</td>
+                            <td><img src="bootstrap/img/sadness4.png" class="emoIcon" /></td>
+                        </tr>
+                        <tr>
+                            <td>Surprised</td>
+                            <td><img src="bootstrap/img/surprised4.png" class="emoIcon" /></td>
+                        </tr>
+                        <tr>
+                            <td>Disgusted</td>
+                            <td><img src="bootstrap/img/disgusted4.png" class="emoIcon" /></td>
+                        </tr> 
+                    </tbody>
+                </table>
             </div>
             <div class="span9">
                 <!-- Tag Graph -->
@@ -84,6 +118,15 @@
             inline: true
         });
 
+        $("#target").click(function () {
+            alert(window.innerWidth);
+        });
+        // detect browser change size
+        $(window).resize(function () {
+            // resize calendar 
+            $('.ui-datepicker').css('font-size', document.getElementById("chart_div").offsetWidth / 85 + 'px');
+        });
+        
         // Hover states on the static widgets
         $("#dialog-link, #icons li").hover(
             function () {
@@ -132,6 +175,9 @@
                     }
                     // ready to draw line chart
                     $('#chart_div').highcharts({
+                        credits: {
+                            enabled: false
+                        },
                         title: {
                             text: 'Singapore Current Affairs',
                             x: -20 //center
