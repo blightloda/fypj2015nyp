@@ -8,6 +8,7 @@
     <title>Trend Sensor with Twitter</title>
     <script src="/bootstrap/js/jquery.js" type="text/javascript"></script>
     <script src="/bootstrap/js/jquery-ui.js" type="text/javascript"></script>
+    <script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="/bootstrap/js/highcharts.js" type="text/javascript"></script>
     <script src="/bootstrap/js/exporting.js" type="text/javascript"></script>
@@ -98,6 +99,14 @@
 
     <script type="text/javascript">
  
+        // set width for bubble rectangle
+        $(document).ready(function() { 
+            document.getElementById("bubble").setAttribute("style", "width:" + (document.getElementById("chart_div").offsetWidth - 105) + "px;"
+                + "height:" + document.getElementById("chart_div").offsetHeight + "px;"
+                + "border:1px solid black;" + "margin: 0 auto");
+         });
+        
+
         var str= "";
         //get today's date
         var today = new Date();
@@ -126,6 +135,11 @@
         $(window).resize(function () {
             // resize calendar 
             $('.ui-datepicker').css('font-size', document.getElementById("chart_div").offsetWidth / 85 + 'px');
+
+            // resize bubble
+            document.getElementById("bubble").setAttribute("style", "width:" + (document.getElementById("chart_div").offsetWidth - 105) + "px;"
+                + "height:" + document.getElementById("chart_div").offsetHeight + "px;"
+                + "border:1px solid black;" + "margin: 0 auto");
         });
         
         // Hover states on the static widgets
@@ -235,7 +249,7 @@
         ];
 
         var color = d3.scale.ordinal().range(["#FFFFFF", "#FFFF99", "#FF0066", "#99FF66", "#FF99FF", "#3399FF"]),
-        diameter = 500;
+        diameter = 380;
 
         var bubble = d3.layout.pack()
               .value(function (d) { return d3.sum(d[1]); })
