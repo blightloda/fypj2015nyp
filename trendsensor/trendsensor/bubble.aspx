@@ -8,6 +8,7 @@
 </head>
 <body>
         <form id="form1" runat="server">
+            <div id="bubble"></div>
         <script src="http://d3js.org/d3.v3.min.js"></script>
 <style>
   body {
@@ -50,7 +51,7 @@
         arc = d3.svg.arc().innerRadius(0),
         pie = d3.layout.pie();
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#bubble").append("svg")
         .attr("width", diameter)
         .attr("height", diameter)
         .attr("class", "bubble");
