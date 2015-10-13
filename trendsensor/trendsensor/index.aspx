@@ -20,6 +20,31 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
+    <style>
+    #tooltip {
+        position: absolute;
+        width: 200px;
+        height: auto;
+        padding: 10px;
+        background-color: white;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
+        box-shadow: 4px 4px 10px #ecf0f1;
+        pointer-events: none;
+    }
+    #tooltip.hidden {
+        opacity: 0;
+    }
+    #tooltip p {
+        margin: 0;
+        font-family: sans-serif;
+        font-size: 16px;
+        line-height: 20px;
+}
+    </style>
     <!-- The main container. -->
     <div class="container-fluid">
         <!-- First row, with two columns. -->
@@ -276,7 +301,7 @@
           ["bubble12", [50, 50]],
         ];
 
-        var color = d3.scale.ordinal().range(["#FFFFFF", "#FFFF99", "#FF0066", "#99FF66", "#FF99FF", "#3399FF"]),
+        var color = d3.scale.ordinal().range(["#ecf0f1", "#f1c40f", "#e74c3c", "#3498db", "#9b59b6", "#2ecc71"]),
         diameter = 380;
 
         var bubble = d3.layout.pack()
@@ -297,6 +322,7 @@
         nodes.enter().append("g")
             .attr("class", "node")
             .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+            
 
         var arcGs = nodes.selectAll("g.arc")
             .data(function (d) {
@@ -311,14 +337,14 @@
             })
             .style("fill", function (d, i) { return color(i); });
 
-        arcEnter.append("text")
+        <%--arcEnter.append("text")
             .attr({
                 x: function (d) { arc.outerRadius(d.r); return arc.centroid(d)[0]; },
                 y: function (d) { arc.outerRadius(d.r); return arc.centroid(d)[1]; },
                 dy: "0.35em"
             })
             .style("text-anchor", "middle")
-            .text(function (d) { return d.value; });
+            .text(function (d) { return d.value; });--%>
 
         var labels = nodes.selectAll("text.label")
             .data(function (d) { console.log(d); return [d[0]]; });
