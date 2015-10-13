@@ -200,26 +200,33 @@
                 {
                     // prevent json hijacking
                     var linechartList = data.d;
-                    // 
+                    // get max length for x
+                    var maxLength = linechartList[linechartList.length - 1].MaxLength;
+
                     var hours = [];
                     // all line data
                     var datas = { "name": "Frequency", "data": [] };
                     // individual mood data
-                    var moodDatas = { "name": "Frequency", "data": [] };
+                    var moodDatas = { "name": "Frequency", "joy": [], "anger": [], "sadness": [], "surprised": [], "disgusted": [] };
                     // loop through return data from database (linechartList)
                     // push them into chart graph
                     // last row is not taken as it is for 5 individual mood
-                    for (index = 0; index < linechartList.length - 1; index++)
+                    for (index = 0; index < linechartList.length - maxLength - 1 ; index++)
                     {
                         hours.push(linechartList[index].Hour);
                         datas["data"].push(parseInt(linechartList[index].Frequency));
                     }
-                    // push data for individual mood
-                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Joy));
-                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Anger));
-                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Sadness));
-                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Surprised));
-                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Disgusted));
+                    
+                    for (index = maxLength; index > 0; index--)
+                    {
+                        // push data for individual mood
+                        moodDatas["joy"].push(parseInt(linechartList[linechartList.length - index - 1].Joy));
+                        moodDatas["anger"].push(parseInt(linechartList[linechartList.length - index - 1].Anger));
+                        moodDatas["sadness"].push(parseInt(linechartList[linechartList.length - index - 1].Sadness));
+                        moodDatas["surprised"].push(parseInt(linechartList[linechartList.length - index - 1].Surprised));
+                        moodDatas["disgusted"].push(parseInt(linechartList[linechartList.length - index - 1].Disgusted));
+                    }
+                   
                     // ready to draw line chart
                     $('#chart_div').highcharts({
                         credits: {
@@ -256,26 +263,26 @@
                             name: 'All',
                             color: '#000000',
                             data: datas["data"]
-                        //}, {
-                        //    name: 'Anger',
-                        //    color: '#FF0000',
-                        //    data: [20, 20, 15, 10, 5]
-                        //}, {
-                        //    name: 'Joy',
-                        //    color: '#FF8000',
-                        //    data: [10, 50, 40, 30, 20]
-                        //}, {
-                        //    name: 'Sadness',
-                        //    color: '#008000',
-                        //    data: [30, 15, 20, 30, 40]
-                        //}, {
-                        //    name: 'Surprised',
-                        //    color: '#FFC0CB',
-                        //    data: [40, 40, 30, 30, 40]
-                        //}, {
-                        //    name: 'Disgusted',
-                        //    color: '#0000FF',
-                        //    data: [50, 0, 0, 0, 0]
+                        }, {
+                            name: 'Anger',
+                            color: '#FF0000',
+                            data: moodDatas["anger"]
+                        }, {
+                            name: 'Joy',
+                            color: '#FF8000',
+                            data: moodDatas["joy"]
+                        }, {
+                            name: 'Sadness',
+                            color: '#008000',
+                            data: moodDatas["sadness"]
+                        }, {
+                            name: 'Surprised',
+                            color: '#FFC0CB',
+                            data: moodDatas["surprised"]
+                        }, {
+                            name: 'Disgusted',
+                            color: '#0000FF',
+                            data: moodDatas["disgusted"]
                         }]
                     });
                 }

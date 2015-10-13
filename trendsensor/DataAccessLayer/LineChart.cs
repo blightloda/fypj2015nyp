@@ -16,6 +16,7 @@ namespace DataAccessLayer
 
             DataSet ds = new DataSet();
             DataSet ds1 = new DataSet();
+            DataSet ds2 = new DataSet();
             // empty list
             List<LineChart> linechartList = new List<LineChart>();
 
@@ -23,7 +24,7 @@ namespace DataAccessLayer
             {
                 using (MySqlCommand cmd = new MySqlCommand())
                 {
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(), da1 = new MySqlDataAdapter())
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(), da1 = new MySqlDataAdapter(), da2 = new MySqlDataAdapter())
                     {
                         // obtain connection string information from app.config
                         cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
@@ -40,21 +41,35 @@ namespace DataAccessLayer
                         // rrturns the results
                         da.Fill(ds, "Rate");
 
+                        // get the min and max value for x axis
+                        cmd.CommandText = "SELECT Min(CAST(`hour` AS UNSIGNED))  FROM tagsretrievedtemp WHERE date = '" + str + "';";
+                        int minX = int.Parse(cmd.ExecuteScalar().ToString());
+                        cmd.CommandText = "SELECT Max(CAST(`hour` AS UNSIGNED))  FROM tagsretrievedtemp WHERE date = '" + str + "';";
+                        int maxX = int.Parse(cmd.ExecuteScalar().ToString());
+                        
+
                         // reuse cmd variable
                         // count frequency of a individual mood for a given date and time 
-                        for (int i = 0; i < 10; i++ )
+                        for (int i = minX; i < maxX; i++)
                         {
-                            cmd.CommandText = "SELECT(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'joy') AS joy,"
-                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'sadness') AS sadness,"
-                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'surprised') AS surprised,"
-                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'anger') AS anger,"
-                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'disgusted') AS disgusted";
+                            cmd.CommandText = "SELECT(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'joy') AS joy,"
+                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'sadness') AS sadness,"
+                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'surprised') AS surprised,"
+                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'anger') AS anger,"
+                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'disgusted') AS disgusted";
+                            // tell the DataAdapter to use the cmd
+                            da1.SelectCommand = cmd;
+                            // returns the results
+                            da1.Fill(ds1, "mood");
                         }
-                            
+
+                        // get the length, incase some number missing between minX and maxX
+                        cmd.CommandText = "SELECT count(distinct(hour)) AS maxLength FROM tagsretrievedtemp WHERE date = '" + str + "';";
+                        int length = int.Parse(cmd.ExecuteScalar().ToString());
                         // tell the DataAdapter to use the cmd
-                        da1.SelectCommand = cmd;
+                        da2.SelectCommand = cmd;
                         // returns the results
-                        da1.Fill(ds1, "mood");
+                        da2.Fill(ds2, "maxLength");
 
                         // close the connection
                         cn.Close();
@@ -82,6 +97,13 @@ namespace DataAccessLayer
                 linechart.Disgusted = dr["disgusted"].ToString();
                 linechartList.Add(linechart);
             }
+
+            foreach (DataRow dr in ds2.Tables["maxLength"].Rows)
+            {
+                LineChart linechart = new LineChart();
+                linechart.MaxLength = dr["maxLength"].ToString();
+                linechartList.Add(linechart);
+            }
             return linechartList;
         }
 
@@ -96,6 +118,8 @@ namespace DataAccessLayer
         private string _Surprised = "";
         private string _Disgusted = "";
 
+        private string _MaxLength = "";
+
         // setters and getters
         public string Hour { get { return _Hour; } set { _Hour = value; } }
         public string Frequency { get { return _Frequency; } set { _Frequency = value; } }
@@ -104,6 +128,7 @@ namespace DataAccessLayer
         public string Sadness { get { return _Sadness; } set { _Sadness = value; } }
         public string Surprised { get { return _Surprised; } set { _Surprised = value; } }
         public string Disgusted { get { return _Disgusted; } set { _Disgusted = value; } }
+        public string MaxLength { get { return _MaxLength; } set { _MaxLength = value; } }
 
     }
 }
