@@ -128,9 +128,6 @@
             inline: true
         });
 
-        $("#target").click(function () {
-            alert(window.innerWidth);
-        });
         // detect browser change size
         $(window).resize(function () {
             // resize calendar 
@@ -152,7 +149,7 @@
             }
         );
 
-        drawChart(today);
+        drawChart("09/08/2015");
         
         //calendar click function
         $('#datepicker').change(function () {
@@ -180,14 +177,24 @@
                     var linechartList = data.d;
                     // 
                     var hours = [];
+                    // all line data
                     var datas = { "name": "Frequency", "data": [] };
+                    // individual mood data
+                    var moodDatas = { "name": "Frequency", "data": [] };
                     // loop through return data from database (linechartList)
                     // push them into chart graph
-                    for (index = 0; index < linechartList.length; index++)
+                    // last row is not taken as it is for 5 individual mood
+                    for (index = 0; index < linechartList.length - 1; index++)
                     {
                         hours.push(linechartList[index].Hour);
                         datas["data"].push(parseInt(linechartList[index].Frequency));
                     }
+                    // push data for individual mood
+                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Joy));
+                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Anger));
+                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Sadness));
+                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Surprised));
+                    moodDatas["data"].push(parseInt(linechartList[linechartList.length - 1].Disgusted));
                     // ready to draw line chart
                     $('#chart_div').highcharts({
                         credits: {
@@ -208,7 +215,6 @@
                             categories: hours
                         },
                         yAxis: {
-                            alternateGridColor: '#FDFFD5',
                             allowDecimals: false,
                             title: {
                                 text: 'Frequency'
@@ -217,12 +223,34 @@
                                 value: 0,
                                 width: 1,
                                 color: '#808080'
+                                
                             }],
-                           
+                            min: 0
                         },
                         series: [{
                             name: 'All',
+                            color: '#000000',
                             data: datas["data"]
+                        //}, {
+                        //    name: 'Anger',
+                        //    color: '#FF0000',
+                        //    data: [20, 20, 15, 10, 5]
+                        //}, {
+                        //    name: 'Joy',
+                        //    color: '#FF8000',
+                        //    data: [10, 50, 40, 30, 20]
+                        //}, {
+                        //    name: 'Sadness',
+                        //    color: '#008000',
+                        //    data: [30, 15, 20, 30, 40]
+                        //}, {
+                        //    name: 'Surprised',
+                        //    color: '#FFC0CB',
+                        //    data: [40, 40, 30, 30, 40]
+                        //}, {
+                        //    name: 'Disgusted',
+                        //    color: '#0000FF',
+                        //    data: [50, 0, 0, 0, 0]
                         }]
                     });
                 }

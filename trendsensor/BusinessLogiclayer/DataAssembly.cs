@@ -27,18 +27,18 @@ namespace BusinessLogiclayer
             LineChart lc = new LineChart();
             StringBuilder sb = new StringBuilder();
             //get all the keywords/tags from the clicked date and hour
-            List<String> list = lc.getKeyword(date, hour);
+            //List<String> list = lc.getKeyword(date, hour);
             //for every keyword, get frequency of mood and put inside stringbuilder
-            foreach (string s in list)
-            {
+           // foreach (string s in list)
+          //  {
                 
-                sb.AppendLine(s + "\t" + lc.getFrequencyJoy(s) + "\t" + lc.getFrequencyAnger(s) + "\t" + lc.getFrequencySadness(s) + "\t" + lc.getFrequencySurprised(s) + "\t" + lc.getFrequencyDisgusted(s));
+                //sb.AppendLine(s + "\t" + lc.getFrequencyJoy(s) + "\t" + lc.getFrequencyAnger(s) + "\t" + lc.getFrequencySadness(s) + "\t" + lc.getFrequencySurprised(s) + "\t" + lc.getFrequencyDisgusted(s));
                 //lc.getFrequencyJoy(s);
                 //lc.getFrequencyAnger(s);
                 //lc.getFrequencySadness(s);
                 //lc.getFrequencySurprised(s);
                 //lc.getFrequencyDisgusted(s);
-            }
+           // }
             //write the data into tsv file for graph display
             File.WriteAllText(path, sb.ToString());
         }

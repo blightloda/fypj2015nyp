@@ -15,24 +15,22 @@ namespace DataAccessLayer
         {
 
             DataSet ds = new DataSet();
+            DataSet ds1 = new DataSet();
             // empty list
             List<LineChart> linechartList = new List<LineChart>();
 
             using (MySqlConnection cn = new MySqlConnection())
             {
-                using (MySqlCommand cmd = new MySqlCommand(), cmd1 = new MySqlCommand())
+                using (MySqlCommand cmd = new MySqlCommand())
                 {
-                    using (MySqlDataAdapter da = new MySqlDataAdapter())
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(), da1 = new MySqlDataAdapter())
                     {
                         // obtain connection string information from app.config
                         cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
                         // tell the cmd to use the cn
                         cmd.Connection = cn;
-                        cmd1.Connection = cn;
                         // supply the cmd with the necessary SQL Y-M-D FULL
-                        cmd.CommandText = "SELECT * FROM tagsretrievedtemp WHERE date = '" + str + "' GROUP BY date,hour;";
-                        // get individual mood 
-                        cmd1.CommandText = "";
+                        cmd.CommandText = "SELECT * FROM tagsretrievedtemp WHERE date = '" + str + "' GROUP BY date,hour;";                                                       
                         //testing/print out sqlquery
                         System.Diagnostics.Debug.WriteLine(cmd.CommandText);
                         // tell the DataAdapter to use the cmd
@@ -41,6 +39,23 @@ namespace DataAccessLayer
                         cn.Open();
                         // rrturns the results
                         da.Fill(ds, "Rate");
+
+                        // reuse cmd variable
+                        // count frequency of a individual mood for a given date and time 
+                        for (int i = 0; i < 10; i++ )
+                        {
+                            cmd.CommandText = "SELECT(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'joy') AS joy,"
+                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'sadness') AS sadness,"
+                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'surprised') AS surprised,"
+                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'anger') AS anger,"
+                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + str + "' and mood = 'disgusted') AS disgusted";
+                        }
+                            
+                        // tell the DataAdapter to use the cmd
+                        da1.SelectCommand = cmd;
+                        // returns the results
+                        da1.Fill(ds1, "mood");
+
                         // close the connection
                         cn.Close();
                     }
@@ -56,198 +71,39 @@ namespace DataAccessLayer
                 linechart.Frequency = dr["frequency"].ToString();
                 linechartList.Add(linechart);
             }
+
+            foreach (DataRow dr in ds1.Tables["mood"].Rows)
+            {
+                LineChart linechart = new LineChart();
+                linechart.Joy = dr["joy"].ToString();
+                linechart.Sadness = dr["sadness"].ToString();
+                linechart.Surprised = dr["surprised"].ToString();
+                linechart.Anger = dr["anger"].ToString();
+                linechart.Disgusted = dr["disgusted"].ToString();
+                linechartList.Add(linechart);
+            }
             return linechartList;
         }
 
+ 
         // private instance variable
         private string _Hour = "";
         private string _Frequency = "";
 
-        // getters
+        private string _Joy = "";
+        private string _Anger = "";
+        private string _Sadness = "";
+        private string _Surprised = "";
+        private string _Disgusted = "";
+
+        // setters and getters
         public string Hour { get { return _Hour; } set { _Hour = value; } }
         public string Frequency { get { return _Frequency; } set { _Frequency = value; } }
+        public string Joy { get { return _Joy; } set { _Joy = value; } }
+        public string Anger { get { return _Anger; } set { _Anger = value; } }
+        public string Sadness { get { return _Sadness; } set { _Sadness = value; } }
+        public string Surprised { get { return _Surprised; } set { _Surprised = value; } }
+        public string Disgusted { get { return _Disgusted; } set { _Disgusted = value; } }
 
-        //get keyword/tag
-        public List<String> getKeyword(string date, string hour)
-        {
-            List<String> list = new List<String>();
-
-            DataSet ds = new DataSet();
-
-            using (MySqlConnection cn = new MySqlConnection())
-            {
-                using (MySqlCommand cmd = new MySqlCommand())
-                {
-                    using (MySqlDataAdapter da = new MySqlDataAdapter())
-                    {
-                        // obtain connection string information from app.config
-                        cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
-                        // tell the cmd to use the cn
-                        cmd.Connection = cn;
-                        // supply the cmd with the necessary SQL Y-M-D FULL
-                        cmd.CommandText = "SELECT tag FROM tagsretrievedtemp WHERE date = '" + date + "' and hour = " + hour + "";
-
-                        //testing/print out sqlquery
-                        System.Diagnostics.Debug.WriteLine(cmd.CommandText);
-                        // tell the DataAdapter to use the cmd
-                        da.SelectCommand = cmd;
-                        // open an active connection
-                        cn.Open();
-                        // rrturns the results
-                        da.Fill(ds, "tags");
-                        // close the connection
-                        cn.Close();
-                    }
-                }
-            }
-            foreach (DataRow row in ds.Tables["name"].Rows)
-            {
-                list.Add(row["companyName"].ToString());
-            }
-            return list;
-        }
-        //get frequency of mood
-        public int getFrequencyJoy(string s)
-        {
-            using (MySqlConnection cn = new MySqlConnection())
-            {
-                using (MySqlCommand cmd = new MySqlCommand())
-                {
-                    using (MySqlDataReader Reader = cmd.ExecuteReader())
-                    {
-                        // obtain connection string information from app.config
-                        cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
-                        // tell the cmd to use the cn
-                        cmd.Connection = cn;
-                        // supply the cmd with the necessary SQL Y-M-D FULL
-                        cmd.CommandText = "SELECT count(*) FROM contentsretrievedtemp WHERE tag = '" + s + "' and mood = 'joy';";
-
-                        //testing/print out sqlquery
-                        System.Diagnostics.Debug.WriteLine(cmd.CommandText);
-
-                        // open an active connection
-                        cn.Open();
-                        Int32 number = Convert.ToInt32(cmd.ExecuteScalar());
-                        // close the connection
-                        cn.Close();
-                        return number;
-                    }
-                }
-            }
-
-        }
-        public int getFrequencyAnger(string s)
-        {
-            using (MySqlConnection cn = new MySqlConnection())
-            {
-                using (MySqlCommand cmd = new MySqlCommand())
-                {
-                    using (MySqlDataReader Reader = cmd.ExecuteReader())
-                    {
-                        // obtain connection string information from app.config
-                        cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
-                        // tell the cmd to use the cn
-                        cmd.Connection = cn;
-                        // supply the cmd with the necessary SQL Y-M-D FULL
-                        cmd.CommandText = "SELECT count(*) FROM contentsretrievedtemp WHERE tag = '" + s + "' and mood = 'anger';";
-
-                        //testing/print out sqlquery
-                        System.Diagnostics.Debug.WriteLine(cmd.CommandText);
-
-                        // open an active connection
-                        cn.Open();
-                        Int32 number = Convert.ToInt32(cmd.ExecuteScalar());
-                        // close the connection
-                        cn.Close();
-                        return number;
-                    }
-                }
-            }
-        }
-
-        public int getFrequencySadness(string s)
-        {
-            using (MySqlConnection cn = new MySqlConnection())
-            {
-                using (MySqlCommand cmd = new MySqlCommand())
-                {
-                    using (MySqlDataReader Reader = cmd.ExecuteReader())
-                    {
-                        // obtain connection string information from app.config
-                        cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
-                        // tell the cmd to use the cn
-                        cmd.Connection = cn;
-                        // supply the cmd with the necessary SQL Y-M-D FULL
-                        cmd.CommandText = "SELECT count(*) FROM contentsretrievedtemp WHERE tag = '" + s + "' and mood = 'sadness';";
-
-                        //testing/print out sqlquery
-                        System.Diagnostics.Debug.WriteLine(cmd.CommandText);
-
-                        // open an active connection
-                        cn.Open();
-                        Int32 number = Convert.ToInt32(cmd.ExecuteScalar());
-                        // close the connection
-                        cn.Close();
-                        return number;
-                    }
-                }
-            }
-        }
-        public int getFrequencySurprised(string s)
-        {
-            using (MySqlConnection cn = new MySqlConnection())
-            {
-                using (MySqlCommand cmd = new MySqlCommand())
-                {
-                    using (MySqlDataReader Reader = cmd.ExecuteReader())
-                    {
-                        // obtain connection string information from app.config
-                        cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
-                        // tell the cmd to use the cn
-                        cmd.Connection = cn;
-                        // supply the cmd with the necessary SQL Y-M-D FULL
-                        cmd.CommandText = "SELECT count(*) FROM contentsretrievedtemp WHERE tag = '" + s + "' and mood = 'surprised';";
-
-                        //testing/print out sqlquery
-                        System.Diagnostics.Debug.WriteLine(cmd.CommandText);
-
-                        // open an active connection
-                        cn.Open();
-                        Int32 number = Convert.ToInt32(cmd.ExecuteScalar());
-                        // close the connection
-                        cn.Close();
-                        return number;
-                    }
-                }
-            }
-        }
-        public int getFrequencyDisgusted(string s)
-        {
-            using (MySqlConnection cn = new MySqlConnection())
-            {
-                using (MySqlCommand cmd = new MySqlCommand())
-                {
-                    using (MySqlDataReader Reader = cmd.ExecuteReader())
-                    {
-                        // obtain connection string information from app.config
-                        cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
-                        // tell the cmd to use the cn
-                        cmd.Connection = cn;
-                        // supply the cmd with the necessary SQL Y-M-D FULL
-                        cmd.CommandText = "SELECT count(*) FROM contentsretrievedtemp WHERE tag = '" + s + "' and mood = 'disgusted';";
-
-                        //testing/print out sqlquery
-                        System.Diagnostics.Debug.WriteLine(cmd.CommandText);
-
-                        // open an active connection
-                        cn.Open();
-                        Int32 number = Convert.ToInt32(cmd.ExecuteScalar());
-                        // close the connection
-                        cn.Close();
-                        return number;
-                    }
-                }
-            }
-        }
     }
 }
