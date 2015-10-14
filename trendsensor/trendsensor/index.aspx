@@ -174,7 +174,7 @@
             }
         );
 
-        drawChart("09/08/2015");
+        drawChart("01/01/1999");
         
         //calendar click function
         $('#datepicker').change(function () {

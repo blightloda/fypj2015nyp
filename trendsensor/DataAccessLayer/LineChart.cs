@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Collections;
 
 namespace DataAccessLayer
 {
@@ -13,7 +14,9 @@ namespace DataAccessLayer
 
         public List<LineChart> getLineChart(string str)
         {
-
+            int minX = 0;
+            int maxX = 0;
+            ArrayList hours = new ArrayList();
             DataSet ds = new DataSet();
             DataSet ds1 = new DataSet();
             DataSet ds2 = new DataSet();
@@ -41,36 +44,54 @@ namespace DataAccessLayer
                         // rrturns the results
                         da.Fill(ds, "Rate");
 
-                        // get the min and max value for x axis
                         cmd.CommandText = "SELECT Min(CAST(`hour` AS UNSIGNED))  FROM tagsretrievedtemp WHERE date = '" + str + "';";
-                        int minX = int.Parse(cmd.ExecuteScalar().ToString());
-                        cmd.CommandText = "SELECT Max(CAST(`hour` AS UNSIGNED))  FROM tagsretrievedtemp WHERE date = '" + str + "';";
-                        int maxX = int.Parse(cmd.ExecuteScalar().ToString());
-                        
-
-                        // reuse cmd variable
-                        // count frequency of a individual mood for a given date and time 
-                        for (int i = minX; i < maxX; i++)
+                        if (cmd.ExecuteScalar().ToString() != "")
                         {
-                            cmd.CommandText = "SELECT(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'joy') AS joy,"
-                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'sadness') AS sadness,"
-                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'surprised') AS surprised,"
-                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'anger') AS anger,"
-                                                    + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + i + "' and mood = 'disgusted') AS disgusted";
-                            // tell the DataAdapter to use the cmd
-                            da1.SelectCommand = cmd;
-                            // returns the results
-                            da1.Fill(ds1, "mood");
+                            minX = int.Parse(cmd.ExecuteScalar().ToString());
+                            cmd.CommandText = "SELECT Max(CAST(`hour` AS UNSIGNED))  FROM tagsretrievedtemp WHERE date = '" + str + "';";
+                            if (cmd.ExecuteScalar().ToString() != "")
+                            {
+                                maxX = int.Parse(cmd.ExecuteScalar().ToString());
+                            }
                         }
 
-                        // get the length, incase some number missing between minX and maxX
-                        cmd.CommandText = "SELECT count(distinct(hour)) AS maxLength FROM tagsretrievedtemp WHERE date = '" + str + "';";
-                        int length = int.Parse(cmd.ExecuteScalar().ToString());
-                        // tell the DataAdapter to use the cmd
-                        da2.SelectCommand = cmd;
-                        // returns the results
-                        da2.Fill(ds2, "maxLength");
+                        if (maxX != 0)
+                        {
+                            // get the actually value of hour
+                            cmd.CommandText = "SELECT hour FROM tagsretrievedtemp WHERE date = '" + str + "' GROUP BY date,hour;";
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                
+                                while (reader.Read())
+                                {
+                                    hours.Add(reader.GetString(0));
+                                }
+                            }
 
+
+                            // reuse cmd variable
+                            // count frequency of a individual mood for a given date and time 
+                            foreach (string hour in hours)
+                            {
+                                cmd.CommandText = "SELECT(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + hour + "' and mood = 'joy') AS joy,"
+                                                        + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + hour + "' and mood = 'sadness') AS sadness,"
+                                                        + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + hour + "' and mood = 'surprised') AS surprised,"
+                                                        + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + hour + "' and mood = 'anger') AS anger,"
+                                                        + "(SELECT count(*) FROM tagsretrievedtemp tr INNER JOIN contentsretrievedtemp ct ON tr.tagId = ct.tagId WHERE `date` = '" + str + "' and hour='" + hour + "' and mood = 'disgusted') AS disgusted";
+                                // tell the DataAdapter to use the cmd
+                                da1.SelectCommand = cmd;
+                                // returns the results
+                                da1.Fill(ds1, "mood");
+                            }
+
+                            // get the length, incase some number missing between minX and maxX
+                            cmd.CommandText = "SELECT count(distinct(hour)) AS maxLength FROM tagsretrievedtemp WHERE date = '" + str + "';";
+                            int length = int.Parse(cmd.ExecuteScalar().ToString());
+                            // tell the DataAdapter to use the cmd
+                            da2.SelectCommand = cmd;
+                            // returns the results
+                            da2.Fill(ds2, "maxLength");
+                        }
                         // close the connection
                         cn.Close();
                     }
@@ -86,24 +107,33 @@ namespace DataAccessLayer
                 linechart.Frequency = dr["frequency"].ToString();
                 linechartList.Add(linechart);
             }
+            if (maxX != 0)
+            {
+                foreach (DataRow dr in ds1.Tables["mood"].Rows)
+                {
+                    LineChart linechart = new LineChart();
+                    linechart.Joy = dr["joy"].ToString();
+                    linechart.Sadness = dr["sadness"].ToString();
+                    linechart.Surprised = dr["surprised"].ToString();
+                    linechart.Anger = dr["anger"].ToString();
+                    linechart.Disgusted = dr["disgusted"].ToString();
+                    linechartList.Add(linechart);
+                }
 
-            foreach (DataRow dr in ds1.Tables["mood"].Rows)
+                foreach (DataRow dr in ds2.Tables["maxLength"].Rows)
+                {
+                    LineChart linechart = new LineChart();
+                    linechart.MaxLength = dr["maxLength"].ToString();
+                    linechartList.Add(linechart);
+                }
+            }
+            else if (maxX == 0)
             {
                 LineChart linechart = new LineChart();
-                linechart.Joy = dr["joy"].ToString();
-                linechart.Sadness = dr["sadness"].ToString();
-                linechart.Surprised = dr["surprised"].ToString();
-                linechart.Anger = dr["anger"].ToString();
-                linechart.Disgusted = dr["disgusted"].ToString();
+                linechart.MaxLength = "0";
                 linechartList.Add(linechart);
             }
-
-            foreach (DataRow dr in ds2.Tables["maxLength"].Rows)
-            {
-                LineChart linechart = new LineChart();
-                linechart.MaxLength = dr["maxLength"].ToString();
-                linechartList.Add(linechart);
-            }
+            
             return linechartList;
         }
 
