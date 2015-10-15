@@ -174,7 +174,7 @@
             }
         );
 
-        drawChart("01/01/1999");
+        drawChart("09/09/2015");
         
         //calendar click function
         $('#datepicker').change(function () {
@@ -202,7 +202,6 @@
                     var linechartList = data.d;
                     // get max length for x
                     var maxLength = linechartList[linechartList.length - 1].MaxLength;
-
                     var hours = [];
                     // all line data
                     var datas = { "name": "Frequency", "data": [] };
@@ -216,7 +215,7 @@
                         hours.push(linechartList[index].Hour);
                         datas["data"].push(parseInt(linechartList[index].Frequency));
                     }
-                    
+                    console.log(linechartList);
                     for (index = maxLength; index > 0; index--)
                     {
                         // push data for individual mood
