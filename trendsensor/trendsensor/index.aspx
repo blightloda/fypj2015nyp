@@ -290,7 +290,7 @@
                         plotOptions: {
                             line: {
                                 dataLabels: {
-                                    enabled: enable
+                                    enabled: false
                                 },
                             }
                         },
