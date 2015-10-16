@@ -32,12 +32,25 @@ namespace trendsensor
             LineChart linechart = new LineChart();
             linechartList = linechart.getLineChart(str1);
 
-            //testing/printout date
-            System.Diagnostics.Debug.WriteLine(str1);
-
             // assign the linechartList to the response object
             object response = linechartList;
             return response;
         }
+
+        [WebMethod]
+        public static object getLiveCount()
+        {
+            int liveCount = 0;
+
+            // create a linechart class instance so that i
+            // can talk to database 
+            LineChart linechart = new LineChart();
+            liveCount = linechart.getLiveCount();
+
+            // assign the linechartList to the response object
+            object response = liveCount;
+            return response;
+        }
+
     }
 }

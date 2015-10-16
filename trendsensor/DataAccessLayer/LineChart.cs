@@ -137,6 +137,34 @@ namespace DataAccessLayer
             return linechartList;
         }
 
+        public int getLiveCount()
+        {
+            int liveCount = 0;
+            using (MySqlConnection cn = new MySqlConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    using (MySqlDataAdapter da = new MySqlDataAdapter())
+                    {
+                        // obtain connection string information from app.config
+                        cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
+                        // tell the cmd to use the cn
+                        cmd.Connection = cn;
+                        // supply the cmd with the necessary SQL Y-M-D FULL
+                        cmd.CommandText = "SELECT TABLE_ROWS as liveCount FROM information_schema.tables WHERE TABLE_NAME='post';";
+                        // open an active connection
+                        cn.Open();
+                        // rrturns the results
+                        if (cmd.ExecuteScalar().ToString() != "")
+                        {
+                            liveCount = int.Parse(cmd.ExecuteScalar().ToString());
+                            return liveCount;
+                        }
+                    }
+                }
+            }
+            return liveCount;
+        }
  
         // private instance variable
         private string _Hour = "";

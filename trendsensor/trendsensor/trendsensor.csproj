@@ -92,6 +92,7 @@
     <Content Include="bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="bootstrap\img\glyphicons-halflings.png" />
     <Content Include="bootstrap\img\joy4.png" />
+    <Content Include="bootstrap\img\NewLogo3.png" />
     <Content Include="bootstrap\img\normal.png" />
     <Content Include="bootstrap\img\sadness4.png" />
     <Content Include="bootstrap\img\surprised4.png" />
