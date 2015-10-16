@@ -129,7 +129,7 @@
                     .attr("class", "bubble");
 
                 var nodes = svg.selectAll("g.node")
-                    .data(bubble.nodes({ children: data }).filter(function (d) { return !d.children; }));
+                    .data(bubble.nodes(function (d){return d.data}));
                 nodes.enter().append("g")
                     .attr("class", "node")
                     .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -140,12 +140,25 @@
                     });
                 var arcEnter = arcGs.enter().append("g").attr("class", "arc");
 
+                var grads = svg.append("defs").selectAll("radialGradient").data(function (d) { return data;})
+                   .enter().append("radialGradient")
+                   .attr("gradientUnits", "userSpaceOnUse")
+                   .attr("cx", 0)
+                   .attr("cy", 0)
+                   .attr("r", "30%")
+                   .attr("id", function (d, i) { return "grad" + i; });
+                    grads.append("stop").attr("offset", "0%").style("stop-color", function (d, i) { return color(i); });
+                    grads.append("stop").attr("offset", "50%").style("stop-color", "white");
+                    grads.append("stop").attr("offset", "15%").style("stop-color", function (d, i) { return color(i); });
+
+
                 arcEnter.append("path")
                     .attr("d", function (d) {
                         arc.outerRadius(d.r);
                         return arc(d);
                     })
-                    .style("fill", function (d, i) { return color(i); })
+                    .style("fill", function (d, i) { return "url(#grad" + i + ")"; })
+                    //.style("fill", function (d, i) { return color(i); })
                 .on("mouseover", function (d) {
                     d3.select("#tooltip")
                         .style("left", d3.event.pageX + "px")
