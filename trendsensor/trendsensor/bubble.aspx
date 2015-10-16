@@ -35,7 +35,7 @@
   }
   g.arc path {
     stroke: #828282;
-    stroke-width: 0.5;
+    stroke-width: 1;
   }
   g.arc text {
     font-size: 10px;
@@ -81,8 +81,8 @@
     //  ["bubble11", [10, 80, 10, 10]],
     //  ["bubble12", [50, 50]],
     //];
-    drawChart("09/09/2015");
-    function drawChart(str) {
+    drawChart2("09/09/2015");
+    function drawChart2(str) {
         $.ajax
         (
             {
@@ -99,15 +99,20 @@
             {
                 // prevent json hijacking
                 var linechartList = data1.d;
-                var twodata = new array([linechartList.length], [2]);
+                var twodata = [];
+                var data = [[]];
                 var frequencydata = [];
                 //for (index = 0; index < linechartList.length; index++) {
                 //    frequencydata = linechartList.length
                 //}
-                for (index = 0; index < linechartList.length - 195; index++) {
-                    twodata[index] = linechartList[index].Tag;
-                    twodata[index][1] = linechartList[index].MoodFrequency;                
-                        //twodata[0].push = linechartList[0].MoodFrequency;
+                for (var index = 0; index < linechartList.length - 195; index++) {
+                    data[index] = [];
+                    twodata.push(linechartList[index].Tag);
+                    frequencydata.push(linechartList[index].MoodFrequency);
+                }
+                for (var i = 0; i < twodata.length; i++) {
+                    data[i][0]=twodata[i];
+                    data[i][1]=frequencydata[i];
                 }
                 var color = d3.scale.ordinal().range(["#E4F1FE", "#EEE657", "#e74c3c", "#3498db", "#9b59b6", "#2ecc71"]),
                 diameter = 500;
@@ -128,7 +133,7 @@
                     .attr("class", "bubble");
 
                 var nodes = svg.selectAll("g.node")
-                    .data(bubble.nodes({ children: twodata }).filter(function (d) { return !d.children; }));
+                    .data(bubble.nodes({ children: data }).filter(function (d) { return !d.children; }));
                 nodes.enter().append("g")
                     .attr("class", "node")
                     .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -140,7 +145,7 @@
                 var arcEnter = arcGs.enter().append("g").attr("class", "arc");
 
 
-                var grads = svg.append("defs").selectAll("radialGradient").data(function (d) { return twodata; })
+                var grads = svg.append("defs").selectAll("radialGradient").data(function (d) { return data; })
                    .enter().append("radialGradient")
                    .attr("gradientUnits", "userSpaceOnUse")
                    .attr("cx", 0)
