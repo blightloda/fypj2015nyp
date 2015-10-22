@@ -53,6 +53,7 @@
                 <!-- Datepicker -->
                 <div id="selectedDateTime"></div>
                 <div id="datepicker"></div>
+                <div id="amount"><!--<img id="loading" src="image/loader.gif">0</img>--></div>
             </div>
             <div class="span10">
                 <!-- Trend Graph -->
@@ -102,7 +103,9 @@
             </div>
             <div class="span9">
                 <!-- Tag Graph -->
-                <div id="bubble" style="border:1px solid black; min-width: 310px; height: 400px; margin: 0 auto"></div>
+                <div id="bubble" style="border:1px solid black; min-width: 310px; height: 400px; margin: 0 auto">
+                    s
+                </div>
             </div>
         </div>
     </div>
@@ -125,10 +128,10 @@
     <script type="text/javascript">
  
         // set width for bubble rectangle
-        $(document).ready(function() { 
+        $(document).ready(function () {
             document.getElementById("bubble").setAttribute("style", "width:" + (document.getElementById("chart_div").offsetWidth - 105) + "px;"
                 + "height:" + document.getElementById("chart_div").offsetHeight + "px;"
-                + "border:1px solid black;" + "margin: 0 auto");
+                + "border:1px solid black;" + "margin: 0 auto"); 
          });
         
 
@@ -174,15 +177,50 @@
             }
         );
 
-        drawChart("09/08/2015");
-        drawChart2("09/08/2015");
+        drawChart("01/01/1992");
+      //  drawChart2("09/08/2015");
         //calendar click function
         $('#datepicker').change(function () {
             
             str = $('#datepicker').val();
             drawChart(str);
-            drawChart2(str);
+            getLiveCounter();
+            //drawChart2(str);
         });
+
+        function getLiveCounter() {
+            $.ajax
+            (
+                {
+                    type: 'GET',
+                    url: 'index.aspx/getLiveCount',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    async: false
+                }
+            ).done
+            (
+                function (data, textStatus, jqXHR)
+                {
+                    var liveCount = data.d;
+                    
+                    $('#amount').html(liveCount);
+                    updateLiveCount();
+                }
+            ).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log('The function attached to the ajax\'s fail() method has been executed.')
+                console.log('The jqXRH Status Error Code is : ' + jqXHR.status);
+            });//end of $.ajax(...);
+
+        }
+
+        function updateLiveCount() {
+            var counter = setInterval(function () {
+                var resp = parseInt($('#amount').html());
+                resp++;
+                $('#amount').html(resp);
+            }, 200);
+        }
 
         function drawChart(str) {
             $.ajax
@@ -323,109 +361,113 @@
                         }]
                     });
                 }
-            );;
+            ).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log('The function attached to the ajax\'s fail() method has been executed.')
+                console.log('The jqXRH Status Error Code is : ' + jqXHR.status);
+            });//end of $.ajax(...);
+            ;;
         }
         
-        function drawChart2(str) {
-            $.ajax
-            (
-                {
-                    type: 'POST',
-                    url: 'bubble.aspx/getBubbleChart',
-                    data: "{str: '" + str + "'}",
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    async: false
-                }
-            ).done
-            (
-                function (data1, textStatus, jqXHR) {
-                    // prevent json hijacking
-                    var linechartList = data1.d;
-                    var twodata = [];
-                    var data = [[]];
-                    var frequencydata = [];
-                    //for (index = 0; index < linechartList.length; index++) {
-                    //    frequencydata = linechartList.length
-                    //}
+        //function drawChart2(str) {
+        //    $.ajax
+        //    (
+        //        {
+        //            type: 'POST',
+        //            url: 'bubble.aspx/getBubbleChart',
+        //            data: "{str: '" + str + "'}",
+        //            contentType: 'application/json; charset=utf-8',
+        //            dataType: 'json',
+        //            async: false
+        //        }
+        //    ).done
+        //    (
+        //        function (data1, textStatus, jqXHR) {
+        //            // prevent json hijacking
+        //            var linechartList = data1.d;
+        //            var twodata = [];
+        //            var data = [[]];
+        //            var frequencydata = [];
+        //            //for (index = 0; index < linechartList.length; index++) {
+        //            //    frequencydata = linechartList.length
+        //            //}
                     
-                    for (var index = 0; index < 10; index++) {
-                        data[index] = [];
-                        twodata.push(linechartList[index].Tag);
-                        frequencydata.push(linechartList[index].MoodFrequency);
-                    }
-                    for (var i = 0; i < twodata.length; i++) {
-                        data[i][0] = twodata[i];
-                        data[i][1] = frequencydata[i];
-                    }
-                    var color = d3.scale.ordinal().range(["#E4F1FE", "#EEE657", "#e74c3c", "#3498db", "#9b59b6", "#2ecc71"]),
-                    diameter = 500;
+        //            for (var index = 0; index < 10; index++) {
+        //                data[index] = [];
+        //                twodata.push(linechartList[index].Tag);
+        //                frequencydata.push(linechartList[index].MoodFrequency);
+        //            }
+        //            for (var i = 0; i < twodata.length; i++) {
+        //                data[i][0] = twodata[i];
+        //                data[i][1] = frequencydata[i];
+        //            }
+        //            var color = d3.scale.ordinal().range(["#E4F1FE", "#EEE657", "#e74c3c", "#3498db", "#9b59b6", "#2ecc71"]),
+        //            diameter = 500;
 
-                    var bubble = d3.layout.pack()
-                          .value(function (d) { return d3.sum(d[1]); })
-                          .sort(null)
-                          .size([diameter, diameter])
-                          .padding(1.5),
-                        arc = d3.svg.arc().innerRadius(0),
-                        pie = d3.layout.pie();
+        //            var bubble = d3.layout.pack()
+        //                  .value(function (d) { return d3.sum(d[1]); })
+        //                  .sort(null)
+        //                  .size([diameter, diameter])
+        //                  .padding(1.5),
+        //                arc = d3.svg.arc().innerRadius(0),
+        //                pie = d3.layout.pie();
 
-                    var svg = d3.select("#bubble").append("svg")
-                        .attr("width", diameter)
-                        .attr("height", diameter)
-                        .attr("class", "bubble");
+        //            var svg = d3.select("#bubble").append("svg")
+        //                .attr("width", diameter)
+        //                .attr("height", diameter)
+        //                .attr("class", "bubble");
 
-                    var nodes = svg.selectAll("g.node")
-                        .data(bubble.nodes({ children: data }).filter(function (d) { return !d.children; }));
-                    nodes.enter().append("g")
-                        .attr("class", "node")
-                        .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+        //            var nodes = svg.selectAll("g.node")
+        //                .data(bubble.nodes({ children: data }).filter(function (d) { return !d.children; }));
+        //            nodes.enter().append("g")
+        //                .attr("class", "node")
+        //                .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-                    var arcGs = nodes.selectAll("g.arc")
-                        .data(function (d) {
-                            return pie(d[1]).map(function (m) { m.r = d.r; return m; });
-                        });
-                    var arcEnter = arcGs.enter().append("g").attr("class", "arc");
+        //            var arcGs = nodes.selectAll("g.arc")
+        //                .data(function (d) {
+        //                    return pie(d[1]).map(function (m) { m.r = d.r; return m; });
+        //                });
+        //            var arcEnter = arcGs.enter().append("g").attr("class", "arc");
 
-                    arcEnter.append("path")
-                        .attr("d", function (d) {
-                            arc.outerRadius(d.r);
-                            return arc(d);
-                        })
-                        .style("fill", function (d, i) { return color(i); })
-                    .on("mouseover", function (d) {
-                        d3.select("#tooltip")
-                            .style("left", d3.event.pageX + "px")
-                            .style("top", d3.event.pageY + "px")
-                            .style("display", "block")
-                            .select("#value")
-                            .text(d.value);
-                    })
-                    .on("mouseout", function () {
-                        // Hide the tooltip
-                        d3.select("#tooltip")
-                            .style("display", "none");
-                    });
+        //            arcEnter.append("path")
+        //                .attr("d", function (d) {
+        //                    arc.outerRadius(d.r);
+        //                    return arc(d);
+        //                })
+        //                .style("fill", function (d, i) { return color(i); })
+        //            .on("mouseover", function (d) {
+        //                d3.select("#tooltip")
+        //                    .style("left", d3.event.pageX + "px")
+        //                    .style("top", d3.event.pageY + "px")
+        //                    .style("display", "block")
+        //                    .select("#value")
+        //                    .text(d.value);
+        //            })
+        //            .on("mouseout", function () {
+        //                // Hide the tooltip
+        //                d3.select("#tooltip")
+        //                    .style("display", "none");
+        //            });
 
-                    //arcEnter.append("text")
-                    //    .attr({
-                    //        x: function (d) { arc.outerRadius(d.r); return arc.centroid(d)[0]; },
-                    //        y: function (d) { arc.outerRadius(d.r); return arc.centroid(d)[1]; },
-                    //        dy: "0.35em"
-                    //    })
-                    //    .style("text-anchor", "middle")
-                    //    .text(function (d) { return d.value; });
+        //            //arcEnter.append("text")
+        //            //    .attr({
+        //            //        x: function (d) { arc.outerRadius(d.r); return arc.centroid(d)[0]; },
+        //            //        y: function (d) { arc.outerRadius(d.r); return arc.centroid(d)[1]; },
+        //            //        dy: "0.35em"
+        //            //    })
+        //            //    .style("text-anchor", "middle")
+        //            //    .text(function (d) { return d.value; });
 
-                    var labels = nodes.selectAll("text.label")
-                        .data(function (d) { console.log(d); return [d[0]]; });
-                    labels.enter().append("text")
-                        .attr({
-                            "class": "label",
-                            dy: "0.35em"
-                        })
-                        .style("text-anchor", "middle")
-                        .text(String);
-                })
-        }
+        //            var labels = nodes.selectAll("text.label")
+        //                .data(function (d) { console.log(d); return [d[0]]; });
+        //            labels.enter().append("text")
+        //                .attr({
+        //                    "class": "label",
+        //                    dy: "0.35em"
+        //                })
+        //                .style("text-anchor", "middle")
+        //                .text(String);
+        //        })
+        //}
 </script>
 </body>
 </html>

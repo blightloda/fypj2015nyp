@@ -6,6 +6,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataAccessLayer;
+using System.Web.Script.Services;
 
 namespace trendsensor
 {
@@ -38,7 +39,8 @@ namespace trendsensor
         }
 
         [WebMethod]
-        public static object getLiveCount()
+        [ScriptMethod(UseHttpGet = true)]
+        public static int getLiveCount()
         {
             int liveCount = 0;
 
@@ -47,9 +49,7 @@ namespace trendsensor
             LineChart linechart = new LineChart();
             liveCount = linechart.getLiveCount();
 
-            // assign the linechartList to the response object
-            object response = liveCount;
-            return response;
+            return liveCount;
         }
 
     }
