@@ -22,19 +22,19 @@
 </head>
 <body>
     <style>
-    #tooltip {
-        position: absolute;
-        width: 200px;
-        height: auto;
-        padding: 10px;
-        background-color: white;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        border-radius: 10px;
-        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-        -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
-        box-shadow: 4px 4px 10px #ecf0f1;
-        pointer-events: none;
+         #tooltip {
+            position: absolute;
+            width: 200px;
+            height: auto;
+            padding: 10px;
+            background-color: white;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+            -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 4px 4px 10px #ecf0f1;
+            pointer-events: none;
         }
         #tooltip.hidden {
             opacity: 0;
@@ -46,42 +46,49 @@
             line-height: 20px;
         }
         .image { 
-           position: relative; 
-           width: 100%; /* for IE 6 */
+            position: relative; 
+            width: 100%; /* for IE 6 */
         }
         .module {
-          width: 270px;
-          height: 150px;
-          float: left;
-          background: url(/bootstrap/img/NewLogo3.png);
-          background-size: 270px 150px;
-          position: relative;
+            width: 270px;
+            height: 150px;
+            float: left;
+            background: url(/bootstrap/img/NewLogo3.png);
+            background-size: 270px 150px;
+            position: relative;
         }
-
+        body {
+            background-image: url(/bootstrap/img/0.png);
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+        }
         h2 {
-          position: absolute;
-          bottom: 75px;
-          left: 5px;
-          padding: 4px 8px;
-          color: black;
-          margin: 0;
-          font: 10px Sans-Serif;
+            position: absolute;
+            bottom: 75px;
+            left: 5px;
+            padding: 4px 8px;
+            color: black;
+            margin: 0;
+            font: 10px Sans-Serif;
         }
 
         .opp h2 {
-          background: rgba(255, 255, 255, 0.75);
-          color: black;
+            background: rgba(255, 255, 255, 0.75);
+            color: black;
         }
     </style>
     <!-- The main container. -->
     <div class="container-fluid">
         <!-- First row, with two columns. -->
         <div class="row-fluid">
-            <div class="span2">
+            <div class="span2" style="margin-top:20px; ">
                 <!-- Datepicker -->
                 <div id="selectedDateTime"></div>
                 <div id="datepicker"></div>
-                <div class="module">
+                <div class="module" style="margin-top:10px">
                   <h2><div id="label">Incoming Live Tweets <br>Since 10/01/2013 :<div id="amount"></div>
                     </div></h2>
                 </div>
@@ -95,7 +102,7 @@
             </div>
             <div class="span10">
                 <!-- Trend Graph -->
-                <div id="chart_div" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                <div id="chart_div" style="min-width: 310px; height: 400px; margin: 0 auto; margin-top:20px; border-radius:10px; padding:10px;background-color:#FFFFFF"></div>
             </div>
         </div>
 
@@ -105,7 +112,7 @@
         <div class="row">
             <div class="span3">
                 <!-- Mood Selector -->
-                <table class="table table-hover"> 
+                <table class="table table-hover" style ="background-color:#FFFFFF;border-radius:10px;padding:10px"> 
                     <thead>
                         <tr>
                             <th>Mood Selector</th>

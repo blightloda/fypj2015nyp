@@ -63,7 +63,37 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bootstrap\css\aboutBox.css" />
+    <Content Include="bootstrap\css\bootstrap-datepicker.min.css" />
+    <Content Include="bootstrap\css\bootstrap.min.css" />
+    <Content Include="bootstrap\css\font-awesome.min.css" />
+    <Content Include="bootstrap\css\metisMenu.min.css" />
+    <Content Include="bootstrap\css\morris.css" />
+    <Content Include="bootstrap\css\sb-admin-2.css" />
+    <Content Include="bootstrap\css\timeline.css" />
+    <Content Include="bootstrap\fonts\fontawesome-webfont.svg" />
+    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="bootstrap\img\0.png" />
+    <Content Include="bootstrap\img\NewbgdesignCustom.jpg" />
+    <Content Include="bootstrap\js\bootstrap-datepaginator.min.js" />
+    <Content Include="bootstrap\js\bootstrap-datepicker.min.js" />
+    <Content Include="bootstrap\js\bootstrap.min.js" />
+    <Content Include="bootstrap\js\jquery-2.1.4.min.js" />
+    <Content Include="bootstrap\js\metisMenu.min.js" />
+    <Content Include="bootstrap\js\moment-with-locales.js" />
+    <Content Include="bootstrap\js\morris-data.js" />
+    <Content Include="bootstrap\js\morris.min.js" />
+    <Content Include="bootstrap\js\raphael-min.js" />
+    <Content Include="bootstrap\js\sb-admin-2.js" />
+    <Content Include="home.aspx" />
     <Content Include="packages.config" />
+    <Content Include="bootstrap\fonts\fontawesome-webfont.eot" />
+    <Content Include="bootstrap\fonts\fontawesome-webfont.ttf" />
+    <Content Include="bootstrap\fonts\fontawesome-webfont.woff" />
+    <Content Include="bootstrap\fonts\FontAwesome.otf" />
+    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -75,7 +105,6 @@
     <Content Include="bootstrap\css\bootstrap-responsive.css" />
     <Content Include="bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="bootstrap\css\bootstrap.css" />
-    <Content Include="bootstrap\css\bootstrap.min.css" />
     <Content Include="bootstrap\css\highcharts.css" />
     <Content Include="bootstrap\css\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="bootstrap\css\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
@@ -103,7 +132,6 @@
     <Content Include="bootstrap\img\sadness4.png" />
     <Content Include="bootstrap\img\surprised4.png" />
     <Content Include="bootstrap\js\bootstrap.js" />
-    <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\DataLiveCounter.js" />
     <Content Include="bootstrap\js\exporting.js" />
     <Content Include="bootstrap\js\highcharts.js" />
@@ -137,6 +165,13 @@
     </Compile>
     <Compile Include="highchartDemo.aspx.designer.cs">
       <DependentUpon>highchartDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="home.aspx.cs">
+      <DependentUpon>home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="home.aspx.designer.cs">
+      <DependentUpon>home.aspx</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
