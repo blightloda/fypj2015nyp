@@ -1,0 +1,34 @@
+#aboutBox
+{
+height: 80px;
+width: 200px;
+margin: 3% 0 0 71%;
+position:absolute;
+z-index:5;
+text-align:center;
+}
+#amount
+{
+font-size:100%;
+margin: 4% 0 0 0;
+z-index:10;
+font-weight:bold;
+}
+#label
+{
+font-weight:bold;
+margin: 6% 0 0 0;
+z-index:10;
+}
+
+#loading
+{
+margin: -2% 0 0 0;
+width:10%;
+height:auto;	
+}
+#loading2
+{
+margin: 55% 0 0 35%;
+	
+}

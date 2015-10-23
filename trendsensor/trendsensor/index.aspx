@@ -17,6 +17,7 @@
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
     <link href="/bootstrap/css/emoIcon.css" rel="stylesheet" />
+    <link href="/bootstrap/css/aboutBox.css" rel="stylesheet" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 </head>
 <body>
@@ -44,6 +45,33 @@
             font-size: 16px;
             line-height: 20px;
         }
+        .image { 
+           position: relative; 
+           width: 100%; /* for IE 6 */
+        }
+        .module {
+          width: 270px;
+          height: 150px;
+          float: left;
+          background: url(/bootstrap/img/NewLogo3.png);
+          background-size: 270px 150px;
+          position: relative;
+        }
+
+        h2 {
+          position: absolute;
+          bottom: 75px;
+          left: 5px;
+          padding: 4px 8px;
+          color: black;
+          margin: 0;
+          font: 10px Sans-Serif;
+        }
+
+        .opp h2 {
+          background: rgba(255, 255, 255, 0.75);
+          color: black;
+        }
     </style>
     <!-- The main container. -->
     <div class="container-fluid">
@@ -53,8 +81,17 @@
                 <!-- Datepicker -->
                 <div id="selectedDateTime"></div>
                 <div id="datepicker"></div>
-                <div><img id="logo" src="/bootstrap/img/NewLogo3.png" /></div>
-                <div id="amount"></div>
+                <div class="module">
+                  <h2><div id="label">Incoming Live Tweets <br>Since 10/01/2013 :<div id="amount"></div>
+                    </div></h2>
+                </div>
+                <%--<div><img id="logo" src="/bootstrap/img/NewLogo3.png" /></div>
+                <!-- aboutBox.css -->
+                <div id="aboutBox">
+                    <div id="label">Incoming Live Tweets <br>Since 10/01/2013 : 
+                        <div id="amount"></div>
+                    </div>
+                </div>--%>
             </div>
             <div class="span10">
                 <!-- Trend Graph -->
@@ -344,7 +381,7 @@
             (
                 function (data, textStatus, jqXHR) {
                     var liveCount = data.d;
-                    $('#amount').html(liveCount);
+                    $('#amount').html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + liveCount);
                     updateLiveCount();
                 }
             ).fail(function (jqXHR, textStatus, errorThrown) {
@@ -355,9 +392,14 @@
         }
         function updateLiveCount() {
             var counter = setInterval(function () {
-                var resp = parseInt($('#amount').html());
-                resp++;
-                $('#amount').html(resp);
+                var str = $('#amount').html();
+                var tag = "&nbsp;";
+                for (tag in str) {
+                    str = str.replace("&nbsp;", "");
+                }
+                var liveCount = str;
+                liveCount++;
+                $('#amount').html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + liveCount);
             }, 200);
         }
 </script>
