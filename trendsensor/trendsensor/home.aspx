@@ -33,14 +33,19 @@
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
+            <div class="navbar navbar-default navbar-fixed-top">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="home.aspx">Current Trendsensor</a>
+                <div class="col-lg-1">
+                    <a class="navbar-brand" href="home.aspx">Current Trendsensor</a>
+                </div>
+                <div class="col-lg-11">
+                    <div id="datepaginator"></div>
+                </div>
             </div>
             <!-- /.navbar-top-links -->
             <div class="navbar-default sidebar" role="navigation">
@@ -73,12 +78,8 @@
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-3">
-                    <h1 class="page-header">Current Trendsensor</h1>
-                </div>
-                <!-- /.col-lg-3 -->
 
-                <div class="col-lg-3">
+                <div class="col-lg-6">
                     <h1 class="page-header">DateTime Selected: </h1>
                 </div>
                 <!-- /.col-lg-3 -->
@@ -91,7 +92,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <!-- Markup - paginator will be injected as html into this div -->
-                    <div id="datepaginator"></div>
+                    
                     <hr />
                 </div>
             </div>
@@ -327,7 +328,7 @@
             (
                 {
                     type: 'POST',
-                    url: 'index.aspx/getLineChart',
+                    url: 'home.aspx/getLineChart',
                     data: "{calendarClickDate: '" + calendarClickDate + "'}",
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
@@ -518,7 +519,7 @@
             (
                 {
                     type: 'GET',
-                    url: 'index.aspx/getLiveCount',
+                    url: 'home.aspx/getLiveCount',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     async: false
