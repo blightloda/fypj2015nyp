@@ -5,9 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Trend Sensor with Twitter</title>
+    
     <script src="/bootstrap/js/jquery.js" type="text/javascript"></script>
     <script src="/bootstrap/js/jquery-ui.js" type="text/javascript"></script>
     <script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
+    <script src="d3.layout.cloud.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="/bootstrap/js/highcharts.js" type="text/javascript"></script>
     <script src="/bootstrap/js/exporting.js" type="text/javascript"></script>
@@ -80,119 +82,94 @@
     //  ["bubble11", [10, 80, 10, 10]],
     //  ["bubble12", [50, 50]],
     //];
-    drawChart2("09/09/2015");
-    function drawChart2(str) {
+    //
+    cloudtag("09/09/2015",9);
+    function cloudtag(date,hour) {
         $.ajax
         (
             {
                 type: 'POST',
-                url: 'bubble.aspx/getBubbleChart',
-                data: "{str: '" + str + "'}",
+                url: 'bubble.aspx/cloudTag',
+                data: JSON.stringify({ dat: date, hour: hour }),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 async: false
             }
         ).done
         (
-            function (data1, textStatus, jqXHR) {
-                // prevent json hijacking
-                var linechartList = data1.d;
-                var twodata = [];
-                var data = [[]];
-                var frequencydata = [];
-                //for (index = 0; index < linechartList.length; index++) {
-                //    frequencydata = linechartList.length
+            function (data, textStatus, jqXHR) {
+                //var fonti="";
+                //var ind=0;
+                var cloudtaglist = data.d;
+                var worddata=[];
+                for (i = 0; i < cloudtaglist.length; i++) {
+                    worddata[i] = cloudtaglist[i].tag;
+                }
+                var fontsiz = [];
+                for (i = 0; i < cloudtaglist.length; i++) {
+                    fontsiz[i] = cloudtaglist[i].frequency/100 *5;
+                }
+                var fill = d3.scale.category20();
+                //function mapdata() {
+                //    return{text:, size:}
                 //}
-                for (var index = 0; index < linechartList.length - 190; index++) {
-                    data[index] = [];
-                    twodata.push(linechartList[index].Tag);
-                    frequencydata.push(linechartList[index].MoodFrequency);
+                var sj = [];
+                function mapdata() {
+                    for (i = 0; i < worddata.length; i++) {
+                        sj.push({ text: worddata[i], size: fontsiz[i] });
+                    }
                 }
-                for (var i = 0; i < twodata.length; i++) {
-                    data[i][0] = twodata[i];
-                    data[i][1] = frequencydata[i];
+                mapdata();
+                d3.layout.cloud().size([300, 300])
+                    .words(sj.map(function (d) {
+                          return { text: d.text, size: 10 + d.size * 50 };
+                      }))
+                    .rotate(function () { return 4 * 90; })
+                    .font("Impact")
+                    .fontSize(function (d) { return d.size; })
+                    .on("end", draw)
+                    .start();
+
+                function draw(words) {
+                    d3.select("body").append("svg")
+                        .attr("width", 300)
+                        .attr("height", 300)
+                      .append("g")
+                        .attr("transform", "translate(150,150)")
+                      .selectAll("text")
+                        .data(words)
+                      .enter().append("text")
+                        .style("font-size", function (d) { return d.size + "px"; })
+                        .style("font-family", "Impact")
+                        .style("fill", function (d, i) { return fill(i); })
+                        .style("transition", "all 0.3s ease")
+                        .attr("text-anchor", "middle")
+                        .attr("transform", function (d) {
+                            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                        })
+                        .text(function (d) { return d.text; })
+                        .on("mouseover", function () {
+                            $(this).css("font-size", "5em");
+                        })
+                        .on("mouseout", function (d) {
+                            //fonti = words[ind].size;
+                            //ind++;
+                            $(this).css("font-size", d.size + "px");
+
+                        })
+                        //.on("mouseout", function () {
+                            
+                        //        fonti=words[ind].size;
+                        //        ind++;
+                        //    $(this).stop().animate({ fontSize: fonti  + "px" }, 500);
+                           
+                        //})
+                        
+                        
                 }
-                var color = d3.scale.ordinal().range(["#E4F1FE", "#EEE657", "#e74c3c", "#3498db", "#9b59b6", "#2ecc71"]),
-                diameter = 500;
-
-                var bubble = d3.layout.pack()
-                      .value(function (d) { return d3.sum(d[1]); })
-                      .sort(null)
-                      .size([diameter, diameter])
-                      .padding(1.5),
-                    arc = d3.svg.arc().innerRadius(0),
-                    pie = d3.layout.pie();
-
-                var svg = d3.select("#bubble").append("svg")
-                    .attr("width", diameter)
-                    .attr("height", diameter)
-                    .attr("class", "bubble");
-
-                var nodes = svg.selectAll("g.node")
-                    .data(bubble.nodes(function (d){return d.data}));
-                nodes.enter().append("g")
-                    .attr("class", "node")
-                    .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-                var arcGs = nodes.selectAll("g.arc")
-                    .data(function (d) {
-                        return pie(d[1]).map(function (m) { m.r = d.r; return m; });
-                    });
-                var arcEnter = arcGs.enter().append("g").attr("class", "arc");
-
-                var grads = svg.append("defs").selectAll("radialGradient").data(function (d) { return data;})
-                   .enter().append("radialGradient")
-                   .attr("gradientUnits", "userSpaceOnUse")
-                   .attr("cx", 0)
-                   .attr("cy", 0)
-                   .attr("r", "30%")
-                   .attr("id", function (d, i) { return "grad" + i; });
-                    grads.append("stop").attr("offset", "0%").style("stop-color", function (d, i) { return color(i); });
-                    grads.append("stop").attr("offset", "50%").style("stop-color", "white");
-                    grads.append("stop").attr("offset", "15%").style("stop-color", function (d, i) { return color(i); });
-
-
-                arcEnter.append("path")
-                    .attr("d", function (d) {
-                        arc.outerRadius(d.r);
-                        return arc(d);
-                    })
-                    .style("fill", function (d, i) { return "url(#grad" + i + ")"; })
-                    //.style("fill", function (d, i) { return color(i); })
-                .on("mouseover", function (d) {
-                    d3.select("#tooltip")
-                        .style("left", d3.event.pageX + "px")
-                        .style("top", d3.event.pageY + "px")
-                        .style("display", "block")
-                        .select("#value")
-                        .text(d.value);
-                })
-                .on("mouseout", function () {
-                    // Hide the tooltip
-                    d3.select("#tooltip")
-                        .style("display", "none");
-                });
-
-                //arcEnter.append("text")
-                //    .attr({
-                //        x: function (d) { arc.outerRadius(d.r); return arc.centroid(d)[0]; },
-                //        y: function (d) { arc.outerRadius(d.r); return arc.centroid(d)[1]; },
-                //        dy: "0.35em"
-                //    })
-                //    .style("text-anchor", "middle")
-                //    .text(function (d) { return d.value; });
-
-                var labels = nodes.selectAll("text.label")
-                    .data(function (d) { console.log(d); return [d[0]]; });
-                labels.enter().append("text")
-                    .attr({
-                        "class": "label",
-                        dy: "0.35em"
-                    })
-                    .style("text-anchor", "middle")
-                    .text(String);
             })
     }
+    var s = 0;
 </script>
             
         </form>
