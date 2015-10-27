@@ -30,7 +30,7 @@
 <body>
 
     <div id="wrapper">
-        
+
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -47,15 +47,16 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="home.aspx"><i class="fa fa-home fa-fw"></i> Home</a>
+                            <a href="home.aspx"><i class="fa fa-home fa-fw"></i>Home</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-info fa-fw"></i> Live Count<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-info fa-fw"></i>Live Count<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    Incoming Live Tweets <br>Since 10/01/2013 :
+                                <li>Incoming Live Tweets
+                                    <br>
+                                    Since 10/01/2013 :
                                 </li>
-                                
+
                                 <li>
                                     <div id="amount">0</div>
                                     <!-- /.live count -->
@@ -97,11 +98,11 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    
+
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-line-chart"></i> Singapore Current Affairs
+                            <i class="fa fa-line-chart"></i>Singapore Current Affairs
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -111,22 +112,24 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
-                    
+
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-clock-o fa-fw"></i> Related Tweets
+                            <i class="fa fa-clock-o fa-fw"></i>Related Tweets
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <ul class="timeline">
                                 <li>
-                                    <div class="timeline-badge"><i class="fa fa-check"></i>
+                                    <div class="timeline-badge">
+                                        <i class="fa fa-check"></i>
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
                                             <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                                            <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
+                                            <p>
+                                                <small class="text-muted"><i class="fa fa-clock-o"></i>11 hours ago via Twitter</small>
                                             </p>
                                         </div>
                                         <div class="timeline-body">
@@ -135,7 +138,8 @@
                                     </div>
                                 </li>
                                 <li class="timeline-inverted">
-                                    <div class="timeline-badge warning"><i class="fa fa-credit-card"></i>
+                                    <div class="timeline-badge warning">
+                                        <i class="fa fa-credit-card"></i>
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
@@ -148,7 +152,8 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="timeline-badge danger"><i class="fa fa-bomb"></i>
+                                    <div class="timeline-badge danger">
+                                        <i class="fa fa-bomb"></i>
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
@@ -170,7 +175,8 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="timeline-badge info"><i class="fa fa-save"></i>
+                                    <div class="timeline-badge info">
+                                        <i class="fa fa-save"></i>
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
@@ -181,7 +187,7 @@
                                             <hr>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-gear"></i>  <span class="caret"></span>
+                                                    <i class="fa fa-gear"></i><span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
                                                     <li><a href="#">Action</a>
@@ -209,7 +215,8 @@
                                     </div>
                                 </li>
                                 <li class="timeline-inverted">
-                                    <div class="timeline-badge success"><i class="fa fa-graduation-cap"></i>
+                                    <div class="timeline-badge success">
+                                        <i class="fa fa-graduation-cap"></i>
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
@@ -234,7 +241,7 @@
 
     </div>
     <!-- /#wrapper -->
-    
+
     <!-- jQuery -->
     <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
 
@@ -255,9 +262,15 @@
     <script src="/bootstrap/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap-datepaginator.min.js" type="text/javascript"></script>
 
-    
+
 
     <script type="text/javascript">
+
+        $( document ).ready(function() {
+            var d = new Date();
+            var n = d.toDateString();
+            document.getElementById('selectedDateTime').innerHTML = n;
+        });
 
         //get current date
         var today = new Date();
@@ -288,7 +301,9 @@
                 // draw new linechart after date change
                 drawChart(calendarClickDate);
                 // write selected date to label
-                document.getElementById('selectedDateTime').innerHTML = calendarClickDate;
+                var d = new Date(calendarClickDate);
+                var n = d.toDateString();
+                document.getElementById('selectedDateTime').innerHTML = n;
             }
         }
         $('#datepaginator').datepaginator(dateChanged);
@@ -308,6 +323,7 @@
             ).done
             (
                 function (data, textStatus, jqXHR) {
+
                     // prevent json hijacking
                     var linechartList = data.d;
                     // get max length for x
@@ -404,9 +420,38 @@
                                 cursor: 'pointer',
                                 point: {
                                     events: {
-                                        click: function (e) {
-                                            alert("haha");
+                                        mouseOver: function () {     
+                                                // format date 
+                                                var selectedTime;
+                                                if (this.x >= 12 && this.x <= 23) {
+                                                    selectedTime = this.x + " PM"
+                                                } else if (this.x >= 1 && this.x <= 11) {
+                                                    selectedTime = this.x + " AM"
+                                                } else if (this.x == 0) {
+                                                    selectedTime = "24 AM";
+                                                }
+                                                var d = new Date(calendarClickDate);
+                                                var n = d.toDateString();
+                                                var finalDateTime = n + " " + selectedTime
+
+                                                document.getElementById('selectedDateTime').innerHTML = finalDateTime;
                                         }
+                                        //click: function (e) {
+                                        //    // format date 
+                                        //    var selectedTime;
+                                        //    if (this.x >= 12 && this.x <= 23) {
+                                        //        selectedTime = this.x + " PM"
+                                        //    } else if (this.x >= 1 && this.x <= 11) {
+                                        //        selectedTime = this.x + " AM"
+                                        //    } else if (this.x == 0) {
+                                        //        selectedTime = "24 AM";
+                                        //    }
+                                        //    var d = new Date(calendarClickDate);
+                                        //    var n = d.toDateString();
+                                        //    var finalDateTime = n + " " + selectedTime
+
+                                        //    document.getElementById('selectedDateTime').innerHTML = finalDateTime;
+                                        //}
                                     }
                                 },
                                 marker: {
@@ -490,6 +535,6 @@
                 $('#amount').html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + liveCount);
             }, 200);
         }
-</script>
+    </script>
 </body>
 </html>

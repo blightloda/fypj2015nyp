@@ -140,8 +140,6 @@
     <Content Include="bootstrap\js\jquery-ui.js" />
     <Content Include="bootstrap\js\jquery.js" />
     <Content Include="bubble.aspx" />
-    <Content Include="googleapitesting.aspx" />
-    <Content Include="highchartDemo.aspx" />
     <Content Include="index.aspx" />
     <Content Include="mysql.aspx" />
     <Content Include="Web.config" />
@@ -153,20 +151,6 @@
     </Compile>
     <Compile Include="bubble.aspx.designer.cs">
       <DependentUpon>bubble.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="googleapitesting.aspx.cs">
-      <DependentUpon>googleapitesting.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="googleapitesting.aspx.designer.cs">
-      <DependentUpon>googleapitesting.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="highchartDemo.aspx.cs">
-      <DependentUpon>highchartDemo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="highchartDemo.aspx.designer.cs">
-      <DependentUpon>highchartDemo.aspx</DependentUpon>
     </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
