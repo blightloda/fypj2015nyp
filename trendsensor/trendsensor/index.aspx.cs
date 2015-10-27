@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataAccessLayer;
 using System.Web.Script.Services;
+using System.Globalization;
 
 namespace trendsensor
 {
@@ -24,9 +25,29 @@ namespace trendsensor
             List<LineChart> linechartList = new List<LineChart>();
 
             //convert to correct date format
-            //DateTime date = DateTime.Parse(str);
-            DateTime date = DateTime.ParseExact(calendarClickDate, "MM/dd/yyyy", null);
-            string str1 = date.ToString("yyyy'-'MM'-'dd");
+            string format = "MM-dd-yyyy";
+            string format2 = "MM/dd/yyyy";
+            DateTime dateTime;
+            string str1 = "";
+            if (DateTime.TryParseExact(calendarClickDate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            {
+                str1 = dateTime.ToString("yyyy'-'MM'-'dd");
+            }
+            else if (DateTime.TryParseExact(calendarClickDate, format2, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            {
+                str1 = dateTime.ToString("yyyy'-'MM'-'dd");
+            }
+
+            //DateTime date = new DateTime();
+            //try {
+            //    date = DateTime.ParseExact(calendarClickDate, "MM-dd-yyyy", null);
+            //}
+            //catch (InvalidCastException e)
+            //{
+
+            //}
+
+           
 
             // create a linechart class instance so that i
             // can talk to database 

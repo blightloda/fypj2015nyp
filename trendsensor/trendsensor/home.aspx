@@ -13,36 +13,24 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
+    <!-- Datepicker Core CSS -->
+    <link href="/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet" media="screen" />
     <!-- MetisMenu CSS -->
     <link href="/bootstrap/css/metisMenu.min.css" rel="stylesheet" />
-
     <!-- Timeline CSS -->
     <link href="/bootstrap/css/timeline.css" rel="stylesheet" />
-
     <!-- Custom CSS -->
     <link href="/bootstrap/css/sb-admin-2.css" rel="stylesheet" />
-
-    <!-- Morris Charts CSS -->
-    <link href="/bootstrap/css/morris.css" rel="stylesheet" />
-
+    <!-- High Charts CSS -->
+    <link href="/bootstrap/css/highcharts.css" rel="stylesheet" />
     <!-- Custom Fonts -->
     <link href="/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
-
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 <body>
 
     <div id="wrapper">
-
+        
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -54,18 +42,26 @@
                 </button>
                 <a class="navbar-brand" href="home.aspx">Current Trendsensor</a>
             </div>
-         
             <!-- /.navbar-top-links -->
-
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-						<li>
-                           <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Calendar<span class="fa arrow"></span></a>
-                            
+                        <li>
+                            <a href="home.aspx"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li>
-                            <a href="home.aspx"><i class="fa fa-dashboard fa-fw"></i> Default</a>
+                            <a href="#"><i class="fa fa-info fa-fw"></i> Live Count<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    Incoming Live Tweets <br>Since 10/01/2013 :
+                                </li>
+                                
+                                <li>
+                                    <div id="amount">0</div>
+                                    <!-- /.live count -->
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
                     </ul>
                 </div>
@@ -76,156 +72,50 @@
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-3">
                     <h1 class="page-header">Current Trendsensor</h1>
                 </div>
-                <!-- /.col-lg-12 -->
+                <!-- /.col-lg-3 -->
+
+                <div class="col-lg-3">
+                    <h1 class="page-header">DateTime Selected: </h1>
+                </div>
+                <!-- /.col-lg-3 -->
+
+                <div class="col-lg-6">
+                    <h1 id="selectedDateTime" class="page-header"></h1>
+                </div>
             </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <!-- Markup - paginator will be injected as html into this div -->
-                    <div id="datePicker"></div>
+                    <div id="datepaginator"></div>
+                    <hr />
                 </div>
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
+                    
+                    <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <i class="fa fa-line-chart"></i> Singapore Current Affairs
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="morris-area-chart"></div>
+                            <!-- Trend Graph -->
+                            <div id="chart_div"></div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Date</th>
-                                                    <th>Time</th>
-                                                    <th>Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:29 PM</td>
-                                                    <td>$321.33</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3325</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:20 PM</td>
-                                                    <td>$234.34</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3324</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:03 PM</td>
-                                                    <td>$724.17</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3323</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:00 PM</td>
-                                                    <td>$23.71</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3322</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:49 PM</td>
-                                                    <td>$8345.23</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3321</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:23 PM</td>
-                                                    <td>$245.12</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3320</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:15 PM</td>
-                                                    <td>$5663.54</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3319</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:13 PM</td>
-                                                    <td>$943.45</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </div>
-                                <!-- /.col-lg-4 (nested) -->
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
-                                </div>
-                                <!-- /.col-lg-8 (nested) -->
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
+                    
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+                            <i class="fa fa-clock-o fa-fw"></i> Related Tweets
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -337,197 +227,6 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i> Notifications Panel
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small"><em>11:32 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                                    <span class="pull-right text-muted small"><em>11:13 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                                    <span class="pull-right text-muted small"><em>10:57 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                                    <span class="pull-right text-muted small"><em>9:49 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-money fa-fw"></i> Payment Received
-                                    <span class="pull-right text-muted small"><em>Yesterday</em>
-                                    </span>
-                                </a>
-                            </div>
-                            <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-donut-chart"></div>
-                            <a href="#" class="btn btn-default btn-block">View Details</a>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    <div class="chat-panel panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-comments fa-fw"></i>
-                            Chat
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-chevron-down"></i>
-                                </button>
-                                <ul class="dropdown-menu slidedown">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-refresh fa-fw"></i> Refresh
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-check-circle fa-fw"></i> Available
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-times fa-fw"></i> Busy
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-clock-o fa-fw"></i> Away
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-sign-out fa-fw"></i> Sign Out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <ul class="chat">
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
-                                            </small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
-                    </div>
-                    <!-- /.panel .chat-panel -->
-                </div>
-                <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
         </div>
@@ -545,10 +244,8 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/bootstrap/js/metisMenu.min.js" type="text/javascript"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="/bootstrap/js/raphael-min.js" type="text/javascript"></script>
-    <script src="/bootstrap/js/morris.min.js" type="text/javascript"></script>
-    <script src="/bootstrap/js/morris-data.js" type="text/javascript"></script>
+    <!-- High Charts JavaScript -->
+    <script src="/bootstrap/js/highcharts.js" type="text/javascript"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="/bootstrap/js/sb-admin-2.js" type="text/javascript"></script>
@@ -558,9 +255,241 @@
     <script src="/bootstrap/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap-datepaginator.min.js" type="text/javascript"></script>
 
-    <!-- Basic initialization using defaults -->
-    <script type='text/javascript'>
-        $('#datePicker').datepaginator();
-    </script>
+    
+
+    <script type="text/javascript">
+
+        //get current date
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        // add 0 infront for 0-9
+        if (dd < 10) { dd = '0' + dd }
+        if (mm < 10) { mm = '0' + mm }
+        today = mm + '-' + dd + '-' + yyyy;
+
+        // draw linechart on current date
+        drawChart(today);
+        // get live count
+        getLiveCounter();
+
+        // Basic initialization using defaults
+        var options = {
+            selectedDateFormat: 'MM-DD-YYYY'
+        }
+        $('#datepaginator').datepaginator(options);
+
+        // date change event
+        var dateChanged = {
+            onSelectedDateChanged: function (event, date) {
+                $('#datepaginator').datepaginator('setSelectedDate', [date, 'MM-DD-YYYY']);
+                var calendarClickDate = date.format('MM-DD-YYYY');
+                // draw new linechart after date change
+                drawChart(calendarClickDate);
+                // write selected date to label
+                document.getElementById('selectedDateTime').innerHTML = calendarClickDate;
+            }
+        }
+        $('#datepaginator').datepaginator(dateChanged);
+
+        // draw line charts
+        function drawChart(calendarClickDate) {
+            $.ajax
+            (
+                {
+                    type: 'POST',
+                    url: 'index.aspx/getLineChart',
+                    data: "{calendarClickDate: '" + calendarClickDate + "'}",
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    async: false
+                }
+            ).done
+            (
+                function (data, textStatus, jqXHR) {
+                    // prevent json hijacking
+                    var linechartList = data.d;
+                    // get max length for x
+                    var maxLength = linechartList[linechartList.length - 1].MaxLength;
+
+                    var hours = [];
+                    // all line data
+                    var datas = { "name": "Frequency", "data": [] };
+                    // individual mood data
+                    var moodDatas = { "name": "Frequency", "joy": [], "anger": [], "sadness": [], "surprised": [], "disgusted": [] };
+                    // loop through return data from database (linechartList)
+                    // push them into chart graph
+                    // last row is not taken as it is for 5 individual mood
+                    for (index = 0; index < linechartList.length - maxLength - 1 ; index++) {
+                        hours.push(linechartList[index].Hour);
+                        datas["data"].push(parseInt(linechartList[index].Frequency));
+                    }
+
+                    for (index = maxLength; index > 0; index--) {
+                        // push data for individual mood
+                        moodDatas["joy"].push(parseInt(linechartList[linechartList.length - index - 1].Joy));
+                        moodDatas["anger"].push(parseInt(linechartList[linechartList.length - index - 1].Anger));
+                        moodDatas["sadness"].push(parseInt(linechartList[linechartList.length - index - 1].Sadness));
+                        moodDatas["surprised"].push(parseInt(linechartList[linechartList.length - index - 1].Surprised));
+                        moodDatas["disgusted"].push(parseInt(linechartList[linechartList.length - index - 1].Disgusted));
+                    }
+
+                    // ready to draw line chart
+                    $('#chart_div').highcharts({
+
+                        credits: {
+                            enabled: false
+                        },
+
+                        title: {
+                            text: ''
+                        },
+
+                        tooltip: {
+                            shared: true,
+                            crosshairs: true
+                        },
+
+                        xAxis: {
+                            title: {
+                                text: 'Hour'
+                            },
+                            tickWidth: 0,
+                            gridLineWidth: 1,
+                            labels: {
+                                align: 'left',
+                                x: 3,
+                                y: -3
+                            },
+                            categories: hours
+                        },
+
+                        yAxis: [{ // left y axis
+                            title: {
+                                text: 'Frequency'
+                            },
+                            labels: {
+                                align: 'left',
+                                x: 3,
+                                y: 16,
+                                format: '{value:.,of}'
+                            },
+                            showFirstLabel: false,
+                        }, {  // right y axis
+                            linkedTo: 0,
+                            gridLineWidth: 0,
+                            opposite: true,
+                            title: {
+                                text: 'Frequency'
+                            },
+                            labels: {
+                                align: 'right',
+                                x: -3,
+                                y: 16,
+                                format: '{value:.,0f}'
+                            },
+                            showFirstLabel: false
+                        }],
+
+                        legend: {
+                            align: 'left',
+                            verticalAlign: 'top',
+                            x: 0,
+                            y: 0
+                        },
+
+                        plotOptions: {
+                            series: {
+                                cursor: 'pointer',
+                                point: {
+                                    events: {
+                                        click: function (e) {
+                                            alert("haha");
+                                        }
+                                    }
+                                },
+                                marker: {
+                                    lineWidth: 1
+                                }
+                            }
+                        },
+
+                        series: [{
+                            name: 'All',
+                            color: '#000000',
+                            data: datas["data"]
+                        }, {
+                            name: 'Anger',
+                            color: '#FF0000',
+                            data: moodDatas["anger"],
+                            visible: false
+                        }, {
+                            name: 'Joy',
+                            color: '#FF8000',
+                            data: moodDatas["joy"],
+                            visible: false
+                        }, {
+                            name: 'Sadness',
+                            color: '#008000',
+                            data: moodDatas["sadness"],
+                            visible: false
+                        }, {
+                            name: 'Surprised',
+                            color: '#FFC0CB',
+                            data: moodDatas["surprised"],
+                            visible: false
+                        }, {
+                            name: 'Disgusted',
+                            color: '#0000FF',
+                            data: moodDatas["disgusted"],
+                            visible: false
+                        }]
+                    });
+                }
+            ).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log('The function attached to the ajax\'s fail() method has been executed.')
+                console.log('The jqXRH Status Error Code is : ' + jqXHR.status);
+            });//end of $.ajax(...);
+            ;;
+        }
+
+        // get the number of tweets recorded so far
+        function getLiveCounter() {
+            $.ajax
+            (
+                {
+                    type: 'GET',
+                    url: 'index.aspx/getLiveCount',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    async: false
+                }
+            ).done
+            (
+                function (data, textStatus, jqXHR) {
+                    var liveCount = data.d;
+                    $('#amount').html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + liveCount);
+                    updateLiveCount();
+                }
+            ).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log('The function attached to the ajax\'s fail() method has been executed.')
+                console.log('The jqXRH Status Error Code is : ' + jqXHR.status);
+            });//end of $.ajax(...);
+
+        }
+        function updateLiveCount() {
+            var counter = setInterval(function () {
+                var str = $('#amount').html();
+                var tag = "&nbsp;";
+                for (tag in str) {
+                    str = str.replace("&nbsp;", "");
+                }
+                var liveCount = str;
+                liveCount++;
+                $('#amount').html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + liveCount);
+            }, 200);
+        }
+</script>
 </body>
 </html>

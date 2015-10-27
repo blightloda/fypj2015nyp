@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bootstrap\css\aboutBox.css" />
+    <Content Include="bootstrap\css\bootstrap-datepicker.css" />
     <Content Include="bootstrap\css\bootstrap-datepicker.min.css" />
     <Content Include="bootstrap\css\bootstrap.min.css" />
     <Content Include="bootstrap\css\font-awesome.min.css" />
@@ -80,6 +81,7 @@
     <Content Include="bootstrap\js\jquery-2.1.4.min.js" />
     <Content Include="bootstrap\js\metisMenu.min.js" />
     <Content Include="bootstrap\js\moment-with-locales.js" />
+    <Content Include="bootstrap\js\moment.js" />
     <Content Include="bootstrap\js\morris-data.js" />
     <Content Include="bootstrap\js\morris.min.js" />
     <Content Include="bootstrap\js\raphael-min.js" />
