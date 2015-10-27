@@ -119,7 +119,7 @@
                             <i class="fa fa-cloud"></i>Tag Cloud
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <div id="cloudtag" class="panel-body">
                             
                         </div>
                         <!-- /.panel-body -->
@@ -275,6 +275,10 @@
     <script src="/bootstrap/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap-datepaginator.min.js" type="text/javascript"></script>
 
+    <!-- D3.js -->
+    <script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
+    <!-- D3 Cloud Tag-->
+    <script src="d3.layout.cloud.js" type="text/javascript"></script>
 
 
     <script type="text/javascript">
@@ -547,6 +551,96 @@
                 liveCount++;
                 $('#amount').html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + liveCount);
             }, 200);
+        }
+
+
+        //cloudtag
+        cloudtag("09/09/2015",9);
+        function cloudtag(date,hour) {
+            $.ajax
+            (
+                {
+                    type: 'POST',
+                    url: 'bubble.aspx/cloudTag',
+                    data: JSON.stringify({ dat: date, hour: hour }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    async: false
+                }
+            ).done
+            (
+                function (data, textStatus, jqXHR) {
+                    //var fonti="";
+                    //var ind=0;
+                    var divwidth = document.getElementById("cloudtag").clientWidth;
+                    var cloudtaglist = data.d;
+                    var worddata=[];
+                    for (i = 0; i < cloudtaglist.length; i++) {
+                        worddata[i] = cloudtaglist[i].tag;
+                    }
+                    var fontsiz = [];
+                    for (i = 0; i < cloudtaglist.length; i++) {
+                        fontsiz[i] = cloudtaglist[i].frequency/10;
+                    }
+                    var fill = d3.scale.category20();
+                    //function mapdata() {
+                    //    return{text:, size:}
+                    //}
+                    var sj = [];
+                    function mapdata() {
+                        for (i = 0; i < worddata.length; i++) {
+                            sj.push({ text: worddata[i], size: fontsiz[i] });
+                        }
+                    }
+                    mapdata();
+                    d3.layout.cloud().size([divwidth, 300])
+                        .words(sj.map(function (d) {
+                              return { text: d.text, size: 10 + d.size * 50 };
+                          }))
+                        .rotate(function () { return 4 * 90; })
+                        .font("Impact")
+                        .fontSize(function (d) { return d.size; })
+                        .on("end", draw)
+                        .start();
+
+                    function draw(words) {
+                        d3.select("#cloudtag").append("svg")
+                            .attr("width", document.getElementById("cloudtag").clientWidth)
+                            .attr("height", 300)
+                          .append("g")
+                            .attr("transform", "translate("+divwidth/2 +",150)")
+                          .selectAll("text")
+                            .data(words)
+                          .enter().append("text")
+                            .style("font-size", function (d) { return d.size + "px"; })
+                            .style("font-family", "Impact")
+                            .style("fill", function (d, i) { return fill(i); })
+                            .style("transition", "all 0.3s ease")
+                            .attr("text-anchor", "middle")
+                            .attr("transform", function (d) {
+                                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                            })
+                            .text(function (d) { return d.text; })
+                            .on("mouseover", function () {
+                                $(this).css("font-size", "5em");
+                            })
+                            .on("mouseout", function (d) {
+                                //fonti = words[ind].size;
+                                //ind++;
+                                $(this).css("font-size", d.size + "px");
+
+                            })
+                            //.on("mouseout", function () {
+
+                            //        fonti=words[ind].size;
+                            //        ind++;
+                            //    $(this).stop().animate({ fontSize: fonti  + "px" }, 500);
+
+                            //})
+
+
+                    }
+                })
         }
     </script>
 </body>
