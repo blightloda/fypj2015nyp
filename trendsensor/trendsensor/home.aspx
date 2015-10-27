@@ -116,6 +116,19 @@
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
+                            <i class="fa fa-cloud"></i>Tag Cloud
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
                             <i class="fa fa-clock-o fa-fw"></i>Related Tweets
                         </div>
                         <!-- /.panel-heading -->
