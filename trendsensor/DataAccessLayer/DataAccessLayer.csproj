@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarChart.cs" />
     <Compile Include="BubbleChart.cs" />
     <Compile Include="CloudTag.cs" />
     <Compile Include="LineChart.cs" />
