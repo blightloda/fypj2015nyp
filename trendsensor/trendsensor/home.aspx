@@ -58,7 +58,7 @@
                             <a href="#"><i class="fa fa-info fa-fw"></i>Live Count<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>Incoming Live Tweets
-                                    <br>
+                                    <br />
                                     Since 10/01/2013 :
                                 </li>
 
@@ -198,7 +198,7 @@
                                         </div>
                                         <div class="timeline-body">
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est molestiae excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla qui! Laborum, atque.</p>
-                                            <hr>
+                                            <hr />
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i><span class="caret"></span>
@@ -442,17 +442,21 @@
                                                 // format date 
                                                 var selectedTime;
                                                 if (this.x >= 12 && this.x <= 23) {
-                                                    selectedTime = this.x + " PM"
+                                                    //selectedTime = this.x + " PM"
+                                                    selectedTime = this.x
                                                 } else if (this.x >= 1 && this.x <= 11) {
-                                                    selectedTime = this.x + " AM"
+                                                   // selectedTime = this.x + " AM"
+                                                    selectedTime = this.x
                                                 } else if (this.x == 0) {
-                                                    selectedTime = "24 AM";
+                                                   // selectedTime = "24 AM";
+                                                    selectedTime = this.x 
                                                 }
                                                 var d = new Date(calendarClickDate);
                                                 var n = d.toDateString();
                                                 var finalDateTime = n + " " + selectedTime
 
                                                 document.getElementById('selectedDateTime').innerHTML = finalDateTime;
+                                                cloudtag(calendarClickDate, selectedTime);
                                         }
                                         //click: function (e) {
                                         //    // format date 
@@ -556,8 +560,8 @@
 
 
         //cloudtag
-        cloudtag("09/09/2015",9);
-        function cloudtag(date,hour) {
+        function cloudtag(date, hour) {
+            document.getElementById("cloudtag").innerHTML = "";
             $.ajax
             (
                 {

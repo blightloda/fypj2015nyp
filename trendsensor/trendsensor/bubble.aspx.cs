@@ -48,7 +48,7 @@ namespace trendsensor
 
             //convert to correct date format
             //DateTime date = DateTime.Parse(str);
-            DateTime date = DateTime.ParseExact(dat, "MM/dd/yyyy", null);
+            DateTime date = DateTime.ParseExact(dat, "MM-dd-yyyy", null);
             string str1 = date.ToString("yyyy'-'MM'-'dd");
 
             // create a linechart class instance so that i
