@@ -13,6 +13,8 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Switch CSS -->
+    <link href="/bootstrap/css/bootstrap-switch.css" rel="stylesheet" />
     <!-- Datepicker Core CSS -->
     <link href="/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet" media="screen" />
     <!-- MetisMenu CSS -->
@@ -77,8 +79,8 @@
         </nav>
 
         <div id="page-wrapper">
-            <div class="row">
 
+            <div class="row">
                 <div class="col-lg-6">
                     <h1 class="page-header">DateTime Selected: </h1>
                 </div>
@@ -89,17 +91,17 @@
                 </div>
             </div>
             <!-- /.row -->
-            <div class="row">
+
+            <%--<div class="row">
                 <div class="col-lg-12 col-md-12">
                     <!-- Markup - paginator will be injected as html into this div -->
-                    
                     <hr />
                 </div>
-            </div>
+            </div>--%>
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -113,20 +115,39 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
 
+                <div class="col-lg-3">
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-line-chart"></i>Singapore Current Affairs
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <input type="checkbox" name="my-checkbox" checked>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+                <div class="col-lg-9">
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-cloud"></i>Tag Cloud
                         </div>
                         <!-- /.panel-heading -->
-                        <div id="cloudtag" class="panel-body">
-                            
+                        <div id="cloudtag" class="panel-body">                        
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+                </div>
 
+                <div class="col-lg-12">
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -247,7 +268,7 @@
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-8 -->
+
             </div>
             <!-- /.row -->
         </div>
@@ -258,6 +279,9 @@
 
     <!-- jQuery -->
     <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
+
+     <!-- Bootstrap Switch JS -->
+    <link href="/bootstrap/js/bootstrap-switch.js" rel="stylesheet" />
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -288,6 +312,8 @@
             var d = new Date();
             var n = d.toDateString();
             document.getElementById('selectedDateTime').innerHTML = n;
+            $("[name='my-checkbox']").bootstrapSwitch();
+
         });
 
         //get current date
@@ -442,38 +468,19 @@
                                                 // format date 
                                                 var selectedTime;
                                                 if (this.x >= 12 && this.x <= 23) {
-                                                    //selectedTime = this.x + " PM"
-                                                    selectedTime = this.x
+                                                    selectedTime = this.x + " PM";
                                                 } else if (this.x >= 1 && this.x <= 11) {
-                                                   // selectedTime = this.x + " AM"
-                                                    selectedTime = this.x
+                                                    selectedTime = this.x + " AM";
                                                 } else if (this.x == 0) {
-                                                   // selectedTime = "24 AM";
-                                                    selectedTime = this.x 
+                                                   selectedTime = "24 AM";
                                                 }
                                                 var d = new Date(calendarClickDate);
                                                 var n = d.toDateString();
-                                                var finalDateTime = n + " " + selectedTime
+                                                var finalDateTime = n + " " + selectedTime;
 
                                                 document.getElementById('selectedDateTime').innerHTML = finalDateTime;
-                                                cloudtag(calendarClickDate, selectedTime);
+                                                cloudtag(calendarClickDate, this.x);
                                         }
-                                        //click: function (e) {
-                                        //    // format date 
-                                        //    var selectedTime;
-                                        //    if (this.x >= 12 && this.x <= 23) {
-                                        //        selectedTime = this.x + " PM"
-                                        //    } else if (this.x >= 1 && this.x <= 11) {
-                                        //        selectedTime = this.x + " AM"
-                                        //    } else if (this.x == 0) {
-                                        //        selectedTime = "24 AM";
-                                        //    }
-                                        //    var d = new Date(calendarClickDate);
-                                        //    var n = d.toDateString();
-                                        //    var finalDateTime = n + " " + selectedTime
-
-                                        //    document.getElementById('selectedDateTime').innerHTML = finalDateTime;
-                                        //}
                                     }
                                 },
                                 marker: {
@@ -566,7 +573,7 @@
             (
                 {
                     type: 'POST',
-                    url: 'bubble.aspx/cloudTag',
+                    url: 'home.aspx/cloudTag',
                     data: JSON.stringify({ dat: date, hour: hour }),
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
@@ -628,6 +635,8 @@
                             .text(function (d) { return d.text; })
                             .on("mouseover", function () {
                                 $(this).css("font-size", "5em");
+                                // update bar chart
+
                             })
                             .on("mouseout", function (d) {
                                 //fonti = words[ind].size;

@@ -74,24 +74,15 @@ namespace trendsensor
         }
 
         [WebMethod]
-        public static object cloudTag(string calendarClickDate, int hour)
+        public static object cloudTag(string dat, int hour)
         {
             // create a list, which can hold linechart instances
             List<CloudTag> ctlist = new List<CloudTag>();
 
             //convert to correct date format
-            string format = "MM-dd-yyyy";
-            string format2 = "MM/dd/yyyy";
-            DateTime dateTime;
-            string str1 = "";
-            if (DateTime.TryParseExact(calendarClickDate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
-            {
-                str1 = dateTime.ToString("yyyy'-'MM'-'dd");
-            }
-            else if (DateTime.TryParseExact(calendarClickDate, format2, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
-            {
-                str1 = dateTime.ToString("yyyy'-'MM'-'dd");
-            }
+            //DateTime date = DateTime.Parse(str);
+            DateTime date = DateTime.ParseExact(dat, "MM-dd-yyyy", null);
+            string str1 = date.ToString("yyyy'-'MM'-'dd");
 
             // create a linechart class instance so that i
             // can talk to database 

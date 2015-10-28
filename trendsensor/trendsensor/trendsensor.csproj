@@ -65,6 +65,7 @@
     <Content Include="bootstrap\css\aboutBox.css" />
     <Content Include="bootstrap\css\bootstrap-datepicker.css" />
     <Content Include="bootstrap\css\bootstrap-datepicker.min.css" />
+    <Content Include="bootstrap\css\bootstrap-switch.css" />
     <Content Include="bootstrap\css\bootstrap.min.css" />
     <Content Include="bootstrap\css\font-awesome.min.css" />
     <Content Include="bootstrap\css\metisMenu.min.css" />
@@ -77,6 +78,7 @@
     <Content Include="bootstrap\img\NewbgdesignCustom.jpg" />
     <Content Include="bootstrap\js\bootstrap-datepaginator.min.js" />
     <Content Include="bootstrap\js\bootstrap-datepicker.min.js" />
+    <Content Include="bootstrap\js\bootstrap-switch.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\jquery-2.1.4.min.js" />
     <Content Include="bootstrap\js\metisMenu.min.js" />
