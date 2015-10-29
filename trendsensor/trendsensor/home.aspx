@@ -13,8 +13,10 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Bootstrap Switch CSS -->
-    <link href="/bootstrap/css/bootstrap-switch.css" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Toggle CSS -->
+    <link href="/bootstrap/css/bootstrap-toggle.css" rel="stylesheet" />
     <!-- Datepicker Core CSS -->
     <link href="/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet" media="screen" />
     <!-- MetisMenu CSS -->
@@ -25,8 +27,8 @@
     <link href="/bootstrap/css/sb-admin-2.css" rel="stylesheet" />
     <!-- High Charts CSS -->
     <link href="/bootstrap/css/highcharts.css" rel="stylesheet" />
-    <!-- Custom Fonts -->
-    <link href="/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- jQuery -->
+    <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -118,26 +120,19 @@
                 </div>
                 <!-- /.col-lg-12 -->
 
-                <div class="col-lg-3">
+                <div class="col-lg-12">
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-line-chart"></i>Singapore Current Affairs
+                            <i class="fa fa-cloud"></i>Tag Cloud	         		            		             
                         </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <input type="checkbox" name="my-checkbox" checked>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-
-                <div class="col-lg-9">
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-cloud"></i>Tag Cloud
+                            <i class="fa fa-filter"></i>Emotions Filter&nbsp;&nbsp;&nbsp;&nbsp;	
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-onstyle="danger" />&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-onstyle="warning" />   &nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-onstyle="success" />&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-onstyle="info" />&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-onstyle="primary" />		         		            		             
                         </div>
                         <!-- /.panel-heading -->
                         <div id="cloudtag" class="panel-body">                        
@@ -277,29 +272,20 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
-
-     <!-- Bootstrap Switch JS -->
-    <link href="/bootstrap/js/bootstrap-switch.js" rel="stylesheet" />
-
     <!-- Bootstrap Core JavaScript -->
     <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-
+    <!-- Toggle JavaScript -->
+    <script src="/bootstrap/js/bootstrap-toggle.js" type="text/javascript" ></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/bootstrap/js/metisMenu.min.js" type="text/javascript"></script>
-
     <!-- High Charts JavaScript -->
     <script src="/bootstrap/js/highcharts.js" type="text/javascript"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="/bootstrap/js/sb-admin-2.js" type="text/javascript"></script>
-
     <!-- DatePicker JavaScript -->
     <script src="/bootstrap/js/moment-with-locales.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap-datepaginator.min.js" type="text/javascript"></script>
-
     <!-- D3.js -->
     <script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
     <!-- D3 Cloud Tag-->
@@ -312,8 +298,6 @@
             var d = new Date();
             var n = d.toDateString();
             document.getElementById('selectedDateTime').innerHTML = n;
-            $("[name='my-checkbox']").bootstrapSwitch();
-
         });
 
         //get current date
