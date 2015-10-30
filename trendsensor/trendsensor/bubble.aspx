@@ -19,11 +19,13 @@
     <link href="/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
     <link href="/bootstrap/css/emoIcon.css" rel="stylesheet" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+<script src="http://code.highcharts.com/highcharts-3d.js"></script>
 </head>
 <body>
         <form id="form1" runat="server">
             <div id="bubble">
                 <div id="tooltip" class="hidden">
+
     <p><strong>Frequency:</strong>
     </p>
     <p><span id="value">100</span> tweets</p>
@@ -171,263 +173,132 @@
     //            }
     //        })
     //}
-    
-
+    var ser = [{'name':'Joy'}]
+    var mood = ['Joy', 'Anger', 'Sadness', 'Surprised', 'Disgusted'];
+    var colour = ['#F5D76E', '#F22613', '#2ECC71', '#E08283', '#4183D7'];
+    var datas = [2, 4, 0, 1, 6];
     //bar chart
-    $(function () {
-        // Create the chart
-        $('#container').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Mood Chart'
-            },
-            subtitle: {
-                text: 'Click the columns to select filter by mood'
-            },
-            xAxis: {
-                type: 'category'
-            },
-            yAxis: {
-                title: {
-                    text: 'Frequency'
-                }
-
-            },
-            legend: {
-                enabled: true
-            },
-            plotOptions: {
-                series: {
-                    borderWidth: 0,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.y:.1f}%'
-                    }
-                }
-            },
-
-            tooltip: {
-                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-            },
-
-            series: [{
-                name: 'Brands',
-                colorByPoint: true,
-                data: [{
-                    name: 'Microsoft Internet Explorer',
-                    y: 56.33,
-                    drilldown: 'Microsoft Internet Explorer'
-                }, {
-                    name: 'Chrome',
-                    y: 24.03,
-                    drilldown: 'Chrome'
-                }, {
-                    name: 'Firefox',
-                    y: 10.38,
-                    drilldown: 'Firefox'
-                }, {
-                    name: 'Safari',
-                    y: 4.77,
-                    drilldown: 'Safari'
-                }, {
-                    name: 'Opera',
-                    y: 0.91,
-                    drilldown: 'Opera'
-                }, {
-                    name: 'Proprietary or Undetectable',
-                    y: 0.2,
-                    drilldown: null
-                }]
-            }],
-            drilldown: {
-                series: [{
-                    name: 'Microsoft Internet Explorer',
-                    id: 'Microsoft Internet Explorer',
-                    data: [
-                        [
-                            'v11.0',
-                            24.13
-                        ],
-                        [
-                            'v8.0',
-                            17.2
-                        ],
-                        [
-                            'v9.0',
-                            8.11
-                        ],
-                        [
-                            'v10.0',
-                            5.33
-                        ],
-                        [
-                            'v6.0',
-                            1.06
-                        ],
-                        [
-                            'v7.0',
-                            0.5
-                        ]
-                    ]
-                }, {
-                    name: 'Chrome',
-                    id: 'Chrome',
-                    data: [
-                        [
-                            'v40.0',
-                            5
-                        ],
-                        [
-                            'v41.0',
-                            4.32
-                        ],
-                        [
-                            'v42.0',
-                            3.68
-                        ],
-                        [
-                            'v39.0',
-                            2.96
-                        ],
-                        [
-                            'v36.0',
-                            2.53
-                        ],
-                        [
-                            'v43.0',
-                            1.45
-                        ],
-                        [
-                            'v31.0',
-                            1.24
-                        ],
-                        [
-                            'v35.0',
-                            0.85
-                        ],
-                        [
-                            'v38.0',
-                            0.6
-                        ],
-                        [
-                            'v32.0',
-                            0.55
-                        ],
-                        [
-                            'v37.0',
-                            0.38
-                        ],
-                        [
-                            'v33.0',
-                            0.19
-                        ],
-                        [
-                            'v34.0',
-                            0.14
-                        ],
-                        [
-                            'v30.0',
-                            0.14
-                        ]
-                    ]
-                }, {
-                    name: 'Firefox',
-                    id: 'Firefox',
-                    data: [
-                        [
-                            'v35',
-                            2.76
-                        ],
-                        [
-                            'v36',
-                            2.32
-                        ],
-                        [
-                            'v37',
-                            2.31
-                        ],
-                        [
-                            'v34',
-                            1.27
-                        ],
-                        [
-                            'v38',
-                            1.02
-                        ],
-                        [
-                            'v31',
-                            0.33
-                        ],
-                        [
-                            'v33',
-                            0.22
-                        ],
-                        [
-                            'v32',
-                            0.15
-                        ]
-                    ]
-                }, {
-                    name: 'Safari',
-                    id: 'Safari',
-                    data: [
-                        [
-                            'v8.0',
-                            2.56
-                        ],
-                        [
-                            'v7.1',
-                            0.77
-                        ],
-                        [
-                            'v5.1',
-                            0.42
-                        ],
-                        [
-                            'v5.0',
-                            0.3
-                        ],
-                        [
-                            'v6.1',
-                            0.29
-                        ],
-                        [
-                            'v7.0',
-                            0.26
-                        ],
-                        [
-                            'v6.2',
-                            0.17
-                        ]
-                    ]
-                }, {
-                    name: 'Opera',
-                    id: 'Opera',
-                    data: [
-                        [
-                            'v12.x',
-                            0.34
-                        ],
-                        [
-                            'v28',
-                            0.24
-                        ],
-                        [
-                            'v27',
-                            0.17
-                        ],
-                        [
-                            'v29',
-                            0.16
-                        ]
-                    ]
-                }]
+    barchart('2013-01-2216home');
+    function barchart(tagid) {
+        
+        $.ajax
+        (
+            {
+                type: 'POST',
+                url: 'bubble.aspx/getBarChart',
+                data: JSON.stringify({ tagd: tagid}),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                async: false
             }
-        });
-    });
+        ).done
+        (
+            function (data, textStatus, jqXHR) {
+                var bclist = data.d;
+                var barjoy = 0;
+                var baranger = 0;
+                var barsadness = 0;
+                var barsurprised = 0;
+                var bardisgusted = 0;
+                for (i = 0; i < bclist.length; i++) {
+                    if (bclist[i].mood == 'joy') {
+                        barjoy++;
+                    }
+                    if(bclist[i].mood =='anger'){
+                        baranger++;
+                    }
+                    if (bclist[i].mood == 'sadness') {
+                        barsadness++;
+                    }
+                    if (bclist[i].mood == 'surprised') {
+                        barsurprised++;
+                    }
+                    if(bclist[i].mood =='disgusted') {
+                        bardisgusted++;
+                    }
+                    
+                }
+                $(function () {
+                    $('#bubble').highcharts({
+                        chart: {
+                            type: 'column',
+                            margin: 75,
+                            options3d: {
+                                enabled: true,
+                                alpha: 10,
+                                beta: 25,
+                                depth: 70
+                            },
+                            color: colour
+                        },
+                        title: {
+                            text: '3D chart with null values'
+                        },
+                        subtitle: {
+                            text: 'Notice the difference between a 0 value and a null point'
+                        },
+                        plotOptions: {
+                            column: {
+                                depth: 35
+                            },
+                            series: {
+                                groupPadding: 0.05
+                            }
+                        },
+                        xAxis: {
+
+
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Frequency'
+                            }
+                        },
+                        series: [{
+                            name: 'Joy',
+                            data: [barjoy],
+                            color: '#F5D76E',
+                            dataLabels: {
+                                enabled: true
+                            }
+                        },
+                        {
+                            name: 'Anger',
+                            data: [baranger],
+                            color: '#F22613',
+                            dataLabels: {
+                                enabled: true
+                            }
+                        },
+                        {
+                            name: 'Sadness',
+                            data:[barsadness],
+                            color: '#2ECC71',
+                            dataLabels: {
+                                enabled: true
+                            }
+                        },
+                        {
+                            name: 'Surprised',
+                            data: [barsurprised],
+                            color: '#E08283',
+                            dataLabels: {
+                                enabled: true
+                            }
+                        },
+                        {
+                            name: 'Disgusted',
+                            data: [bardisgusted],
+                            color: '#4183D7',
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }]
+
+                    });
+                });
+            })
+    }
 </script>
             
         </form>

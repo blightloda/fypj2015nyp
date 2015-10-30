@@ -60,5 +60,15 @@ namespace trendsensor
             object response = ctlist;
             return response;
         }
+
+        [WebMethod]
+        public static object getBarChart(string tagd)
+        {
+            List<BarChart> bclist = new List<BarChart>();
+            BarChart bc = new BarChart();
+            bclist = bc.getBarChart(tagd);
+            object response = bclist;
+            return response;
+        }
     }
 }

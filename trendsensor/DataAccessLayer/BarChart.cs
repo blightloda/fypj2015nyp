@@ -11,10 +11,12 @@ namespace DataAccessLayer
     {
         public string mood { get; set; }
         public int frequency { get; set; }
-        public BarChart(string mood, int frequency)
+        public string tweets { get; set; }
+        public BarChart() { }
+        public BarChart(string mood, string tweets)
         {
             this.mood = mood;
-            this.frequency = frequency;
+            this.tweets = tweets;
         }
         public List<BarChart> getBarChart(string tid)
         {
@@ -37,7 +39,7 @@ namespace DataAccessLayer
                     {
                         while (reader.Read())
                         {
-                            BarChart bc = new BarChart(reader.GetString("mood"), reader.GetInt16("frequency"));
+                            BarChart bc = new BarChart(reader.GetString("mood"), reader.GetString("content"));
                             bclist.Add(bc);
                         }
                     }
@@ -46,5 +48,6 @@ namespace DataAccessLayer
             }
             return bclist;
         }
+
     }
 }
