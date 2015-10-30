@@ -13,6 +13,10 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Toggle CSS -->
+    <link href="/bootstrap/css/bootstrap-toggle.css" rel="stylesheet" />
     <!-- Datepicker Core CSS -->
     <link href="/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet" media="screen" />
     <!-- MetisMenu CSS -->
@@ -23,8 +27,8 @@
     <link href="/bootstrap/css/sb-admin-2.css" rel="stylesheet" />
     <!-- High Charts CSS -->
     <link href="/bootstrap/css/highcharts.css" rel="stylesheet" />
-    <!-- Custom Fonts -->
-    <link href="/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- jQuery -->
+    <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -33,14 +37,19 @@
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
+            <div class="navbar navbar-default navbar-fixed-top">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="home.aspx">Current Trendsensor</a>
+                <div class="col-lg-1">
+                    <a class="navbar-brand" href="home.aspx">Current Trendsensor</a>
+                </div>
+                <div class="col-lg-11">
+                    <div id="datepaginator"></div>
+                </div>
             </div>
             <!-- /.navbar-top-links -->
             <div class="navbar-default sidebar" role="navigation">
@@ -53,7 +62,7 @@
                             <a href="#"><i class="fa fa-info fa-fw"></i>Live Count<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>Incoming Live Tweets
-                                    <br>
+                                    <br />
                                     Since 10/01/2013 :
                                 </li>
 
@@ -72,13 +81,9 @@
         </nav>
 
         <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-3">
-                    <h1 class="page-header">Current Trendsensor</h1>
-                </div>
-                <!-- /.col-lg-3 -->
 
-                <div class="col-lg-3">
+            <div class="row">
+                <div class="col-lg-6">
                     <h1 class="page-header">DateTime Selected: </h1>
                 </div>
                 <!-- /.col-lg-3 -->
@@ -88,17 +93,17 @@
                 </div>
             </div>
             <!-- /.row -->
-            <div class="row">
+
+            <%--<div class="row">
                 <div class="col-lg-12 col-md-12">
                     <!-- Markup - paginator will be injected as html into this div -->
-                    <div id="datepaginator"></div>
                     <hr />
                 </div>
-            </div>
+            </div>--%>
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -112,20 +117,32 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
 
+                <div class="col-lg-12">
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-cloud"></i>Tag Cloud
+                            <i class="fa fa-cloud"></i>Tag Cloud	         		            		             
+                        </div>
+                        <div class="panel-heading">
+                            <i class="fa fa-filter"></i>Emotions Filter&nbsp;&nbsp;&nbsp;&nbsp;	
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-onstyle="danger" />&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-onstyle="warning" />   &nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-onstyle="success" />&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-onstyle="info" />&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-onstyle="primary" />		         		            		             
                         </div>
                         <!-- /.panel-heading -->
-                        <div id="cloudtag" class="panel-body">
-                            
+                        <div id="cloudtag" class="panel-body">                        
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+                </div>
 
+                <div class="col-lg-12">
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -197,7 +214,7 @@
                                         </div>
                                         <div class="timeline-body">
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est molestiae excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla qui! Laborum, atque.</p>
-                                            <hr>
+                                            <hr />
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i><span class="caret"></span>
@@ -246,7 +263,7 @@
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-8 -->
+
             </div>
             <!-- /.row -->
         </div>
@@ -255,26 +272,20 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-
+    <!-- Toggle JavaScript -->
+    <script src="/bootstrap/js/bootstrap-toggle.js" type="text/javascript" ></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/bootstrap/js/metisMenu.min.js" type="text/javascript"></script>
-
     <!-- High Charts JavaScript -->
     <script src="/bootstrap/js/highcharts.js" type="text/javascript"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="/bootstrap/js/sb-admin-2.js" type="text/javascript"></script>
-
     <!-- DatePicker JavaScript -->
     <script src="/bootstrap/js/moment-with-locales.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="/bootstrap/js/bootstrap-datepaginator.min.js" type="text/javascript"></script>
-
     <!-- D3.js -->
     <script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
     <!-- D3 Cloud Tag-->
@@ -331,7 +342,7 @@
             (
                 {
                     type: 'POST',
-                    url: 'index.aspx/getLineChart',
+                    url: 'home.aspx/getLineChart',
                     data: "{calendarClickDate: '" + calendarClickDate + "'}",
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
@@ -441,34 +452,19 @@
                                                 // format date 
                                                 var selectedTime;
                                                 if (this.x >= 12 && this.x <= 23) {
-                                                    selectedTime = this.x + " PM"
+                                                    selectedTime = this.x + " PM";
                                                 } else if (this.x >= 1 && this.x <= 11) {
-                                                    selectedTime = this.x + " AM"
+                                                    selectedTime = this.x + " AM";
                                                 } else if (this.x == 0) {
-                                                    selectedTime = "24 AM";
+                                                   selectedTime = "24 AM";
                                                 }
                                                 var d = new Date(calendarClickDate);
                                                 var n = d.toDateString();
-                                                var finalDateTime = n + " " + selectedTime
+                                                var finalDateTime = n + " " + selectedTime;
 
                                                 document.getElementById('selectedDateTime').innerHTML = finalDateTime;
+                                                cloudtag(calendarClickDate, this.x);
                                         }
-                                        //click: function (e) {
-                                        //    // format date 
-                                        //    var selectedTime;
-                                        //    if (this.x >= 12 && this.x <= 23) {
-                                        //        selectedTime = this.x + " PM"
-                                        //    } else if (this.x >= 1 && this.x <= 11) {
-                                        //        selectedTime = this.x + " AM"
-                                        //    } else if (this.x == 0) {
-                                        //        selectedTime = "24 AM";
-                                        //    }
-                                        //    var d = new Date(calendarClickDate);
-                                        //    var n = d.toDateString();
-                                        //    var finalDateTime = n + " " + selectedTime
-
-                                        //    document.getElementById('selectedDateTime').innerHTML = finalDateTime;
-                                        //}
                                     }
                                 },
                                 marker: {
@@ -522,7 +518,7 @@
             (
                 {
                     type: 'GET',
-                    url: 'index.aspx/getLiveCount',
+                    url: 'home.aspx/getLiveCount',
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     async: false
@@ -555,13 +551,13 @@
 
 
         //cloudtag
-        cloudtag("09/09/2015",9);
-        function cloudtag(date,hour) {
+        function cloudtag(date, hour) {
+            document.getElementById("cloudtag").innerHTML = "";
             $.ajax
             (
                 {
                     type: 'POST',
-                    url: 'bubble.aspx/cloudTag',
+                    url: 'home.aspx/cloudTag',
                     data: JSON.stringify({ dat: date, hour: hour }),
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
@@ -623,6 +619,8 @@
                             .text(function (d) { return d.text; })
                             .on("mouseover", function () {
                                 $(this).css("font-size", "5em");
+                                // update bar chart
+
                             })
                             .on("mouseout", function (d) {
                                 //fonti = words[ind].size;
