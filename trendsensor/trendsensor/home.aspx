@@ -29,6 +29,7 @@
     <link href="/bootstrap/css/highcharts.css" rel="stylesheet" />
     <!-- jQuery -->
     <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
+    
 
 </head>
 <body>
@@ -128,11 +129,11 @@
                         </div>
                         <div class="panel-heading">
                             <i class="fa fa-filter"></i>Emotions Filter&nbsp;&nbsp;&nbsp;&nbsp;	
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-onstyle="danger" />&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-onstyle="warning" />   &nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-onstyle="success" />&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-onstyle="info" />&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-onstyle="primary" />		         		            		             
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-onstyle="danger" id="angercheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-onstyle="warning" id="joycheck"/>   &nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-onstyle="success" id="sadnesscheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-onstyle="info" id="surprisedcheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-onstyle="primary" id="disgustedcheck"/>		         		            		             
                         </div>
                         <!-- /.panel-heading -->
                         <div id="cloudtag" class="panel-body">                        
@@ -150,7 +151,10 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <ul class="timeline">
+                            <div class="row">
+                                <div id="barchart" class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <ul class="timeline">
                                 <li>
                                     <div class="timeline-badge">
                                         <i class="fa fa-check"></i>
@@ -214,7 +218,7 @@
                                         </div>
                                         <div class="timeline-body">
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est molestiae excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla qui! Laborum, atque.</p>
-                                            <hr />
+                                            <hr>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i><span class="caret"></span>
@@ -258,6 +262,9 @@
                                     </div>
                                 </li>
                             </ul>
+                                </div>
+                            </div> 
+                            
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -290,10 +297,12 @@
     <script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
     <!-- D3 Cloud Tag-->
     <script src="d3.layout.cloud.js" type="text/javascript"></script>
-
+    <!-- Highcharts 3d-->
+    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
 
     <script type="text/javascript">
-
+        //barchart('2013-01-2216home');
+        var cloudtaglist;
         $( document ).ready(function() {
             var d = new Date();
             var n = d.toDateString();
@@ -569,8 +578,13 @@
                     //var fonti="";
                     //var ind=0;
                     var divwidth = document.getElementById("cloudtag").clientWidth;
-                    var cloudtaglist = data.d;
-                    var worddata=[];
+                    cloudtaglist = data.d;
+                    var worddata = [];
+                    var index = 0;
+                    var str = "";
+                    
+                    index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text);
+
                     for (i = 0; i < cloudtaglist.length; i++) {
                         worddata[i] = cloudtaglist[i].tag;
                     }
@@ -620,7 +634,8 @@
                             .on("mouseover", function () {
                                 $(this).css("font-size", "5em");
                                 // update bar chart
-
+                                index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text());
+                                barchart(cloudtaglist[index].tagid, $(this).text());
                             })
                             .on("mouseout", function (d) {
                                 //fonti = words[ind].size;
@@ -640,6 +655,150 @@
                     }
                 })
         }
+        //barchart
+        function barchart(tagid, tag) {
+
+            $.ajax
+            (
+                {
+                    type: 'POST',
+                    url: 'bubble.aspx/getBarChart',
+                    data: JSON.stringify({ tagd: tagid }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    async: false
+                }
+            ).done
+            (
+                function (data, textStatus, jqXHR) {
+                    var bclist = data.d;
+                    var barneutral = 0;
+                    var barjoy = 0;
+                    var baranger = 0;
+                    var barsadness = 0;
+                    var barsurprised = 0;
+                    var bardisgusted = 0;
+                    for (i = 0; i < bclist.length; i++) {
+                        if (bclist[i].mood == 'joy') {
+                            barjoy++;
+                        }
+                        else if (bclist[i].mood == 'anger') {
+                            baranger++;
+                        }
+                        else if (bclist[i].mood == 'sadness') {
+                            barsadness++;
+                        }
+                        else if (bclist[i].mood == 'surprised') {
+                            barsurprised++;
+                        }
+                        else if (bclist[i].mood == 'disgusted') {
+                            bardisgusted++;
+                        }
+                        else {
+                            barneutral++;
+                        }
+                    }
+                    $(function () {
+                        $('#barchart').highcharts({
+                            chart: {
+                                type: 'column',
+                                margin: 75,
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 10,
+                                    beta: 25,
+                                    depth: 70
+                                }
+                            },
+                            title: {
+                                text: tag,
+                                style: {
+                                    "fontWeight":"bold"
+                                }
+                            },
+                            subtitle: {
+                                text: 'mood bar chart'
+                            },
+                            plotOptions: {
+                                column: {
+                                    depth: 35
+                                },
+                                series: {
+                                    groupPadding: 0.05
+                                }
+                            },
+                            xAxis: {
+
+
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Frequency'
+                                }
+                            },
+                            series: [{
+                                name: 'Neutral',
+                                data: [barneutral],
+                                color: '#6C7A89',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }, {
+                                name: 'Joy',
+                                data: [barjoy],
+                                color: '#F5D76E',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            },
+                            {
+                                name: 'Anger',
+                                data: [baranger],
+                                color: '#F22613',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            },
+                            {
+                                name: 'Sadness',
+                                data: [barsadness],
+                                color: '#2ECC71',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            },
+                            {
+                                name: 'Surprised',
+                                data: [barsurprised],
+                                color: '#E08283',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            },
+                            {
+                                name: 'Disgusted',
+                                data: [bardisgusted],
+                                color: '#4183D7',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }]
+
+                        });
+                    });
+                })
+        }
+        //checkbox change event
+        //update cloudtag based on mood
+        $("#angercheck").change(function () {
+            if (this.checked) {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else{
+                    alert("lol");
+                }
+            }
+        });
     </script>
 </body>
 </html>
