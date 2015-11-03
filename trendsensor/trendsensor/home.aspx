@@ -29,7 +29,36 @@
     <link href="/bootstrap/css/highcharts.css" rel="stylesheet" />
     <!-- jQuery -->
     <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
-    
+      <style type="text/css">
+  #menu {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    width: 8em;
+    margin: -2.5em 0 0 0;
+    z-index: 5;
+    background: hsla(80, 88%, 40%, 0.7);
+    color: white;
+    font-weight: bold;
+    font-size: large;
+    text-align: left;
+    border: solid hsla(80, 90%, 40%, 0.5);
+    border-right: none;
+    padding: 0.5em 0.5em 0.5em 1.5em;
+    box-shadow: 0 1px 3px black;
+    border-radius: 0.5em 3em 3em 0.5em;
+  }
+  #menu li { margin: 0 }
+  #menu a { color: inherit }
+
+  /* Make menu absolute, not fixed, on IE 5 & 6 */
+  #menu { position: absolute }
+  *>#menu { position: fixed }
+
+  p.stb { text-indent: 0; margin-top: 0.83em }
+  p.mtb { text-indent: 0; margin-top: 2.17em }
+  p.ltb { text-indent: 0; margin-top: 3.08em }
+</style>
 
 </head>
 <body>
@@ -52,6 +81,12 @@
                     <div id="datepaginator"></div>
                 </div>
             </div>
+            <ul id=menu>
+                <li><a href="#L384">LineCharts</a>
+                <li><a href="#details">TagCloud</a>
+                <li><a href="#details">BarCharts</a>
+                <li><a href="#FAQ">Tweets</a>
+            </ul>
             <!-- /.navbar-top-links -->
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
@@ -84,6 +119,14 @@
         <div id="page-wrapper">
 
             <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">LineCharts</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+            <%--<div class="row">
                 <div class="col-lg-6">
                     <h1 class="page-header">DateTime Selected: </h1>
                 </div>
@@ -92,7 +135,7 @@
                 <div class="col-lg-6">
                     <h1 id="selectedDateTime" class="page-header"></h1>
                 </div>
-            </div>
+            </div>--%>
             <!-- /.row -->
 
             <%--<div class="row">
