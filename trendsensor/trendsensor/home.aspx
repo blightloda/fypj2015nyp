@@ -30,7 +30,36 @@
     <!-- jQuery -->
     <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
     
+    <style type="text/css">
+        #menu {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            width: 14em;
+            margin: -2.5em 0 0 0;
+            z-index: 5;
+            background: hsla(80, 88%, 40%, 0.7);
+            color: white;
+            font-weight: bold;
+            font-size: large;
+            text-align: left;
+            border: solid hsla(80, 90%, 40%, 0.5);
+            border-right: none;
+            padding: 0.5em 0.5em 0.5em 1.5em;
+            box-shadow: 0 1px 3px black;
+            border-radius: 0.5em 3em 3em 0.5em;
+        }
+        #menu li { margin: 0 }
+        #menu a { color: inherit }
 
+        /* Make menu absolute, not fixed, on IE 5 & 6 */
+        #menu { position: absolute }
+        *>#menu { position: fixed }
+
+        p.stb { text-indent: 0; margin-top: 0.83em }
+        p.mtb { text-indent: 0; margin-top: 2.17em }
+        p.ltb { text-indent: 0; margin-top: 3.08em }
+    </style>
 </head>
 <body>
 
@@ -59,21 +88,6 @@
                         <li>
                             <a href="home.aspx"><i class="fa fa-home fa-fw"></i>Home</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-info fa-fw"></i>Live Count<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>Incoming Live Tweets
-                                    <br />
-                                    Since 10/01/2013 :
-                                </li>
-
-                                <li>
-                                    <div id="amount">0</div>
-                                    <!-- /.live count -->
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -95,12 +109,10 @@
             </div>
             <!-- /.row -->
 
-            <%--<div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <!-- Markup - paginator will be injected as html into this div -->
-                    <hr />
-                </div>
-            </div>--%>
+               <ul id="menu">
+                <li>Incoming Tweets</li>
+                <li><div id="amount">0</div></li>
+            </ul>
 
             <!-- /.row -->
             <div class="row">
