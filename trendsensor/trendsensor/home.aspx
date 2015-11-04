@@ -108,14 +108,13 @@
             <li><h1 id="selectedDateTime" class="page-header"></h1></li>
         </ul>
 
-        <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar navbar-default navbar-fixed-top">
                 <div class="col-lg-1">
                     <a class="navbar-brand" href="home.aspx">Current Trendsensor</a>
                 </div>
                 <div class="col-lg-11">
-                    <div id="datepaginator"></div>
+                    <div id="datepaginator" style="margin-left:20px;margin-right:20px"></div>
                 </div>
             </div>
             <!-- /.navbar-top-links -->
@@ -225,12 +224,15 @@
     <!-- D3.js -->
     <script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
     <!-- D3 Cloud Tag-->
-    <script src="d3.layout.cloud.js" type="text/javascript"></script>
+    <script src="/bootstrap/js/d3.layout.cloud.js" type="text/javascript"></script>
     <!-- Highcharts 3d-->
     <script src="http://code.highcharts.com/highcharts-3d.js"></script>
 
     <script type="text/javascript">
+
+        // use to update barchart
         var cloudtaglist;
+
         $( document ).ready(function() {
             var d = new Date();
             var n = d.toDateString();
@@ -507,6 +509,7 @@
         }
         //cloudtag
         function cloudtag(date, hour) {
+            //clear tag cloud content
             document.getElementById("cloudtag").innerHTML = "";
             $.ajax
             (
@@ -521,87 +524,79 @@
             ).done
             (
                 function (data, textStatus, jqXHR) {
-                    //var fonti="";
-                    //var ind=0;
-                    var divwidth = document.getElementById("cloudtag").clientWidth;
+                    // prevent json hijacking
                     cloudtaglist = data.d;
+                    // get width for cloud
+                    var divwidth = document.getElementById("cloudtag").clientWidth;
+                    
                     var worddata = [];
                     var index = 0;
                     var str = "";
                     
-                    index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text);
-
+                    // loop the json data and assign them into array 
                     for (i = 0; i < cloudtaglist.length; i++) {
                         worddata[i] = cloudtaglist[i].tag;
                     }
+
+                    
                     var fontsiz = [];
+                    // keyword size base on frequency
                     for (i = 0; i < cloudtaglist.length; i++) {
                         fontsiz[i] = cloudtaglist[i].frequency/10;
                     }
+
+                    // color for text
                     var fill = d3.scale.category20();
-                    //function mapdata() {
-                    //    return{text:, size:}
-                    //}
+                    // json data for data with size
                     var sj = [];
                     function mapdata() {
                         for (i = 0; i < worddata.length; i++) {
                             sj.push({ text: worddata[i], size: fontsiz[i] });
                         }
                     }
+
                     mapdata();
                     d3.layout.cloud().size([divwidth, 300])
                         .words(sj.map(function (d) {
                               return { text: d.text, size: 10 + d.size * 50 };
                           }))
                         .rotate(function () { return 4 * 90; })
-                        .font("Impact")
-                        .fontSize(function (d) { return d.size; })
+                        .font("impact")
+                        .fontsize(function (d) { return d.size; })
                         .on("end", draw)
                         .start();
 
-                    function draw(words) {
-                        d3.select("#cloudtag").append("svg")
-                            .attr("width", document.getElementById("cloudtag").clientWidth)
-                            .attr("height", 300)
-                          .append("g")
-                            .attr("transform", "translate("+divwidth/2 +",150)")
-                          .selectAll("text")
-                            .data(words)
-                          .enter().append("text")
-                            .style("font-size", function (d) { return d.size + "px"; })
-                            .style("font-family", "Impact")
-                            .style("fill", function (d, i) { return fill(i); })
-                            .style("transition", "all 0.3s ease")
-                            .attr("text-anchor", "middle")
-                            .attr("transform", function (d) {
-                                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                            })
-                            .text(function (d) { return d.text; })
-                            .on("mouseover", function () {
-                                $(this).css("font-size", "5em");
-                                // update bar chart
-                                index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text());
-                                // draw bar chart
-                                barchart(cloudtaglist[index].tagid, $(this).text());
-                                // retreive tweets
-                                relatedTweets($(this).text(), selectedDate, selectedTimeForRelatedTweets);
-                            })
-                            .on("mouseout", function (d) {
-                                //fonti = words[ind].size;
-                                //ind++;
-                                $(this).css("font-size", d.size + "px");
-
-                            })
-                            //.on("mouseout", function () {
-
-                            //        fonti=words[ind].size;
-                            //        ind++;
-                            //    $(this).stop().animate({ fontSize: fonti  + "px" }, 500);
-
-                            //})
-
-
-                    }
+                    //function draw(words) {
+                    //    d3.select("#cloudtag").append("svg")
+                    //        .attr("width", document.getElementById("cloudtag").clientWidth)
+                    //        .attr("height", 300)
+                    //      .append("g")
+                    //        .attr("transform", "translate("+divwidth/2 +",150)")
+                    //      .selectAll("text")
+                    //        .data(words)
+                    //      .enter().append("text")
+                    //        .style("font-size", function (d) { return d.size + "px"; })
+                    //        .style("font-family", "Impact")
+                    //        .style("fill", function (d, i) { return fill(i); })
+                    //        .style("transition", "all 0.3s ease")
+                    //        .attr("text-anchor", "middle")
+                    //        .attr("transform", function (d) {
+                    //            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    //        })
+                    //        .text(function (d) { return d.text; })
+                    //        .on("mouseover", function () {
+                    //            $(this).css("font-size", "5em");
+                    //            // update bar chart
+                    //            index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text());
+                    //            // draw bar chart
+                    //            barchart(cloudtaglist[index].tagid, $(this).text());
+                    //            // retreive tweets
+                    //            relatedTweets($(this).text(), selectedDate, selectedTimeForRelatedTweets);
+                    //        })
+                    //        .on("mouseout", function (d) {
+                    //            $(this).css("font-size", d.size + "px");
+                    //        })
+                    //}
                 })
         }
         // update related tweets
