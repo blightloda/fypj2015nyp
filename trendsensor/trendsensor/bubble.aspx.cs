@@ -13,6 +13,8 @@ namespace trendsensor
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string[] teststr = new string[] { "pizza", "pineapple" };
+            string[] userinput = new string[] { "I", "like", "pizz" };
 
         }
         [WebMethod]

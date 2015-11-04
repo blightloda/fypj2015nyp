@@ -157,14 +157,14 @@
                         <div class="panel-heading">
                             <i class="fa fa-cloud"></i>Tag Cloud	         		            		             
                         </div>
-                        <%--<div class="panel-heading">
+                        <div class="panel-heading">
                             <i class="fa fa-filter"></i>Emotions Filter&nbsp;&nbsp;&nbsp;&nbsp;	
                             <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-onstyle="danger" id="angercheck"/>&nbsp;
                             <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-onstyle="warning" id="joycheck"/>   &nbsp;
                             <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-onstyle="success" id="sadnesscheck"/>&nbsp;
                             <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-onstyle="info" id="surprisedcheck"/>&nbsp;
                             <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-onstyle="primary" id="disgustedcheck"/>		         		            		             
-                        </div>--%>
+                        </div>
                         <!-- /.panel-heading -->
                         <div id="cloudtag" class="panel-body">                        
                         </div>
@@ -404,6 +404,20 @@
                                                 selectedDate = calendarClickDate;
                                                 selectedTimeForRelatedTweets = this.x;
                                                 var finalDateTime = n + " " + selectedTime;
+                                                
+                                                //check checkbox without triggering .change()
+                                                $("#joycheck").data("bs.toggle").on(true);
+                                                $("#angercheck").data("bs.toggle").on(true);
+                                                $("#sadnesscheck").data("bs.toggle").on(true);
+                                                $("#surprisedcheck").data("bs.toggle").on(true);
+                                                $("#disgustedcheck").data("bs.toggle").on(true);
+
+
+                                                //$('#joycheck').bootstrapToggle('on');
+                                                //$('#angercheck').bootstrapToggle('on');
+                                                //$('#sadnesscheck').bootstrapToggle('on');
+                                                //$('#surprisedcheck').bootstrapToggle('on');
+                                                //$('#disgustedcheck').bootstrapToggle('on');
                                                 // update selected dateTime
                                                 document.getElementById('selectedDateTime').innerHTML = finalDateTime;
                                                 cloudtag(calendarClickDate, this.x);
@@ -759,12 +773,238 @@
         }
         //checkbox change event
         //update cloudtag based on mood
-        $("#angercheck").change(function () {
+        $("#joycheck").change(function () {
+            var mood = "";
             if (this.checked) {
                 if ($('#cloudtag').children().length == 0) {
                     alert("No Data");
-                } else{
-                    alert("lol");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
+                }
+            }
+            else {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
+                }
+            }
+        });
+        $("#angercheck").change(function () {
+            var mood = "";
+            if (this.checked) {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
+                }
+            }
+            else {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
+                }
+            }
+        });
+        $("#sadnesscheck").change(function () {
+            var mood = "";
+            if (this.checked) {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
+                }
+            }
+            else {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
+                }
+            }
+        });
+        $("#surprisedcheck").change(function () {
+            var mood = "";
+            if (this.checked) {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
+                }
+            }
+            else {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
+                }
+            }
+        });
+        $("#disgustedcheck").change(function () {
+            var mood = "";
+            if (this.checked) {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
+                }
+            }
+            else {
+                if ($('#cloudtag').children().length == 0) {
+                    alert("No Data");
+                } else {
+                    if (document.getElementById("joycheck").checked) {
+                        mood += "joy";
+                    }
+                    if (document.getElementById("angercheck").checked) {
+                        mood += " anger";
+                    }
+                    if (document.getElementById("sadnesscheck").checked) {
+                        mood += " sadness";
+                    }
+                    if (document.getElementById("surprisedcheck").checked) {
+                        mood += " surprised";
+                    }
+                    if (document.getElementById("disgustedcheck").checked) {
+                        mood += " disgusted";
+                    }
+                    filtercloudtag(globaldate, mood, globaltime);
                 }
             }
         });
