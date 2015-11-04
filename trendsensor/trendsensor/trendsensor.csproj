@@ -79,6 +79,8 @@
     <Content Include="bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="bootstrap\img\0.png" />
     <Content Include="bootstrap\img\NewbgdesignCustom.jpg" />
+    <Content Include="bootstrap\img\nyp-logo-300x63.gif" />
+    <Content Include="bootstrap\img\nyp.jpg" />
     <Content Include="bootstrap\js\bootstrap-datepaginator.min.js" />
     <Content Include="bootstrap\js\bootstrap-datepicker.min.js" />
     <Content Include="bootstrap\js\bootstrap-toggle.js" />

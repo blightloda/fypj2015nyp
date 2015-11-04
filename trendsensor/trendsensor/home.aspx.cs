@@ -93,5 +93,35 @@ namespace trendsensor
             object response = ctlist;
             return response;
         }
+
+        [WebMethod]
+        public static object getRelatedTweets(string selectedWord, string selectedDate, string selectedTime)
+        {
+            // create a list, which can hold tweets instances
+            List<Tweets> tweetList = new List<Tweets>();
+
+            //convert to correct date format
+            string format = "MM-dd-yyyy";
+            string format2 = "MM/dd/yyyy";
+            DateTime dateTime;
+            string str1 = "";
+            if (DateTime.TryParseExact(selectedDate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            {
+                str1 = dateTime.ToString("yyyy'-'MM'-'dd");
+            }
+            else if (DateTime.TryParseExact(selectedDate, format2, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            {
+                str1 = dateTime.ToString("yyyy'-'MM'-'dd");
+            }
+
+            // create a tweets class instance so that i
+            // can talk to database 
+            Tweets tweets = new Tweets();
+            tweetList = tweets.getRelatedTweets(selectedWord, str1, selectedTime);
+
+            // assign the tweetList to the response object
+            object response = tweetList;
+            return response;
+        }
     }
 }
