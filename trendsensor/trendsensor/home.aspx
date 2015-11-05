@@ -516,6 +516,7 @@
         //cloudtag
         function cloudtag(date, hour) {
             //clear tag cloud content
+            $('cloudtag').css("height",$('cloudtag').height());
             document.getElementById("cloudtag").innerHTML = "";
             $.ajax
             (
@@ -595,7 +596,7 @@
                                 // update bar chart
                                 index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text());
                                 // draw bar chart
-                                barchart(cloudtaglist[index].tagid, $(this).text());
+                                barchart(cloudtaglist[index].tagId, $(this).text());
                                 // retreive tweets
                                 relatedTweets($(this).text(), selectedDate, selectedTimeForRelatedTweets);
                             })
@@ -607,7 +608,8 @@
         }
         //filter cloudtag
         function filtercloudtag(date, mood, hour) {
-            //document.getElementById("cloudtag").innerHTML = "";
+            
+            document.getElementById("cloudtag").innerHTML = "";
             $.ajax
             (
                 {
