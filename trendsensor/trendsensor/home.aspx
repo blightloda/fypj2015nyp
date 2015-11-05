@@ -31,10 +31,6 @@
     <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
     
     <style type="text/css">
-        a.dp-nav.dp-nav-right{
-            border-left-style: hidden!important;
-            width: 19px;
-        }
         #menu {
             position: fixed;
             left: 0;
@@ -63,144 +59,240 @@
         p.stb { text-indent: 0; margin-top: 0.83em }
         p.mtb { text-indent: 0; margin-top: 2.17em }
         p.ltb { text-indent: 0; margin-top: 3.08em }
-
-        #currentSelectedDateTime {
-            position: fixed;
-            left: 0;
-            top: 67%;
-            width: 14em;
-            margin: -2.5em 0 0 0;
-            z-index: 5;
-            background: hsla(80, 88%, 40%, 0.7);
-            color: white;
-            font-weight: bold;
-            font-size: large;
-            text-align: left;
-            border: solid hsla(80, 90%, 40%, 0.5);
-            border-right: none;
-            padding: 0.5em 0.5em 0.5em 1.5em;
-            box-shadow: 0 1px 3px black;
-            border-radius: 0.5em 3em 3em 0.5em;
-        }
-        #currentSelectedDateTime li { margin: 0 }
-        #currentSelectedDateTime a { color: inherit }
-
-        /* Make menu absolute, not fixed, on IE 5 & 6 */
-        #currentSelectedDateTime { position: absolute }
-        *>#currentSelectedDateTime { position: fixed }
-
-        p.stb { text-indent: 0; margin-top: 0.83em }
-        p.mtb { text-indent: 0; margin-top: 2.17em }
-        p.ltb { text-indent: 0; margin-top: 3.08em }
     </style>
 </head>
 <body>
 
     <div id="wrapper">
 
-        <!-- /.fixed float menu -->
-        <ul id="menu">
-            <li>Incoming Tweets</li>
-            <li><div id="amount">0</div></li>
-        </ul>
-        <ul id="currentSelectedDateTime">
-            <li>DateTime Selected</li>
-            <li><h1 id="selectedDateTime" class="page-header"></h1></li>
-        </ul>
-
+        <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar navbar-default navbar-fixed-top">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <div class="col-lg-1">
                     <a class="navbar-brand" href="home.aspx">Current Trendsensor</a>
                 </div>
                 <div class="col-lg-11">
-                    <div id="datepaginator" style="margin-left:20px;margin-right:20px"></div>
+                    <div id="datepaginator"></div>
                 </div>
             </div>
             <!-- /.navbar-top-links -->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="home.aspx"><i class="fa fa-home fa-fw"></i>Home</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
         </nav>
-        
+
         <div id="page-wrapper">
-            
+
             <div class="row">
-                <hr />
+                <div class="col-lg-6">
+                    <h1 class="page-header">DateTime Selected: </h1>
+                </div>
+                <!-- /.col-lg-3 -->
+
+                <div class="col-lg-6">
+                    <h1 id="selectedDateTime" class="page-header"></h1>
+                </div>
+            </div>
+            <!-- /.row -->
+
+               <ul id="menu">
+                <li>Incoming Tweets</li>
+                <li><div id="amount">0</div></li>
+            </ul>
+
+            <!-- /.row -->
+            <div class="row">
                 <div class="col-lg-8">
+                    <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-line-chart"></i>Line Chart
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        More
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Print</a>
-                                        </li>
-                                        <li><a href="#">Save As Image</a>
-                                        </li>
-                                        <li><a href="#">Save As Pdf</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <i class="fa fa-line-chart"></i>Singapore Current Affairs
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+                            <!-- Trend Graph -->
                             <div id="chart_div"></div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->           
+                    <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-4">
-                    <%--<div class="panel panel-default">
+                    <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-clock-o fa-fw"></i>Related Tweets
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <ul class="timeline" id="relatedTweetUL">
- 
-                            </ul>  
+                            <div id="barchart"></div>
                         </div>
-                        <!-- /.panel-body -->
-                    </div>--%>
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart"></i>Bar Chart	         		            		             
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">  
-                            <div id="barchart"></div>                      
-                        </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-4 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
                 <div class="col-lg-12">
+                    <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-cloud"></i>Tag Cloud
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='24' width='24'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='24' width='24'></img> Anger" data-onstyle="danger" id="angercheck"/>&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='24' width='24'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='24' width='24'></img> Joy" data-onstyle="warning" id="joycheck"/>   &nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='24' width='24'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='24' width='24'></img> Sadness" data-onstyle="success" id="sadnesscheck"/>&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='24' width='24'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='24' width='24'></img> Surprised" data-onstyle="info" id="surprisedcheck"/>&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='24' width='24'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='24' width='24'></img> Disgusted" data-onstyle="primary" id="disgustedcheck"/>		         		            		             	         		            		             
+                            <i class="fa fa-cloud"></i>Tag Cloud	         		            		             
+                        </div>
+                        <div class="panel-heading">
+                            <i class="fa fa-filter"></i>Emotions Filter&nbsp;&nbsp;&nbsp;&nbsp;	
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-onstyle="danger" id="angercheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-onstyle="warning" id="joycheck"/>   &nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-onstyle="success" id="sadnesscheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-onstyle="info" id="surprisedcheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-onstyle="primary" id="disgustedcheck"/>		         		            		             
                         </div>
                         <!-- /.panel-heading -->
                         <div id="cloudtag" class="panel-body">                        
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel --> 
+                    <!-- /.panel -->
                 </div>
+
+                <div class="col-lg-12">
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-clock-o fa-fw"></i>Related Tweets
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div id="barcharts" class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <ul class="timeline">
+                                <li>
+                                    <div class="timeline-badge">
+                                        <i class="fa fa-check"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                            <p>
+                                                <small class="text-muted"><i class="fa fa-clock-o"></i>11 hours ago via Twitter</small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas suscipit facere rem dicta, debitis.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-badge warning">
+                                        <i class="fa fa-credit-card"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolorem quibusdam, tenetur commodi provident cumque magni voluptatem libero, quis rerum. Fugiat esse debitis optio, tempore. Animi officiis alias, officia repellendus.</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium maiores odit qui est tempora eos, nostrum provident explicabo dignissimos debitis vel! Adipisci eius voluptates, ad aut recusandae minus eaque facere.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="timeline-badge danger">
+                                        <i class="fa fa-bomb"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus numquam facilis enim eaque, tenetur nam id qui vel velit similique nihil iure molestias aliquam, voluptatem totam quaerat, magni commodi quisquam.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates est quaerat asperiores sapiente, eligendi, nihil. Itaque quos, alias sapiente rerum quas odit! Aperiam officiis quidem delectus libero, omnis ut debitis!</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="timeline-badge info">
+                                        <i class="fa fa-save"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est molestiae excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla qui! Laborum, atque.</p>
+                                            <hr>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-gear"></i><span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Action</a>
+                                                    </li>
+                                                    <li><a href="#">Another action</a>
+                                                    </li>
+                                                    <li><a href="#">Something else here</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Separated link</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi fuga odio quibusdam. Iure expedita, incidunt unde quis nam! Quod, quisquam. Officia quam qui adipisci quas consequuntur nostrum sequi. Consequuntur, commodi.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-badge success">
+                                        <i class="fa fa-graduation-cap"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia voluptas debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim incidunt quisquam maxime neque eaque.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                                </div>
+                            </div> 
+                            
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
             </div>
             <!-- /.row -->
         </div>
@@ -231,13 +323,12 @@
     <script src="http://code.highcharts.com/highcharts-3d.js"></script>
 
     <script type="text/javascript">
-        //used for cloudtagfilter
-        var globaltime;
+        //for use in filtercloudtag
         var globaldate;
-        // use to update barchart
+        var globaltime;
+        //barchart('2013-01-2216home');
         var cloudtaglist;
-
-        $( document ).ready(function() {
+        $(document).ready(function () {
             var d = new Date();
             var n = d.toDateString();
             document.getElementById('selectedDateTime').innerHTML = n;
@@ -279,10 +370,6 @@
         }
         $('#datepaginator').datepaginator(dateChanged);
 
-
-        // dateTime to update Tweets
-        var selectedDate = "";
-        var selectedTimeForRelatedTweets = "";
         // draw line charts
         function drawChart(calendarClickDate) {
             $.ajax
@@ -395,40 +482,33 @@
                                 cursor: 'pointer',
                                 point: {
                                     events: {
-                                        mouseOver: function () {     
-                                                // format date 
-                                                var selectedTime;
-                                                if (this.x >= 12 && this.x <= 23) {
-                                                    selectedTime = this.x + " PM";
-                                                } else if (this.x >= 1 && this.x <= 11) {
-                                                    selectedTime = this.x + " AM";
-                                                } else if (this.x == 0) {
-                                                   selectedTime = "24 AM";
-                                                }
-                                                var d = new Date(calendarClickDate);
-                                                var n = d.toDateString();
-                                                selectedDate = calendarClickDate;
-                                                selectedTimeForRelatedTweets = this.x;
-                                                var finalDateTime = n + " " + selectedTime;
-                                                
-                                                //check checkbox without triggering .change()
-                                                $("#joycheck").data("bs.toggle").on(true);
-                                                $("#angercheck").data("bs.toggle").on(true);
-                                                $("#sadnesscheck").data("bs.toggle").on(true);
-                                                $("#surprisedcheck").data("bs.toggle").on(true);
-                                                $("#disgustedcheck").data("bs.toggle").on(true);
+                                        mouseOver: function () {
+                                            // format date 
+                                            var selectedTime;
+                                            if (this.x >= 12 && this.x <= 23) {
+                                                selectedTime = this.x + " PM";
+                                            } else if (this.x >= 1 && this.x <= 11) {
+                                                selectedTime = this.x + " AM";
+                                            } else if (this.x == 0) {
+                                                selectedTime = "24 AM";
+                                            }
+                                            var d = new Date(calendarClickDate);
+                                            var n = d.toDateString();
+                                            var finalDateTime = n + " " + selectedTime;
 
-                                                globaldate = calendarClickDate;
-                                                globaltime = this.x;
-                                                //$('#joycheck').bootstrapToggle('on');
-                                                //$('#angercheck').bootstrapToggle('on');
-                                                //$('#sadnesscheck').bootstrapToggle('on');
-                                                //$('#surprisedcheck').bootstrapToggle('on');
-                                                //$('#disgustedcheck').bootstrapToggle('on');
-                                                // update selected dateTime
-                                                document.getElementById('selectedDateTime').innerHTML = finalDateTime;
-                                                cloudtag(calendarClickDate, this.x);
-                                                
+                                            //check checkbox without triggering .change()
+                                            $("#joycheck").data("bs.toggle").on(true);
+                                            $("#angercheck").data("bs.toggle").on(true);
+                                            $("#sadnesscheck").data("bs.toggle").on(true);
+                                            $("#surprisedcheck").data("bs.toggle").on(true);
+                                            $("#disgustedcheck").data("bs.toggle").on(true);
+                                            // update selected dateTime
+                                            globaldate = calendarClickDate;
+                                            globaltime = this.x;
+                                            
+                                            
+                                            document.getElementById('selectedDateTime').innerHTML = finalDateTime;
+                                            cloudtag(calendarClickDate, this.x);
                                         }
                                     }
                                 },
@@ -513,9 +593,10 @@
                 $('#amount').html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + liveCount);
             }, 200);
         }
+
+
         //cloudtag
         function cloudtag(date, hour) {
-            //clear tag cloud content
             document.getElementById("cloudtag").innerHTML = "";
             $.ajax
             (
@@ -530,44 +611,40 @@
             ).done
             (
                 function (data, textStatus, jqXHR) {
-                    // prevent json hijacking
-                    cloudtaglist = data.d;
-                    // get width for cloud
+                    //var fonti="";
+                    //var ind=0;
                     var divwidth = document.getElementById("cloudtag").clientWidth;
-                    
+                    cloudtaglist = data.d;
                     var worddata = [];
                     var index = 0;
                     var str = "";
-                    
-                    // loop the json data and assign them into array 
+
+                    index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text);
+
                     for (i = 0; i < cloudtaglist.length; i++) {
                         worddata[i] = cloudtaglist[i].tag;
                     }
-
-                    
                     var fontsiz = [];
-                    // keyword size base on frequency
                     for (i = 0; i < cloudtaglist.length; i++) {
-                        fontsiz[i] = cloudtaglist[i].frequency/10;
+                        fontsiz[i] = cloudtaglist[i].frequency / 10;
                     }
-
-                    // color for text
                     var fill = d3.scale.category20();
-                    // json data for data with size
+                    //function mapdata() {
+                    //    return{text:, size:}
+                    //}
                     var sj = [];
                     function mapdata() {
                         for (i = 0; i < worddata.length; i++) {
                             sj.push({ text: worddata[i], size: fontsiz[i] });
                         }
                     }
-
                     mapdata();
                     d3.layout.cloud().size([divwidth, 300])
                         .words(sj.map(function (d) {
-                              return { text: d.text, size: 10 + d.size * 50 };
-                          }))
+                            return { text: d.text, size: 10 + d.size * 50 };
+                        }))
                         .rotate(function () { return 4 * 90; })
-                        .font("impact")
+                        .font("Impact")
                         .fontSize(function (d) { return d.size; })
                         .on("end", draw)
                         .start();
@@ -577,7 +654,7 @@
                             .attr("width", document.getElementById("cloudtag").clientWidth)
                             .attr("height", 300)
                           .append("g")
-                            .attr("transform", "translate("+divwidth/2 +",150)")
+                            .attr("transform", "translate(" + divwidth / 2 + ",150)")
                           .selectAll("text")
                             .data(words)
                           .enter().append("text")
@@ -594,20 +671,163 @@
                                 $(this).css("font-size", "5em");
                                 // update bar chart
                                 index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text());
-                                // draw bar chart
                                 barchart(cloudtaglist[index].tagid, $(this).text());
-                                // retreive tweets
-                                relatedTweets($(this).text(), selectedDate, selectedTimeForRelatedTweets);
                             })
                             .on("mouseout", function (d) {
+                                //fonti = words[ind].size;
+                                //ind++;
                                 $(this).css("font-size", d.size + "px");
+
                             })
+                        //.on("mouseout", function () {
+
+                        //        fonti=words[ind].size;
+                        //        ind++;
+                        //    $(this).stop().animate({ fontSize: fonti  + "px" }, 500);
+
+                        //})
+
+
                     }
+                })
+        }
+        //barchart
+        function barchart(tagid, tag) {
+
+            $.ajax
+            (
+                {
+                    type: 'POST',
+                    url: 'bubble.aspx/getBarChart',
+                    data: JSON.stringify({ tagd: tagid }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    async: false
+                }
+            ).done
+            (
+                function (data, textStatus, jqXHR) {
+                    var bclist = data.d;
+                    var barneutral = 0;
+                    var barjoy = 0;
+                    var baranger = 0;
+                    var barsadness = 0;
+                    var barsurprised = 0;
+                    var bardisgusted = 0;
+                    for (i = 0; i < bclist.length; i++) {
+                        if (bclist[i].mood == 'joy') {
+                            barjoy++;
+                        }
+                        else if (bclist[i].mood == 'anger') {
+                            baranger++;
+                        }
+                        else if (bclist[i].mood == 'sadness') {
+                            barsadness++;
+                        }
+                        else if (bclist[i].mood == 'surprised') {
+                            barsurprised++;
+                        }
+                        else if (bclist[i].mood == 'disgusted') {
+                            bardisgusted++;
+                        }
+                        else {
+                            barneutral++;
+                        }
+                    }
+                    $(function () {
+                        $('#barchart').highcharts({
+                            chart: {
+                                type: 'column',
+                                margin: 75,
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 10,
+                                    beta: 25,
+                                    depth: 70
+                                }
+                            },
+                            title: {
+                                text: tag,
+                                style: {
+                                    "fontWeight": "bold"
+                                }
+                            },
+                            subtitle: {
+                                text: 'mood bar chart'
+                            },
+                            plotOptions: {
+                                column: {
+                                    depth: 35
+                                },
+                                series: {
+                                    groupPadding: 0.05
+                                }
+                            },
+                            xAxis: {
+
+
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Frequency'
+                                }
+                            },
+                            series: [{
+                                name: 'Neutral',
+                                data: [barneutral],
+                                color: '#6C7A89',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }, {
+                                name: 'Joy',
+                                data: [barjoy],
+                                color: '#F5D76E',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            },
+                            {
+                                name: 'Anger',
+                                data: [baranger],
+                                color: '#F22613',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            },
+                            {
+                                name: 'Sadness',
+                                data: [barsadness],
+                                color: '#2ECC71',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            },
+                            {
+                                name: 'Surprised',
+                                data: [barsurprised],
+                                color: '#E08283',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            },
+                            {
+                                name: 'Disgusted',
+                                data: [bardisgusted],
+                                color: '#4183D7',
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }]
+
+                        });
+                    });
                 })
         }
         //filter cloudtag
         function filtercloudtag(date, mood, hour) {
-            //document.getElementById("cloudtag").innerHTML = "";
+
+            document.getElementById("cloudtag").innerHTML = "";
             $.ajax
             (
                 {
@@ -690,173 +910,6 @@
 
                             })
                     }
-                })
-        }
-        // update related tweets
-        function relatedTweets(selectedWord, selectedDate, selectedTime) {
-            $.ajax
-            (
-               {
-                   type: 'POST',
-                   url: 'home.aspx/getRelatedTweets',
-                   data: "{selectedWord: '" + selectedWord + "', selectedDate: '" + selectedDate + "', selectedTime: '" + selectedTime + "'}",
-                   contentType: 'application/json; charset=utf-8',
-                   dataType: 'json',
-                   async: false
-               }
-            ).done
-            (
-               function (data, textStatus, jqXHR) {
-
-                   // prevent json hijacking
-                   var tweetList = data.d;
-                   $(relatedTweetUL).empty();
-                   var counter = 0;
-                   for (i = 0; i < tweetList.length; i++) {
-                       $("#relatedTweetUL").append("<li><div class=\"timeline-badge\"><i class=\"fa fa-check\"></i></div>"
-                           + "<div class=\"timeline-panel\">"
-                           + "<div class=\"timeline-body\">"
-                           + "<p>" + tweetList[i].Content + "</p></div></div></li>");
-                       counter++;
-                       if (counter >= 2) {
-                           break;
-                       }
-                   }
-               }
-            )
-        }
-
-        //barchart
-        function barchart(tagid, tag) {
-
-            $.ajax
-            (
-                {
-                    type: 'POST',
-                    url: 'bubble.aspx/getBarChart',
-                    data: JSON.stringify({ tagd: tagid }),
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    async: false
-                }
-            ).done
-            (
-                function (data, textStatus, jqXHR) {
-                    var bclist = data.d;
-                    var barneutral = 0;
-                    var barjoy = 0;
-                    var baranger = 0;
-                    var barsadness = 0;
-                    var barsurprised = 0;
-                    var bardisgusted = 0;
-                    for (i = 0; i < bclist.length; i++) {
-                        if (bclist[i].mood == 'joy') {
-                            barjoy++;
-                        }
-                        else if (bclist[i].mood == 'anger') {
-                            baranger++;
-                        }
-                        else if (bclist[i].mood == 'sadness') {
-                            barsadness++;
-                        }
-                        else if (bclist[i].mood == 'surprised') {
-                            barsurprised++;
-                        }
-                        else if (bclist[i].mood == 'disgusted') {
-                            bardisgusted++;
-                        }
-                        else {
-                            barneutral++;
-                        }
-                    }
-                    $(function () {
-                        $('#barchart').highcharts({
-                            chart: {
-                                type: 'column',
-                                margin: 75,
-                                options3d: {
-                                    enabled: true,
-                                    alpha: 10,
-                                    beta: 25,
-                                    depth: 70
-                                }
-                            },
-                            title: {
-                                text: tag,
-                                style: {
-                                    "fontWeight":"bold"
-                                }
-                            },
-                            subtitle: {
-                                text: 'mood bar chart'
-                            },
-                            plotOptions: {
-                                column: {
-                                    depth: 35
-                                },
-                                series: {
-                                    groupPadding: 0.05
-                                }
-                            },
-                            xAxis: {
-
-
-                            },
-                            yAxis: {
-                                title: {
-                                    text: 'Frequency'
-                                }
-                            },
-                            series: [{
-                                name: 'Neutral',
-                                data: [barneutral],
-                                color: '#6C7A89',
-                                dataLabels: {
-                                    enabled: true
-                                }
-                            }, {
-                                name: 'Joy',
-                                data: [barjoy],
-                                color: '#F5D76E',
-                                dataLabels: {
-                                    enabled: true
-                                }
-                            },
-                            {
-                                name: 'Anger',
-                                data: [baranger],
-                                color: '#F22613',
-                                dataLabels: {
-                                    enabled: true
-                                }
-                            },
-                            {
-                                name: 'Sadness',
-                                data: [barsadness],
-                                color: '#2ECC71',
-                                dataLabels: {
-                                    enabled: true
-                                }
-                            },
-                            {
-                                name: 'Surprised',
-                                data: [barsurprised],
-                                color: '#E08283',
-                                dataLabels: {
-                                    enabled: true
-                                }
-                            },
-                            {
-                                name: 'Disgusted',
-                                data: [bardisgusted],
-                                color: '#4183D7',
-                                dataLabels: {
-                                    enabled: true
-                                }
-                            }]
-
-                        });
-                    });
                 })
         }
         //checkbox change event
@@ -1099,3 +1152,4 @@
     </script>
 </body>
 </html>
+
