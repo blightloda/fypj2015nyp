@@ -97,7 +97,7 @@ namespace trendsensor
             // create a linechart class instance so that i
             // can talk to database 
             CloudTag ct = new CloudTag();
-            ctlist = ct.filterCloudTag(str1,mood,hour);
+            ctlist = ct.filterCloudTag(str1,mood.Trim(),hour);
 
             // assign the linechartList to the response object
             object response = ctlist;
