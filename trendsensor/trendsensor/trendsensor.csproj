@@ -86,7 +86,6 @@
     <Content Include="bootstrap\js\bootstrap-toggle.js" />
     <Content Include="bootstrap\js\bootstrap-toggle.min.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
-    <Content Include="bootstrap\js\d3.layout.cloud.js" />
     <Content Include="bootstrap\js\jquery-2.1.4.min.js" />
     <Content Include="bootstrap\js\metisMenu.min.js" />
     <Content Include="bootstrap\js\moment-with-locales.js" />

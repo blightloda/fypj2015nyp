@@ -151,29 +151,11 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->  
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-cloud"></i>Tag Cloud	         		            		             
-                        </div>
-                        <div class="panel-heading">
-                            <i class="fa fa-filter"></i>Emotions Filter&nbsp;&nbsp;&nbsp;&nbsp;	
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-onstyle="danger" id="angercheck"/>&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-onstyle="warning" id="joycheck"/>   &nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-onstyle="success" id="sadnesscheck"/>&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-onstyle="info" id="surprisedcheck"/>&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-onstyle="primary" id="disgustedcheck"/>		         		            		             
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div id="cloudtag" class="panel-body">                        
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->          
+                    <!-- /.panel -->           
                 </div>
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-4">
-                    <div class="panel panel-default">
+                    <%--<div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-clock-o fa-fw"></i>Related Tweets
                         </div>
@@ -184,7 +166,7 @@
                             </ul>  
                         </div>
                         <!-- /.panel-body -->
-                    </div>
+                    </div>--%>
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -199,6 +181,26 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-cloud"></i>Tag Cloud
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='24' width='24'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='24' width='24'></img> Anger" data-onstyle="danger" id="angercheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='24' width='24'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='24' width='24'></img> Joy" data-onstyle="warning" id="joycheck"/>   &nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='24' width='24'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='24' width='24'></img> Sadness" data-onstyle="success" id="sadnesscheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='24' width='24'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='24' width='24'></img> Surprised" data-onstyle="info" id="surprisedcheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='24' width='24'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='24' width='24'></img> Disgusted" data-onstyle="primary" id="disgustedcheck"/>		         		            		             	         		            		             
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div id="cloudtag" class="panel-body">                        
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel --> 
+                </div>
             </div>
             <!-- /.row -->
         </div>
@@ -224,12 +226,14 @@
     <!-- D3.js -->
     <script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
     <!-- D3 Cloud Tag-->
-    <script src="/bootstrap/js/d3.layout.cloud.js" type="text/javascript"></script>
+    <script src="d3.layout.cloud.js" type="text/javascript"></script>
     <!-- Highcharts 3d-->
     <script src="http://code.highcharts.com/highcharts-3d.js"></script>
 
     <script type="text/javascript">
-
+        //used for cloudtagfilter
+        var globaltime;
+        var globaldate;
         // use to update barchart
         var cloudtaglist;
 
@@ -414,7 +418,8 @@
                                                 $("#surprisedcheck").data("bs.toggle").on(true);
                                                 $("#disgustedcheck").data("bs.toggle").on(true);
 
-
+                                                globaldate = calendarClickDate;
+                                                globaltime = this.x;
                                                 //$('#joycheck').bootstrapToggle('on');
                                                 //$('#angercheck').bootstrapToggle('on');
                                                 //$('#sadnesscheck').bootstrapToggle('on');
@@ -423,6 +428,7 @@
                                                 // update selected dateTime
                                                 document.getElementById('selectedDateTime').innerHTML = finalDateTime;
                                                 cloudtag(calendarClickDate, this.x);
+                                                
                                         }
                                     }
                                 },
@@ -562,41 +568,128 @@
                           }))
                         .rotate(function () { return 4 * 90; })
                         .font("impact")
-                        .fontsize(function (d) { return d.size; })
+                        .fontSize(function (d) { return d.size; })
                         .on("end", draw)
                         .start();
 
-                    //function draw(words) {
-                    //    d3.select("#cloudtag").append("svg")
-                    //        .attr("width", document.getElementById("cloudtag").clientWidth)
-                    //        .attr("height", 300)
-                    //      .append("g")
-                    //        .attr("transform", "translate("+divwidth/2 +",150)")
-                    //      .selectAll("text")
-                    //        .data(words)
-                    //      .enter().append("text")
-                    //        .style("font-size", function (d) { return d.size + "px"; })
-                    //        .style("font-family", "Impact")
-                    //        .style("fill", function (d, i) { return fill(i); })
-                    //        .style("transition", "all 0.3s ease")
-                    //        .attr("text-anchor", "middle")
-                    //        .attr("transform", function (d) {
-                    //            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                    //        })
-                    //        .text(function (d) { return d.text; })
-                    //        .on("mouseover", function () {
-                    //            $(this).css("font-size", "5em");
-                    //            // update bar chart
-                    //            index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text());
-                    //            // draw bar chart
-                    //            barchart(cloudtaglist[index].tagid, $(this).text());
-                    //            // retreive tweets
-                    //            relatedTweets($(this).text(), selectedDate, selectedTimeForRelatedTweets);
-                    //        })
-                    //        .on("mouseout", function (d) {
-                    //            $(this).css("font-size", d.size + "px");
-                    //        })
+                    function draw(words) {
+                        d3.select("#cloudtag").append("svg")
+                            .attr("width", document.getElementById("cloudtag").clientWidth)
+                            .attr("height", 300)
+                          .append("g")
+                            .attr("transform", "translate("+divwidth/2 +",150)")
+                          .selectAll("text")
+                            .data(words)
+                          .enter().append("text")
+                            .style("font-size", function (d) { return d.size + "px"; })
+                            .style("font-family", "Impact")
+                            .style("fill", function (d, i) { return fill(i); })
+                            .style("transition", "all 0.3s ease")
+                            .attr("text-anchor", "middle")
+                            .attr("transform", function (d) {
+                                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                            })
+                            .text(function (d) { return d.text; })
+                            .on("mouseover", function () {
+                                $(this).css("font-size", "5em");
+                                // update bar chart
+                                index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text());
+                                // draw bar chart
+                                barchart(cloudtaglist[index].tagid, $(this).text());
+                                // retreive tweets
+                                relatedTweets($(this).text(), selectedDate, selectedTimeForRelatedTweets);
+                            })
+                            .on("mouseout", function (d) {
+                                $(this).css("font-size", d.size + "px");
+                            })
+                    }
+                })
+        }
+        //filter cloudtag
+        function filtercloudtag(date, mood, hour) {
+            //document.getElementById("cloudtag").innerHTML = "";
+            $.ajax
+            (
+                {
+                    type: 'POST',
+                    url: 'home.aspx/filterCloudTag',
+                    data: JSON.stringify({ dat: date, mood: mood, hour: hour }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    async: false
+                }
+            ).done
+            (
+                function (data, textStatus, jqXHR) {
+                    //var fonti="";
+                    //var ind=0;
+                    var divwidth = document.getElementById("cloudtag").clientWidth;
+                    cloudtaglist = data.d;
+                    var worddata = [];
+                    var index = 0;
+                    var str = "";
+
+                    index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text);
+
+                    for (i = 0; i < cloudtaglist.length; i++) {
+                        worddata[i] = cloudtaglist[i].tag;
+                    }
+                    var fontsiz = [];
+                    for (i = 0; i < cloudtaglist.length; i++) {
+                        fontsiz[i] = cloudtaglist[i].frequency / 10;
+                    }
+                    var fill = d3.scale.category20();
+                    //function mapdata() {
+                    //    return{text:, size:}
                     //}
+                    var sj = [];
+                    function mapdata() {
+                        for (i = 0; i < worddata.length; i++) {
+                            sj.push({ text: worddata[i], size: fontsiz[i] });
+                        }
+                    }
+                    mapdata();
+                    d3.layout.cloud().size([divwidth, 300])
+                        .words(sj.map(function (d) {
+                            return { text: d.text, size: 10 + d.size * 50 };
+                        }))
+                        .rotate(function () { return 4 * 90; })
+                        .font("Impact")
+                        .fontSize(function (d) { return d.size; })
+                        .on("end", draw)
+                        .start();
+
+                    function draw(words) {
+                        d3.select("#cloudtag").append("svg")
+                            .attr("width", document.getElementById("cloudtag").clientWidth)
+                            .attr("height", 300)
+                          .append("g")
+                            .attr("transform", "translate(" + divwidth / 2 + ",150)")
+                          .selectAll("text")
+                            .data(words)
+                          .enter().append("text")
+                            .style("font-size", function (d) { return d.size + "px"; })
+                            .style("font-family", "Impact")
+                            .style("fill", function (d, i) { return fill(i); })
+                            .style("transition", "all 0.3s ease")
+                            .attr("text-anchor", "middle")
+                            .attr("transform", function (d) {
+                                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                            })
+                            .text(function (d) { return d.text; })
+                            .on("mouseover", function () {
+                                $(this).css("font-size", "5em");
+                                // update bar chart
+                                index = cloudtaglist.map(function (d) { return d['tag']; }).indexOf($(this).text());
+                                barchart(cloudtaglist[index].tagid, $(this).text());
+                            })
+                            .on("mouseout", function (d) {
+                                //fonti = words[ind].size;
+                                //ind++;
+                                $(this).css("font-size", d.size + "px");
+
+                            })
+                    }
                 })
         }
         // update related tweets

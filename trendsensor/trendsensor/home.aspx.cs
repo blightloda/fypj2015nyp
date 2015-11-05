@@ -38,17 +38,6 @@ namespace trendsensor
                 str1 = dateTime.ToString("yyyy'-'MM'-'dd");
             }
 
-            //DateTime date = new DateTime();
-            //try {
-            //    date = DateTime.ParseExact(calendarClickDate, "MM-dd-yyyy", null);
-            //}
-            //catch (InvalidCastException e)
-            //{
-
-            //}
-
-
-
             // create a linechart class instance so that i
             // can talk to database 
             LineChart linechart = new LineChart();
