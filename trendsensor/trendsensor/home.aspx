@@ -29,7 +29,9 @@
     <link href="/bootstrap/css/highcharts.css" rel="stylesheet" />
     <!-- jQuery -->
     <script src="/bootstrap/js/jquery-2.1.4.min.js" type="text/javascript"></script>
-    
+    <!-- Text Highlight -->
+    <script src="/bootstrap/js/jquery.jmHighlight.js" type="text/javascript"></script>
+
     <style type="text/css">
         #menu {
             position: fixed;
@@ -205,6 +207,7 @@
     <script src="d3.layout.cloud.js" type="text/javascript"></script>
     <!-- Highcharts 3d-->
     <script src="http://code.highcharts.com/highcharts-3d.js"></script>
+
 
     <script type="text/javascript">
         //for use in filtercloudtag
@@ -706,6 +709,13 @@
                     });
                 })
         }
+        function highlight(keyword){
+            $(".context").jmHighlight(keyword, {
+                "element": "mark",
+                "className": "customHighlight",
+                "separateWordSearch": true
+            });
+        }
         // update related tweets
         function relatedTweets(selectedWord, selectedDate, selectedTime) {
             $.ajax
@@ -728,36 +738,22 @@
                        if (i % 2 == 0) {
                            $("#relatedTweets").append("<li>" 
                                + "<div class=\"timeline-badge\"><i class=\"fa fa-check\"></i></div>"
-                               + "<div class=\"timeline-panel\"><div class=\"timeline-body\">" + tweetList[i - 1].Content + "</div><div>"
+                               + "<div class=\"timeline-panel\"><div class=\"timeline-body\"><div class=\"context\"><p>" + tweetList[i - 1].Content + "</p></div></div><div>"
                                + "</li>");
+                           highlight(selectedWord);
                        } else {
                            $("#relatedTweets").append("<li class=\"timeline-inverted\">"
                                + "<div class=\"timeline-badge warning\"><i class=\"fa fa-credit-card\"></i></div>"
-                               + "<div class=\"timeline-panel\"><div class=\"timeline-body\">" + tweetList[i - 1].Content + "</div><div>"
+                               + "<div class=\"timeline-panel\"><div class=\"timeline-body\"><div class=\"context\"><p>" + tweetList[i - 1].Content + "</p></div></div><div>"
                                + "</li>");
+                           highlight(selectedWord);
                        }
+                       
                    }
-                   //<li>
-                   //     <div class="timeline-badge">
-                   //         <i class="fa fa-check"></i>
-                   //     </div>
-                   //     <div class="timeline-panel">
-                   //         <div class="timeline-body">
-                   //         </div>
-                   //     </div>
-                   // </li>
-                   // <li class="timeline-inverted">
-                   //     <div class="timeline-badge warning">
-                   //         <i class="fa fa-credit-card"></i>
-                   //     </div>
-                   //     <div class="timeline-panel">
-                   //         <div class="timeline-body">
-                   //         </div>
-                   //     </div>
-                   // </li>
                }
             )
         }
+
         //filter cloudtag
         function filtercloudtag(date, mood, hour) {
 
