@@ -98,34 +98,29 @@
         <div id="page-wrapper">
 
             <div class="row">
-                <div class="col-lg-6">
-                    <h1 class="page-header">DateTime Selected: </h1>
-                </div>
-                <!-- /.col-lg-3 -->
-
-                <div class="col-lg-6">
-                    <h1 id="selectedDateTime" class="page-header"></h1>
+                <div class="col-lg-12">
+                    <hr />
                 </div>
             </div>
             <!-- /.row -->
 
-               <ul id="menu">
+            <ul id="menu">
                 <li>Incoming Tweets</li>
                 <li><div id="amount">0</div></li>
+                <li><h1 id="selectedDateTime" class="page-header"></h1></li>
             </ul>
 
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">
-                    <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-line-chart"></i>Singapore Current Affairs
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <!-- Trend Graph -->
                             <div id="chart_div"></div>
+                            <!-- Trend Graph -->
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -135,7 +130,7 @@
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-clock-o fa-fw"></i>Related Tweets
+                            <i class="fa fa-bar-chart fa-fw"></i>Bar Chart
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -148,17 +143,14 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-cloud"></i>Tag Cloud	         		            		             
-                        </div>
-                        <div class="panel-heading">
-                            <i class="fa fa-filter"></i>Emotions Filter&nbsp;&nbsp;&nbsp;&nbsp;	
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='34' width='34'></img> Anger" data-onstyle="danger" id="angercheck"/>&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='34' width='34'></img> Joy" data-onstyle="warning" id="joycheck"/>   &nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='34' width='34'></img> Sadness" data-onstyle="success" id="sadnesscheck"/>&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='34' width='34'></img> Surprised" data-onstyle="info" id="surprisedcheck"/>&nbsp;
-                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='34' width='34'></img> Disgusted" data-onstyle="primary" id="disgustedcheck"/>		         		            		             
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/anger4.png' height='16' width='16'></img> Anger" data-off="<img src='bootstrap/img/anger4.png' height='16' width='16'></img> Anger" data-onstyle="danger" id="angercheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/joy4.png' height='16' width='16'></img> Joy" data-off="<img src='bootstrap/img/joy4.png' height='16' width='16'></img> Joy" data-onstyle="warning" id="joycheck"/>   &nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/sadness4.png' height='16' width='16'></img> Sadness" data-off="<img src='bootstrap/img/sadness4.png' height='16' width='16'></img> Sadness" data-onstyle="success" id="sadnesscheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/surprised4.png' height='16' width='16'></img> Surprised" data-off="<img src='bootstrap/img/surprised4.png' height='16' width='16'></img> Surprised" data-onstyle="info" id="surprisedcheck"/>&nbsp;
+                            <input type="checkbox" checked data-toggle="toggle" data-on="<img src='bootstrap/img/disgusted4.png' height='16' width='16'></img> Disgusted" data-off="<img src='bootstrap/img/disgusted4.png' height='16' width='16'></img> Disgusted" data-onstyle="primary" id="disgustedcheck"/>		         		            		             
                         </div>
                         <!-- /.panel-heading -->
-                        <div id="cloudtag" class="panel-body">                        
+                        <div id="cloudtag" class="panel-body" style="height:300px;">                        
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -174,7 +166,6 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="row">
-                                <div id="barcharts" class="col-md-6"></div>
                                 <div class="col-md-6">
                                     <ul class="timeline">
                                 <li>
@@ -348,6 +339,8 @@
         drawChart(today);
         // get live count
         getLiveCounter();
+        // draw barChart on pageload
+        barchart("blablaba", "");
 
         // Basic initialization using defaults
         var options = {
