@@ -69,7 +69,7 @@ namespace DataAccessLayer
                     string moo = moods[0];
                     for (int i = 1; i < moods.Length; i++)
                     {
-                        moo += "' OR cr.mood = '" + moods[i];
+                        moo += "' OR tr.date = '"+date +"'AND cr.mood = '" + moods[i];
                     }
                     // obtain connection string information from app.config
                     cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
