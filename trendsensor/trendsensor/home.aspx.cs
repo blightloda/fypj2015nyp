@@ -132,25 +132,5 @@ namespace trendsensor
             object response = tweetList;
             return response;
         }
-        [WebMethod]
-        public static object filterCloudTag(string dat, string mood, int hour)
-        {
-            // create a list, which can hold linechart instances
-            List<CloudTag> ctlist = new List<CloudTag>();
-
-            //convert to correct date format
-            //DateTime date = DateTime.Parse(str);
-            DateTime date = DateTime.ParseExact(dat, "MM-dd-yyyy", null);
-            string str1 = date.ToString("yyyy'-'MM'-'dd");
-
-            // create a linechart class instance so that i
-            // can talk to database 
-            CloudTag ct = new CloudTag();
-            ctlist = ct.filterCloudTag(str1, mood, hour);
-
-            // assign the linechartList to the response object
-            object response = ctlist;
-            return response;
-        }
     }
 }
