@@ -69,7 +69,7 @@ namespace DataAccessLayer
                     string moo = moods[0];
                     for (int i = 1; i < moods.Length; i++)
                     {
-                        moo += "' OR tr.date = '"+date +"'AND cr.mood = '" + moods[i];
+                        moo += "' AND tr.hour="+hour+" OR tr.date = '"+date +"'AND cr.mood = '" + moods[i];
                     }
                     // obtain connection string information from app.config
                     cn.ConnectionString = "server=localhost; userid=root; password=; database=twitter_stream;";
@@ -77,6 +77,7 @@ namespace DataAccessLayer
                     cmd.Connection = cn;
                     // supply the cmd with the necessary SQL Y-M-D FULL
                     str = "SELECT tag, tr.tagid, count( * ) AS frequency FROM `tagsretrievedtemp` tr INNER JOIN `contentsretrievedtemp` cr ON tr.tagId = cr.tagId WHERE tr.date = '" + date + "' AND cr.mood = '" + moo + "' AND tr.hour =" + hour + " GROUP BY tag";
+                    System.Diagnostics.Debug.WriteLine(str);
                     cmd.CommandText = str;
                     
                     
