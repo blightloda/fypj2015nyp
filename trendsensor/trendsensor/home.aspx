@@ -66,7 +66,9 @@
 <body>
 
     <div id="wrapper">
-        <%--<div class="panel panel-default">
+
+        <%--<!-- /.panel -->
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-comment fa-fw"></i>Related Tweets
             </div>
@@ -80,26 +82,25 @@
                 </div>      
             </div>
             <!-- /.panel-body -->
-        </div>--%>
-        <!-- /.panel -->
+        </div>
+        <!-- /.panel -->--%>
+
         <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <i class="fa fa-comment fa-fw"></i>Related Tweets
-                    </div>
-                    <div class="modal-body">
-                        <ul class="timeline" id="relatedTweets">
-                    </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p id="relatedKeywordAndDateTime"><i class="fa fa-comment fa-fw"></i>Related Tweets</p>
+              </div>
+              <div class="modal-body">
+                <ul class="timeline" id="relatedTweets"></ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
             </div>
+          </div>
         </div>
 
 
@@ -124,8 +125,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <div id="menu">
                         <p>Incoming Tweets</p>
-                        <p><div id="amount">0</div></p>
-                       <%-- <li><h1 id="selectedDateTime" class="page-header"></h1></li>--%>
+                        <p><div id="amount">0</div></p>                       
                     </div>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -143,7 +143,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-heading" id="selectedDateTime">
                             <i class="fa fa-line-chart"></i>Singapore Current Affairs
                         </div>
                         <!-- /.panel-heading -->
@@ -187,7 +187,7 @@
                 </div>
                 <!-- /.col-lg-12 -->
                 <div class="col-lg-12">
-
+                    <hr />
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -232,7 +232,7 @@
         $(document).ready(function () {
             var d = new Date();
             var n = d.toDateString();
-            //document.getElementById('selectedDateTime').innerHTML = n;
+            document.getElementById('selectedDateTime').innerHTML = "<i class=\"fa fa-line-chart\"></i>" + n;
         });
 
         //get current date
@@ -268,7 +268,7 @@
                 // write selected date to label
                 var d = new Date(calendarClickDate);
                 var n = d.toDateString();
-                //document.getElementById('selectedDateTime').innerHTML = n;
+                document.getElementById('selectedDateTime').innerHTML = "<i class=\"fa fa-line-chart\"></i>" + n;
             }
         }
         $('#datepaginator').datepaginator(dateChanged);
@@ -410,7 +410,7 @@
                                             // update selected dateTime
                                             globaldate = calendarClickDate;
                                             globaltime = this.x;
-                                            //document.getElementById('selectedDateTime').innerHTML = finalDateTime;
+                                            document.getElementById('selectedDateTime').innerHTML = "<i class=\"fa fa-line-chart\"></i>" + finalDateTime;
                                             cloudtag(calendarClickDate, this.x);
                                         }
                                     }
@@ -746,8 +746,10 @@
             (
                function (data, textStatus, jqXHR) {
                    document.getElementById("relatedTweets").innerHTML = "";
+                   document.getElementById("relatedKeywordAndDateTime").innerHTML = "";
                    // prevent json hijacking
                    var tweetList = data.d;
+                   $("#relatedKeywordAndDateTime").append("<i class=\"fa fa-comment fa-fw\"> </i>" + selectedWord + " " + selectedDate + "@" + selectedTime + "</p>");
                    for (i = 1; i <= tweetList.length; i++) {
                        if (i % 2 == 0) {
                            $("#relatedTweets").append("<li>" 
