@@ -36,7 +36,7 @@
         #menu {
             position: fixed;
             left: 0;
-            top: 50%;
+            top: 60%;
             width: 14em;
             margin: -2.5em 0 0 0;
             z-index: 5;
@@ -51,7 +51,7 @@
             box-shadow: 0 1px 3px black;
             border-radius: 0.5em 3em 3em 0.5em;
         }
-        #menu li { margin: 0 }
+        #menu p { margin: 0 }
         #menu a { color: inherit }
 
         /* Make menu absolute, not fixed, on IE 5 & 6 */
@@ -66,6 +66,42 @@
 <body>
 
     <div id="wrapper">
+        <%--<div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-comment fa-fw"></i>Related Tweets
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="timeline" id="relatedTweets">
+                        </ul>
+                    </div>
+                </div>      
+            </div>
+            <!-- /.panel-body -->
+        </div>--%>
+        <!-- /.panel -->
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <i class="fa fa-comment fa-fw"></i>Related Tweets
+                    </div>
+                    <div class="modal-body">
+                        <ul class="timeline" id="relatedTweets">
+                    </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -86,11 +122,11 @@
             <!-- /.navbar-top-links -->
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="home.aspx"><i class="fa fa-home fa-fw"></i>Home</a>
-                        </li>
-                    </ul>
+                    <div id="menu">
+                        <p>Incoming Tweets</p>
+                        <p><div id="amount">0</div></p>
+                       <%-- <li><h1 id="selectedDateTime" class="page-header"></h1></li>--%>
+                    </div>
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -98,20 +134,11 @@
         </nav>
 
         <div id="page-wrapper">
-
             <div class="row">
                 <div class="col-lg-12">
                     <hr />
                 </div>
             </div>
-            <!-- /.row -->
-
-            <ul id="menu">
-                <li>Incoming Tweets</li>
-                <li><div id="amount">0</div></li>
-                <li><h1 id="selectedDateTime" class="page-header"></h1></li>
-            </ul>
-
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">
@@ -160,23 +187,7 @@
                 </div>
                 <!-- /.col-lg-12 -->
                 <div class="col-lg-12">
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-comment fa-fw"></i>Related Tweets
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <ul class="timeline" id="relatedTweets">
-                                    </ul>
-                                </div>
-                            </div>      
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
+
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -221,7 +232,7 @@
         $(document).ready(function () {
             var d = new Date();
             var n = d.toDateString();
-            document.getElementById('selectedDateTime').innerHTML = n;
+            //document.getElementById('selectedDateTime').innerHTML = n;
         });
 
         //get current date
@@ -257,7 +268,7 @@
                 // write selected date to label
                 var d = new Date(calendarClickDate);
                 var n = d.toDateString();
-                document.getElementById('selectedDateTime').innerHTML = n;
+                //document.getElementById('selectedDateTime').innerHTML = n;
             }
         }
         $('#datepaginator').datepaginator(dateChanged);
@@ -399,7 +410,7 @@
                                             // update selected dateTime
                                             globaldate = calendarClickDate;
                                             globaltime = this.x;
-                                            document.getElementById('selectedDateTime').innerHTML = finalDateTime;
+                                            //document.getElementById('selectedDateTime').innerHTML = finalDateTime;
                                             cloudtag(calendarClickDate, this.x);
                                         }
                                     }
@@ -572,6 +583,9 @@
                                 //ind++;
                                 $(this).css("font-size", d.size + "px");
 
+                            })
+                            .on("click", function () {
+                                $('#myModal').modal('show');
                             })
                     }
                 })
